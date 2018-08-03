@@ -1,3 +1,8 @@
 #!/usr/bin/env node
 
-console.log('hello world');
+const chalk = require('chalk');
+const { right } = require('../utils/icons');
+
+console.log('')
+console.log(chalk.cyan(`${right}  Hello World  ${right}`));
+console.log('')
