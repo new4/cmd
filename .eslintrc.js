@@ -5,6 +5,7 @@ module.exports = {
   },
   'extends': ['new4-eslintrc'],
   'rules': {
+    'no-console': 'off',
     'no-param-reassign': 'off',
     // 禁用一元操作符 ++ 和 --
     'no-plusplus': ['off'],
