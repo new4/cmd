@@ -1,0 +1,29 @@
+{
+  "name": "node-bin",
+  "version": "1.0.0",
+  "description": "Some nodejs commands.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/new4/cmd.git"
+  },
+  "author": "new4",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/new4/cmd/issues"
+  },
+  "homepage": "https://github.com/new4/cmd#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.16.0"
+  },
+  "devDependencies": {
+    "eslint-config-new4-eslintrc": "^0.3.0"
+  },
+  "bin": {
+    "hello": "bin/hello.js"
+  }
+}
