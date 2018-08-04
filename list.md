@@ -50,4 +50,4 @@ A better node-open. Opens stuff like websites, files, executables. Cross-platfor
 
 ## 12. [puppeteer](https://github.com/GoogleChrome/puppeteer)
 
-Headless Chrome Node API https://pptr.dev
+Headless Chrome Node [API](https://pptr.dev)

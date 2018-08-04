@@ -27,6 +27,7 @@
     "eslint-config-new4-eslintrc": "^0.3.0"
   },
   "bin": {
-    "hello": "bin/hello.js"
+    "hello": "bin/hello.js",
+    "browser": "bin/browser/index.js"
   }
 }
