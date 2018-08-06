@@ -16,7 +16,9 @@ const puppeteer = require('puppeteer');
   });
 
   await page.goto('https://wwww.baidu.com');
-  await page.screenshot({ path: 'example.png' });
+  await page.screenshot({
+    path: 'example.png',
+  });
 
   await browser.close();
 })();

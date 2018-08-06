@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const { tipEnhance } = require('../../utils');
+const {
+  tipEnhance,
+} = require('../../utils');
 const create = require('./create');
 const remove = require('./remove');
 const rename = require('./rename');
@@ -34,4 +36,3 @@ program
 tipEnhance(program, __filename);
 
 program.parse(process.argv);
-

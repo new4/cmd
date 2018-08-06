@@ -8,25 +8,15 @@ const {
   reLink,
 } = require('../../utils');
 
-const { checkBin } = require('./utils');
+const {
+  checkBin,
+  template,
+} = require('./utils');
 
-const { success, fail } = icons;
-
-// 模板字串
-const template = `#!/usr/bin/env node
-
-const program = require('commander');
-const { tipEnhance } = require('../../utils');
-
-program
-  .version('0.1.0')
-  .usage('<command> [options]');
-
-// 强化的提示
-tipEnhance(program, __filename);
-
-program.parse(process.argv);
-`;
+const {
+  success,
+  fail,
+} = icons;
 
 /**
  * 新建一个命令
@@ -39,7 +29,10 @@ module.exports = function create(name) {
   const file = `bin/${name}/${name}.js`;
   const promiseOperate = []; // 供 Promise.all 处理的数组
 
-  const { hasBinInfo, hasBinFile } = checkBin(name);
+  const {
+    hasBinInfo,
+    hasBinFile,
+  } = checkBin(name);
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
@@ -60,7 +53,13 @@ module.exports = function create(name) {
   // 没有对应 bin 文件的，创建一个
   if (!hasBinFile) {
     promiseOperate.push(
-      fse.outputFile(underPath('root', file), template, { mode: 0o755 }),
+      fse.outputFile(
+        underPath('root', file),
+        template,
+        {
+          mode: 0o755,
+        },
+      ),
     );
   }
 

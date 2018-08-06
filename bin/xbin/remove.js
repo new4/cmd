@@ -8,9 +8,14 @@ const {
   reLink,
 } = require('../../utils');
 
-const { checkBin } = require('./utils');
+const {
+  checkBin,
+} = require('./utils');
 
-const { success, fail } = icons;
+const {
+  success,
+  fail,
+} = icons;
 
 /**
  * 移除一个命令
@@ -21,7 +26,10 @@ const { success, fail } = icons;
  */
 module.exports = function remove(name, cmd) {
   const promiseOperate = []; // 供 Promise.all 处理的数组
-  const { hasBinInfo, hasBinFile } = checkBin(name);
+  const {
+    hasBinInfo,
+    hasBinFile,
+  } = checkBin(name);
 
   // 没有 bin 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {

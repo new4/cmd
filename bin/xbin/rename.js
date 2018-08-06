@@ -8,9 +8,14 @@ const {
   reLink,
 } = require('../../utils');
 
-const { checkBin } = require('./utils');
+const {
+  checkBin,
+} = require('./utils');
 
-const { success, fail } = icons;
+const {
+  success,
+  fail,
+} = icons;
 
 /**
  * 重命名一个命令
@@ -23,8 +28,15 @@ module.exports = function rename(oldName, newName) {
   const oldFile = `bin/${oldName}/${oldName}.js`;
   const newFile = `bin/${newName}/${newName}.js`;
 
-  const { hasBinInfo, hasBinFile } = checkBin(oldName);
-  const { hasBinInfo: hasNewBinInfo, hasBinFile: hasNewBinFile } = checkBin(newName);
+  const {
+    hasBinInfo,
+    hasBinFile,
+  } = checkBin(oldName);
+
+  const {
+    hasBinInfo: hasNewBinInfo,
+    hasBinFile: hasNewBinFile,
+  } = checkBin(newName);
 
   // 没有 name 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {
@@ -68,11 +80,15 @@ module.exports = function rename(oldName, newName) {
         underPath('root', oldFile),
         underPath('root', newFile),
       );
-      console.log(chalk.cyan(`  ${success} copied:  old file => new file`));
+      console.log(chalk.cyan(`  ${success} copied : old file => new file`));
+
+      // 移除旧目录
+      fse.removeSync(underPath('bin', `${oldName}`));
+      console.log(chalk.cyan(`  ${success} removed: old dir`));
 
       // 移除新目录下的旧文件
       fse.removeSync(underPath('bin', `${newName}/${oldName}.js`));
-      console.log(chalk.cyan(`  ${success} removed: oldfile`));
+      console.log(chalk.cyan(`  ${success} removed: old file`));
 
       console.log();
       reLink();
