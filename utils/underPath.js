@@ -7,5 +7,5 @@ module.exports = function underPath(underpath, subpath) {
     bin: path.join(rootPath, 'bin'),
   };
 
-  return path.resolve(path.join(mapping[underpath], subpath));
+  return path.resolve(path.join(mapping[underpath], subpath || '.'));
 };

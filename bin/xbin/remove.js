@@ -7,7 +7,7 @@ const {
   icons,
 } = require('../../utils');
 
-const { right, wrong } = icons;
+const { success, fail } = icons;
 
 // 标识，移除的风险有点大，暂不提供移除命令，可通过本标识进行开启/关闭
 const provideRemove = true;
@@ -35,7 +35,7 @@ module.exports = function remove(name) {
 
   // 没有 bin 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {
-    console.log(chalk.red(`\n   ${wrong} No command '${name}' existed! \n`));
+    console.log(chalk.red(`\n   ${fail} No command '${name}' existed! \n`));
     return;
   }
 
@@ -58,8 +58,8 @@ module.exports = function remove(name) {
     .all(promiseOperate)
     .then(() => {
       console.log('');
-      hasBinFile && console.log(chalk.cyan(`  ${right} removed: bin/${name}`));
-      hasBinInfo && console.log(chalk.cyan(`  ${right} updated: package.json`));
+      hasBinFile && console.log(chalk.cyan(`  ${success} removed: bin/${name}`));
+      hasBinInfo && console.log(chalk.cyan(`  ${success} updated: package.json`));
       console.log('');
     })
     .catch(err => console.error(err));

@@ -3,11 +3,12 @@ const chalk = require('chalk');
 
 const {
   packageJson,
-  underPath,
   icons,
+  underPath,
+  reLink,
 } = require('../../utils');
 
-const { right, wrong } = icons;
+const { success, fail } = icons;
 
 /**
  * 新建一个命令
@@ -28,7 +29,7 @@ module.exports = function create(name) {
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
-    console.log(chalk.red(`\n   ${wrong} command '${name}' has existed!  \n`));
+    console.log(chalk.red(`\n   ${fail} command '${name}' has existed!  \n`));
     return;
   }
 
@@ -51,9 +52,10 @@ module.exports = function create(name) {
     .all(promiseOperate)
     .then(() => {
       console.log('');
-      !hasBinFile && console.log(chalk.cyan(`  ${right} created: ${file}`));
-      !hasBinInfo && console.log(chalk.cyan(`  ${right} updated: package.json`));
+      !hasBinFile && console.log(chalk.cyan(`  ${success} created: ${file}`));
+      !hasBinInfo && console.log(chalk.cyan(`  ${success} updated: package.json`));
       console.log('');
+      reLink();
     })
     .catch(err => console.error(err));
 };

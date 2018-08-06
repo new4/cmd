@@ -1,4 +1,4 @@
 module.exports = {
-  right: '✔',
-  wrong: '✘',
+  success: '✔',
+  fail: '✘',
 };
