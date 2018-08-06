@@ -10,9 +10,6 @@ const {
 
 const { success, fail } = icons;
 
-// 标识，移除的风险有点大，暂不提供移除命令，可通过本标识进行开启/关闭
-const provideRemove = true;
-
 /**
  * 移除一个命令
  *
@@ -20,11 +17,7 @@ const provideRemove = true;
  *  - 移除 bin 下存放该命令的目录
  *  - 在 package.json 中更新 bin 部分，以便用于 yarn link/unlink 的操作
  */
-module.exports = function remove(name) {
-  if (!provideRemove) {
-    return;
-  }
-
+module.exports = function remove(name, cmd) {
   const bin = packageJson.bin || {};
   const file = `bin/${name}/${name}.js`;
 
@@ -36,7 +29,17 @@ module.exports = function remove(name) {
 
   // 没有 bin 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {
-    console.log(chalk.red(`\n   ${fail} No command '${name}' existed! \n`));
+    console.log();
+    console.log(chalk.red(`   ${fail} No command ${chalk.yellow(`${name}`)} existed!`));
+    console.log();
+    return;
+  }
+
+  if (!cmd.force) {
+    console.log();
+    console.log(chalk.red(`   ${fail} Can not remove ${chalk.yellow(`${name}`)}`));
+    console.log(chalk.red(`   ${fail} Use ${chalk.cyan(`xbin remove ${name} --force`)} instead`));
+    console.log();
     return;
   }
 

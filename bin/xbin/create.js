@@ -45,7 +45,9 @@ module.exports = function create(name) {
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
-    console.log(chalk.red(`\n   ${fail} command `) + chalk.cyan(`${name}`) + chalk.red(' has existed!  \n'));
+    console.log();
+    console.log(chalk.red(`   ${fail} Command ${chalk.yellow(`${name}`)} has existed!`));
+    console.log();
     return;
   }
 

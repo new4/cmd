@@ -32,6 +32,7 @@
   "bin": {
     "hello": "bin/hello.js",
     "xbin": "bin/xbin/xbin.js",
-    "browser": "bin/browser/browser.js"
+    "browser": "bin/browser/browser.js",
+    "kkone": "bin/kkone/kkone.js"
   }
 }
