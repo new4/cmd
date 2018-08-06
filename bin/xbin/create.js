@@ -8,6 +8,8 @@ const {
   reLink,
 } = require('../../utils');
 
+const { checkBin } = require('./utils');
+
 const { success, fail } = icons;
 
 // 模板字串
@@ -34,14 +36,10 @@ program.parse(process.argv);
  *  - 在 package.json 中更新 bin 部分，以便用于 yarn link/unlink 的操作
  */
 module.exports = function create(name) {
-  const bin = packageJson.bin || {};
   const file = `bin/${name}/${name}.js`;
+  const promiseOperate = []; // 供 Promise.all 处理的数组
 
-  const hasBinInfo = Object.keys(bin).indexOf(name) !== -1; // package.json 中的 bin 选项有本命令的信息
-  const hasBinFile = fse.pathExistsSync(file); // bin 目录下含有本命令的相应文件
-
-  // 供 Promise.all 处理的数组
-  const promiseOperate = [];
+  const { hasBinInfo, hasBinFile } = checkBin(name);
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
