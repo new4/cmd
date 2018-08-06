@@ -10,6 +10,7 @@ const {
 
 const { success, fail } = icons;
 
+// 模板字串
 const template = `#!/usr/bin/env node
 
 const program = require('commander');
@@ -59,7 +60,7 @@ module.exports = function create(name) {
   // 没有对应 bin 文件的，创建一个
   if (!hasBinFile) {
     promiseOperate.push(
-      fse.outputFile(underPath('root', file), template),
+      fse.outputFile(underPath('root', file), template, { mode: 0o755 }),
     );
   }
 
