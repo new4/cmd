@@ -26,7 +26,7 @@ module.exports = function remove(name) {
   }
 
   const bin = packageJson.bin || {};
-  const file = `bin/${name}/index.js`;
+  const file = `bin/${name}/${name}.js`;
 
   const hasBinInfo = Object.keys(bin).indexOf(name) !== -1; // package.json 中的 bin 选项有本命令的信息
   const hasBinFile = fse.pathExistsSync(file); // bin 目录下含有本命令的相应文件
