@@ -22,7 +22,8 @@
     "commander": "^2.16.0",
     "execa": "^0.10.0",
     "fs-extra": "^7.0.0",
-    "puppeteer": "^1.6.2"
+    "puppeteer": "^1.6.2",
+    "slash": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^5.2.0",
@@ -31,7 +32,7 @@
   "bin": {
     "hello": "bin/hello.js",
     "browser": "bin/browser/index.js",
-    "xbin": "bin/xbin/index.js",
-    "tt": "bin/tt/index.js"
+    "xbin": "bin/xbin/xbin.js",
+    "kkone": "bin/kkone/index.js"
   }
 }

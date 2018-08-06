@@ -9,6 +9,8 @@ module.exports = {
     'no-param-reassign': 'off',
     // 禁用一元操作符 ++ 和 --
     'no-plusplus': ['off'],
+
+    'no-underscore-dangle': ["off"]
   },
   'parserOptions': {
     'parser': 'babel-eslint'

@@ -5,6 +5,7 @@ const {
   packageJson,
   underPath,
   icons,
+  reLink,
 } = require('../../utils');
 
 const { success, fail } = icons;
@@ -57,10 +58,11 @@ module.exports = function remove(name) {
   Promise
     .all(promiseOperate)
     .then(() => {
-      console.log('');
+      console.log();
       hasBinFile && console.log(chalk.cyan(`  ${success} removed: bin/${name}`));
       hasBinInfo && console.log(chalk.cyan(`  ${success} updated: package.json`));
-      console.log('');
+      console.log();
+      reLink();
     })
     .catch(err => console.error(err));
 };

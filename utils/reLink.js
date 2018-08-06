@@ -12,7 +12,7 @@ module.exports = async function relink() {
   console.log(chalk.cyan('  [re-link]:'));
   await unlink();
   await link();
-  console.log(chalk.cyan(`    ${success} re-link success!`));
+  console.log(chalk.cyan('  [re-link]: success \n'));
 };
 
 /**

@@ -29,7 +29,7 @@ module.exports = function create(name) {
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
-    console.log(chalk.red(`\n   ${fail} command '${name}' has existed!  \n`));
+    console.log(chalk.red(`\n   ${fail} command `) + chalk.cyan(`${name}`) + chalk.red(' has existed!  \n'));
     return;
   }
 
@@ -44,17 +44,26 @@ module.exports = function create(name) {
   // 没有对应 bin 文件的，创建一个
   if (!hasBinFile) {
     promiseOperate.push(
-      fse.outputFile(underPath('root', file), '#!/usr/bin/env node\n'),
+      fse.outputFile(
+        underPath('root', file),
+        [
+          '#!/usr/bin/env node\n',
+          'const program = require(\'commander\');',
+          'program',
+          '  .version(\'0.1.0\')',
+          '.usage(\'<command> [options]\');',
+        ].join(''),
+      ),
     );
   }
 
   Promise
     .all(promiseOperate)
     .then(() => {
-      console.log('');
+      console.log();
       !hasBinFile && console.log(chalk.cyan(`  ${success} created: ${file}`));
       !hasBinInfo && console.log(chalk.cyan(`  ${success} updated: package.json`));
-      console.log('');
+      console.log();
       reLink();
     })
     .catch(err => console.error(err));
