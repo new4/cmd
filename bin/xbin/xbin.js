@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const program = require('commander');
+
 const {
   tipEnhance,
 } = require('../../utils');
+
 const create = require('./create');
 const remove = require('./remove');
 const rename = require('./rename');
@@ -15,13 +17,14 @@ program
 // 创建一个命令
 program
   .command('create <cmd-name>')
-  .alias('init')
+  .alias('c')
   .description('create a bin commander')
   .action(cmd => create(cmd));
 
 // 移除一个命令
 program
   .command('remove <cmd-name>')
+  .alias('rm')
   .description('remove a bin commander')
   .option('-f, --force', 'remove force')
   .action((name, cmd) => remove(name, cmd));
@@ -29,6 +32,7 @@ program
 // 重命名一个命令
 program
   .command('rename <old-name> <new-name>')
+  .alias('rn')
   .description('rename a bin commander')
   .action((oldName, newName) => rename(oldName, newName));
 

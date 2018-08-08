@@ -46,7 +46,10 @@ module.exports = function create(name) {
   if (!hasBinInfo) {
     packageJson.bin[name] = file;
     promiseOperate.push(
-      fse.outputFile(underPath('root', 'package.json'), `${JSON.stringify(packageJson, null, 2)}\n`),
+      fse.outputFile(
+        underPath('root', 'package.json'),
+        `${JSON.stringify(packageJson, null, 2)}\n`,
+      ),
     );
   }
 
