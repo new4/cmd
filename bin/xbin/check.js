@@ -2,8 +2,11 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 const {
-  getCmdInfo,
-  getCurCmd,
+  cmdInfo: {
+    cmdUnderDirBin,
+    cmdInPkgJson,
+    getCurCmd,
+  },
   packageJson,
   underPath,
   icons: {
@@ -39,14 +42,14 @@ module.exports = function check(cmd) {
     dir: [], // 目录残留
   };
 
-  const cmdInPkgJson = getCmdInfo.cmdInPkgJson();
+  const cmdInPkgJsonList = cmdInPkgJson();
 
-  if (!cmdInPkgJson) {
+  if (!cmdInPkgJsonList) {
     bothlog(chalk.red(`   ${fail} No bin config in package.json`));
     return;
   }
 
-  const entries = Object.entries(cmdInPkgJson);
+  const entries = Object.entries(cmdInPkgJsonList);
 
   if (!entries || !entries.length) {
     bothlog(chalk.red(`   ${fail} No cmd config in bin of package.json`));
@@ -67,10 +70,10 @@ module.exports = function check(cmd) {
     }
   });
 
-  const cmdUnderDirBin = getCmdInfo.cmdUnderDirBin();
+  const cmdUnderDirBinList = cmdUnderDirBin();
 
   bothlog(chalk.cyan('cmd info in dir ./bin:'));
-  cmdUnderDirBin.forEach((cmdname) => {
+  cmdUnderDirBinList.forEach((cmdname) => {
     const { hasBinInfo, hasBinFile } = checkBin(cmdname);
     if (hasBinInfo && hasBinFile) {
       log(chalk.cyan(center(`[${success}]`, `${cmdname}`, 'has listed in bin config of package.json')));

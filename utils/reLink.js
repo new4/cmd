@@ -5,14 +5,16 @@ const { success } = require('./icons');
 
 const cwd = underPath('root');
 
+const { log } = require('./log');
+
 /**
  * 执行 unlink -> link 来重建链接
  */
 module.exports = async function relink() {
-  console.log(chalk.cyan('  [re-link]:'));
+  log(chalk.cyan('  [re-link]:'));
   await unlink();
   await link();
-  console.log(chalk.cyan('  [re-link]: success \n'));
+  log(chalk.cyan('  [re-link]: success \n'));
 };
 
 /**
@@ -20,7 +22,7 @@ module.exports = async function relink() {
  */
 async function unlink() {
   await execa('yarn', ['unlink'], { cwd });
-  console.log(chalk.cyan(`    ${success} unlink`));
+  log(chalk.cyan(`    ${success} unlink`));
 }
 
 /**
@@ -28,5 +30,5 @@ async function unlink() {
  */
 async function link() {
   await execa('yarn', ['link'], { cwd });
-  console.log(chalk.cyan(`    ${success} link`));
+  log(chalk.cyan(`    ${success} link`));
 }

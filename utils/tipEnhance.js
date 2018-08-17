@@ -1,7 +1,12 @@
 const program = require('commander');
 const chalk = require('chalk');
 
-const getCurCmd = require('./getCurCmd');
+const { getCurCmd } = require('./cmdInfo');
+
+const {
+  afterlog,
+  bothlog,
+} = require('./log');
 
 // 改写 Command.prototype 的一些原型方法
 function enhance(methodName, log) {
@@ -10,8 +15,7 @@ function enhance(methodName, log) {
       return;
     }
     program.outputHelp();
-    console.log(`  ${chalk.red(log(...args))}`);
-    console.log();
+    afterlog(`  ${chalk.red(log(...args))}`);
     process.exit(1);
   };
 }
@@ -23,9 +27,7 @@ module.exports = function tipEnhance(prog, filename) {
    * 对 --help 事件，输出多一些信息
    */
   prog.on('--help', () => {
-    console.log();
-    console.log(`  Run ${chalk.cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
-    console.log();
+    bothlog(`  Run ${chalk.cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
   });
 
   /**
@@ -53,8 +55,7 @@ module.exports = function tipEnhance(prog, filename) {
     .arguments('<command>')
     .action((cmd) => {
       prog.outputHelp();
-      console.log(chalk.red(`  Unknown command ${chalk.yellow(cmd)}`));
-      console.log();
+      afterlog(chalk.red(`  Unknown command ${chalk.yellow(cmd)}`));
     });
 
   /**

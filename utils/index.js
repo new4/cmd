@@ -1,6 +1,5 @@
 const cleanArgs = require('./cleanArgs');
-const getCmdInfo = require('./getCmdInfo');
-const getCurCmd = require('./getCurCmd');
+const cmdInfo = require('./cmdInfo');
 const icons = require('./icons');
 const log = require('./log');
 const packageJson = require('./packageJson');
@@ -12,8 +11,7 @@ const underPath = require('./underPath');
 
 module.exports = {
   cleanArgs,
-  getCmdInfo,
-  getCurCmd,
+  cmdInfo,
   icons,
   log,
   packageJson,
