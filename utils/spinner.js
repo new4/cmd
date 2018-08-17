@@ -7,7 +7,7 @@ let lastMsg = null;
 exports.logWithSpinner = (symbol, msg) => {
   if (!msg) {
     msg = symbol;
-    symbol = chalk.green('✔');
+    symbol = chalk.red('✔');
   }
   if (lastMsg) {
     spinner.stopAndPersist({
