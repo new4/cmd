@@ -68,7 +68,6 @@ module.exports = function remove(name, cmd) {
       log();
       hasBinFile && log(chalk.cyan(`${success} removed: bin/${name}`));
       hasBinInfo && log(chalk.cyan(`${success} updated: package.json`));
-      log();
       reLink();
     })
     .catch(err => console.error(err));

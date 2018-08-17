@@ -87,7 +87,7 @@ module.exports = function rename(oldName, newName) {
 
       // 移除新目录下的旧文件
       fse.removeSync(underPath('bin', `${newName}/${oldName}.js`));
-      afterlog(chalk.cyan(`${success} removed: old file`));
+      log(chalk.cyan(`${success} removed: old file`));
 
       reLink();
     })

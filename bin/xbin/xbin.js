@@ -11,6 +11,7 @@ const list = require('./list');
 const remove = require('./remove');
 const rename = require('./rename');
 const check = require('./check');
+const relink = require('./relink');
 
 program
   .version('0.1.0')
@@ -65,6 +66,16 @@ program
   .description('check commander residue')
   .option('-c, --clean', 'check and clean commander residue')
   .action(cmd => check(cmd));
+
+/**
+ * 检查所有的命令，保证 package.json 和命令目录一致
+ * 提供参数 -c 可以清理掉这些残留
+ */
+program
+  .command('relink')
+  .alias('rlk')
+  .description('relink all commanders')
+  .action(() => relink());
 
 // 强化的提示
 tipEnhance(program, __filename);

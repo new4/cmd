@@ -77,7 +77,6 @@ module.exports = function create(name, cmd) {
       log();
       !hasBinFile && log(chalk.cyan(`${success} created: ${file}`));
       !hasBinInfo && log(chalk.cyan(`${success} updated: package.json`));
-      log();
       reLink();
     })
     .catch(err => console.error(err));

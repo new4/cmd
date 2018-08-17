@@ -129,7 +129,6 @@ module.exports = function check(cmd) {
           log(chalk.cyan(`${success} clean residue ${cmdname} in ./bin`));
         });
       }
-      log();
       reLink();
     })
     .catch(err => console.error(err));

@@ -7,6 +7,7 @@ const cwd = underPath('root');
 
 const {
   log,
+  beforelog,
   afterlog,
 } = require('./log');
 
@@ -14,7 +15,7 @@ const {
  * 执行 unlink -> link 来重建链接
  */
 module.exports = async function relink() {
-  log(chalk.cyan('[re-link]:'));
+  beforelog(chalk.cyan('[re-link]:'));
   await unlink();
   await link();
 };
