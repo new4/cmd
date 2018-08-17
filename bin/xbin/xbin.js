@@ -7,6 +7,7 @@ const {
 } = require('../../utils');
 
 const create = require('./create');
+const list = require('./list');
 const remove = require('./remove');
 const rename = require('./rename');
 const check = require('./check');
@@ -24,6 +25,16 @@ program
   .description('create a bin commander')
   // .option('-p, --private', 'create a private cmd') // 不想上传到 git 的，可以带上参数 -p，这样仅限本地进行使用
   .action((name, cmd) => create(name, cmd));
+
+/**
+ * 显示当前已有的命令
+ */
+program
+  .command('list')
+  .alias('l')
+  .description('show commander list')
+  // .option('-p, --private', 'create a private cmd') // 不想上传到 git 的，可以带上参数 -p，这样仅限本地进行使用
+  .action(() => list());
 
 /**
  * 移除一个命令，需要带上参数 -f 才是真正的移除
@@ -51,8 +62,8 @@ program
 program
   .command('check')
   .alias('chk')
-  .description('check cmd residue')
-  .option('-c, --clean', 'check and clean cmd residue')
+  .description('check commander residue')
+  .option('-c, --clean', 'check and clean commander residue')
   .action(cmd => check(cmd));
 
 // 强化的提示
