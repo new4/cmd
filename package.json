@@ -35,7 +35,6 @@
   "bin": {
     "xbin": "bin/xbin/xbin.js",
     "browser": "bin/browser/browser.js",
-    "xbrowser": "bin/xbrowser/xbrowser.js",
-    "asd": "bin/asd/asd.js"
+    "xbrowser": "bin/xbrowser/xbrowser.js"
   }
 }

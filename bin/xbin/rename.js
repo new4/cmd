@@ -44,13 +44,13 @@ module.exports = function rename(oldName, newName) {
 
   // 没有 name 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {
-    bothlog(chalk.red(`   ${fail} No command ${chalk.yellow(`${oldName}`)} existed!`));
+    bothlog(chalk.red(`${fail} No command ${chalk.yellow(`${oldName}`)} existed!`));
     return;
   }
 
   // 有 newName 文件或信息的，表明已经有这个命令，不可以把其它的命令改成 newName
   if (hasNewBinInfo || hasNewBinFile) {
-    bothlog(chalk.red(`   ${fail} New command ${chalk.yellow(`${newName}`)} existed!`));
+    bothlog(chalk.red(`${fail} New command ${chalk.yellow(`${newName}`)} existed!`));
     return;
   }
 
@@ -71,23 +71,23 @@ module.exports = function rename(oldName, newName) {
       ),
     ])
     .then(() => {
-      beforelog(chalk.cyan(`  ${success} updated: package.json`));
-      log(chalk.cyan(`  ${success} copied : old dir  => new dir`));
+      beforelog(chalk.cyan(`${success} updated: package.json`));
+      log(chalk.cyan(`${success} copied : old dir  => new dir`));
 
       // 复制文件
       fse.copySync(
         underPath('root', oldFile),
         underPath('root', newFile),
       );
-      log(chalk.cyan(`  ${success} copied : old file => new file`));
+      log(chalk.cyan(`${success} copied : old file => new file`));
 
       // 移除旧目录
       fse.removeSync(underPath('bin', `${oldName}`));
-      log(chalk.cyan(`  ${success} removed: old dir`));
+      log(chalk.cyan(`${success} removed: old dir`));
 
       // 移除新目录下的旧文件
       fse.removeSync(underPath('bin', `${newName}/${oldName}.js`));
-      afterlog(chalk.cyan(`  ${success} removed: old file`));
+      afterlog(chalk.cyan(`${success} removed: old file`));
 
       reLink();
     })

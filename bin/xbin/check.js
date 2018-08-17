@@ -45,14 +45,14 @@ module.exports = function check(cmd) {
   const cmdInPkgJsonList = cmdInPkgJson();
 
   if (!cmdInPkgJsonList) {
-    bothlog(chalk.red(`   ${fail} No bin config in package.json`));
+    bothlog(chalk.red(`${fail} No bin config in package.json`));
     return;
   }
 
   const entries = Object.entries(cmdInPkgJsonList);
 
   if (!entries || !entries.length) {
-    bothlog(chalk.red(`   ${fail} No cmd config in bin of package.json`));
+    bothlog(chalk.red(`${fail} No cmd config in bin of package.json`));
     return;
   }
 
@@ -120,13 +120,13 @@ module.exports = function check(cmd) {
       if (residue.config.length) {
         log('clean residue in package.json:');
         residue.config.forEach((cmdname) => {
-          log(chalk.cyan(`  ${success} clean residue ${cmdname} in package.json`));
+          log(chalk.cyan(`${success} clean residue ${cmdname} in package.json`));
         });
       }
       if (residue.dir.length) {
         beforelog('clean residue in ./bin:');
         residue.dir.forEach((cmdname) => {
-          log(chalk.cyan(`  ${success} clean residue ${cmdname} in ./bin`));
+          log(chalk.cyan(`${success} clean residue ${cmdname} in ./bin`));
         });
       }
       log();

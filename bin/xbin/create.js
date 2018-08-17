@@ -34,7 +34,7 @@ module.exports = function create(name, cmd) {
   log(cmd.private);
 
   // 是否是私有的命令，若是私有的就不会被上传
-  const isPrivateCmd = cmd.private || false;
+  // const isPrivateCmd = cmd.private || false;
 
   const {
     hasBinInfo,
@@ -43,7 +43,7 @@ module.exports = function create(name, cmd) {
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
-    bothlog(chalk.red(`   ${fail} Command ${chalk.yellow(`${name}`)} has existed!`));
+    bothlog(chalk.red(`${fail} Command ${chalk.yellow(`${name}`)} has existed!`));
     return;
   }
 
@@ -75,8 +75,8 @@ module.exports = function create(name, cmd) {
     .all(promiseOperate)
     .then(() => {
       log();
-      !hasBinFile && log(chalk.cyan(`  ${success} created: ${file}`));
-      !hasBinInfo && log(chalk.cyan(`  ${success} updated: package.json`));
+      !hasBinFile && log(chalk.cyan(`${success} created: ${file}`));
+      !hasBinInfo && log(chalk.cyan(`${success} updated: package.json`));
       log();
       reLink();
     })

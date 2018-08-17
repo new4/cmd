@@ -15,7 +15,7 @@ function enhance(methodName, log) {
       return;
     }
     program.outputHelp();
-    afterlog(`  ${chalk.red(log(...args))}`);
+    afterlog(`${chalk.red(log(...args))}`);
     process.exit(1);
   };
 }
@@ -27,7 +27,7 @@ module.exports = function tipEnhance(prog, filename) {
    * 对 --help 事件，输出多一些信息
    */
   prog.on('--help', () => {
-    bothlog(`  Run ${chalk.cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
+    bothlog(`Run ${chalk.cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
   });
 
   /**
@@ -55,7 +55,7 @@ module.exports = function tipEnhance(prog, filename) {
     .arguments('<command>')
     .action((cmd) => {
       prog.outputHelp();
-      afterlog(chalk.red(`  Unknown command ${chalk.yellow(cmd)}`));
+      afterlog(chalk.red(`Unknown command ${chalk.yellow(cmd)}`));
     });
 
   /**

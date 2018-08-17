@@ -22,7 +22,7 @@ program
   .command('create <cmd-name>')
   .alias('c')
   .description('create a bin commander')
-  .option('-p, --private', 'create a private cmd') // 不想上传到 git 的，可以带上参数 -p，这样仅限本地进行使用
+  // .option('-p, --private', 'create a private cmd') // 不想上传到 git 的，可以带上参数 -p，这样仅限本地进行使用
   .action((name, cmd) => create(name, cmd));
 
 /**
