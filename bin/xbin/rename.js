@@ -11,7 +11,6 @@ const {
   log: {
     log,
     beforelog,
-    afterlog,
     bothlog,
   },
   reLink,

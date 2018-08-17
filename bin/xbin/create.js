@@ -63,8 +63,7 @@ module.exports = function create(name, cmd) {
     promiseOperate.push(
       fse.outputFile(
         underPath('root', file),
-        template,
-        {
+        template, {
           mode: 0o755,
         },
       ),

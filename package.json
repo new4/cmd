@@ -36,7 +36,6 @@
   "bin": {
     "xbin": "bin/xbin/xbin.js",
     "xbrowser": "bin/xbrowser/xbrowser.js",
-    "xmocktrans": "bin/xmocktrans/xmocktrans.js",
-    "a": "bin/a/a.js"
+    "xmocktrans": "bin/xmocktrans/xmocktrans.js"
   }
 }
