@@ -7,7 +7,7 @@ const {
 /**
  * 检查：
  *  1. package.json 中的 bin 选项是否有命令 name 的信息
- *  2. bin 目录下是佛含有本命令 name 的相应文件
+ *  2. bin 目录下是否含有本命令 name 的相应文件
  */
 exports.checkBin = (name) => {
   const bin = packageJson.bin || {};

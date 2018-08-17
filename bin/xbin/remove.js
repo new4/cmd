@@ -4,18 +4,22 @@ const chalk = require('chalk');
 const {
   packageJson,
   underPath,
-  icons,
+  icons: {
+    success,
+    fail,
+  },
+  log: {
+    log,
+    beforelog,
+    afterlog,
+    bothlog,
+  },
   reLink,
 } = require('../../utils');
 
 const {
   checkBin,
 } = require('./utils');
-
-const {
-  success,
-  fail,
-} = icons;
 
 /**
  * 移除一个命令
@@ -33,17 +37,13 @@ module.exports = function remove(name, cmd) {
 
   // 没有 bin 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {
-    console.log();
-    console.log(chalk.red(`   ${fail} No command ${chalk.yellow(`${name}`)} existed!`));
-    console.log();
+    bothlog(chalk.red(`   ${fail} No command ${chalk.yellow(`${name}`)} existed!`));
     return;
   }
 
   if (!cmd.force) {
-    console.log();
-    console.log(chalk.red(`   ${fail} Can not remove ${chalk.yellow(`${name}`)}`));
-    console.log(chalk.red(`   ${fail} Use ${chalk.cyan(`xbin remove ${name} --force`)} instead`));
-    console.log();
+    beforelog(chalk.red(`   ${fail} Can not remove ${chalk.yellow(`${name}`)}`));
+    afterlog(chalk.red(`   ${fail} Use ${chalk.cyan(`xbin remove ${name} --force`)} instead`));
     return;
   }
 
@@ -65,10 +65,10 @@ module.exports = function remove(name, cmd) {
   Promise
     .all(promiseOperate)
     .then(() => {
-      console.log();
-      hasBinFile && console.log(chalk.cyan(`  ${success} removed: bin/${name}`));
-      hasBinInfo && console.log(chalk.cyan(`  ${success} updated: package.json`));
-      console.log();
+      log();
+      hasBinFile && log(chalk.cyan(`  ${success} removed: bin/${name}`));
+      hasBinInfo && log(chalk.cyan(`  ${success} updated: package.json`));
+      log();
       reLink();
     })
     .catch(err => console.error(err));

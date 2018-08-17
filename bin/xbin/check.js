@@ -1,0 +1,133 @@
+const fse = require('fs-extra');
+const chalk = require('chalk');
+
+const {
+  getCmdInfo,
+  getCurCmd,
+  packageJson,
+  underPath,
+  icons: {
+    success,
+    fail,
+  },
+  log: {
+    log,
+    beforelog,
+    afterlog,
+    bothlog,
+  },
+  strAlign: {
+    center,
+  },
+  reLink,
+} = require('../../utils');
+
+const {
+  checkBin,
+} = require('./utils');
+
+/**
+ * 检查所有的命令，保证 package.json 和命令目录一致
+ *
+ * 需要做如下几件事：
+ *  - 检查 package.json 中的 bin 字段对应文件是否存在
+ *  - 检查 bin 目录下是否存在一些 package.json 中 bin 字段不存在的子目录
+ */
+module.exports = function check(cmd) {
+  const residue = {
+    config: [], // 配置残留
+    dir: [], // 目录残留
+  };
+
+  const cmdInPkgJson = getCmdInfo.cmdInPkgJson();
+
+  if (!cmdInPkgJson) {
+    bothlog(chalk.red(`   ${fail} No bin config in package.json`));
+    return;
+  }
+
+  const entries = Object.entries(cmdInPkgJson);
+
+  if (!entries || !entries.length) {
+    bothlog(chalk.red(`   ${fail} No cmd config in bin of package.json`));
+    return;
+  }
+
+  bothlog(chalk.cyan('cmd info in package.json:'));
+  entries.forEach(([cmdname, path]) => {
+    const isExisted = fse.pathExistsSync(underPath('root', path));
+    const isValid = cmdname === getCurCmd(path);
+
+    // 以后改造成使用 console.table
+    if (isExisted && isValid) {
+      log(chalk.cyan(center(`[${success}]`, `${cmdname}`, `${path}`)));
+    } else {
+      log(chalk.red(center(`[${fail}]`, `${cmdname}`, `${path}`)));
+      residue.config.push(cmdname);
+    }
+  });
+
+  const cmdUnderDirBin = getCmdInfo.cmdUnderDirBin();
+
+  bothlog(chalk.cyan('cmd info in dir ./bin:'));
+  cmdUnderDirBin.forEach((cmdname) => {
+    const { hasBinInfo, hasBinFile } = checkBin(cmdname);
+    if (hasBinInfo && hasBinFile) {
+      log(chalk.cyan(center(`[${success}]`, `${cmdname}`, 'has listed in bin config of package.json')));
+    } else {
+      log(chalk.red(center(`[${fail}]`, `${cmdname}`, 'not listed in bin config of package.json')));
+      residue.dir.push(cmdname);
+    }
+  });
+
+  log();
+
+  const needClean = cmd.clean || false; // 是否需要清除残留的目录或配置
+  if (!needClean) {
+    afterlog(chalk.cyan(`use ${chalk.yellow('xbin check -c')} to clean residue`));
+    return;
+  }
+
+  if (!residue.config.length && !residue.dir.length) {
+    afterlog(chalk.cyan('Nothing to clean.'));
+    return;
+  }
+
+  const promiseOperate = [];
+  if (residue.config.length) {
+    residue.config.forEach((cmdname) => {
+      delete packageJson.bin[cmdname];
+    });
+    promiseOperate.push(
+      fse.outputFile(underPath('root', 'package.json'), `${JSON.stringify(packageJson, null, 2)}\n`),
+    );
+  }
+
+  if (residue.dir.length) {
+    residue.dir.forEach((cmdname) => {
+      promiseOperate.push(
+        fse.remove(underPath('bin', `${cmdname}`)),
+      );
+    });
+  }
+
+  Promise
+    .all(promiseOperate)
+    .then(() => {
+      if (residue.config.length) {
+        log('clean residue in package.json:');
+        residue.config.forEach((cmdname) => {
+          log(chalk.cyan(`  ${success} clean residue ${cmdname} in package.json`));
+        });
+      }
+      if (residue.dir.length) {
+        beforelog('clean residue in ./bin:');
+        residue.dir.forEach((cmdname) => {
+          log(chalk.cyan(`  ${success} clean residue ${cmdname} in ./bin`));
+        });
+      }
+      log();
+      reLink();
+    })
+    .catch(err => console.error(err));
+};

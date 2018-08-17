@@ -62,3 +62,5 @@ typings/
 
 package_lock.json
 yarn.lock
+
+bin/kkone

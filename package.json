@@ -4,7 +4,8 @@
   "description": "Some nodejs commands.",
   "main": "index.js",
   "scripts": {
-    "lint": "node node_modules/eslint/bin/eslint.js . --fix",
+    "lint": "node node_modules/eslint/bin/eslint.js .",
+    "lint:fix": "node node_modules/eslint/bin/eslint.js . --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
