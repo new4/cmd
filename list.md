@@ -55,3 +55,8 @@ Headless Chrome Node [API](https://pptr.dev)
 ## 13. [mime](https://github.com/broofa/node-mime)
 
 A comprehensive, compact MIME type module.
+
+## 14. [cross-env](https://github.com/kentcdodds/cross-env)
+
+Cross platform setting of environment scripts.
+

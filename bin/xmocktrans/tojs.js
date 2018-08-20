@@ -33,7 +33,5 @@ module.exports = function tojs(dir, cmd) {
 
   log(jsonFiles);
 
-
-
 };
 
