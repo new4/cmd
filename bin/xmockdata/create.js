@@ -145,6 +145,9 @@ module.exports = function create(cmd) {
       code: 0,
       data: {
         0: generateDateStr(13, '2018-03-07'),
+        [MAP_LIST[0]]: generateDateStr(13, '2018-03-07'),
+        [MAP_LIST[1]]: generateDateStr(23, '2018-03-07'),
+        [MAP_LIST[2]]: generateDateStr(23, '2018-03-07'),
       },
       message: '',
     }, null, 2)}`,
