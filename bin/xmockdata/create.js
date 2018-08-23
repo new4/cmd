@@ -5,6 +5,9 @@ const {
   log: {
     log,
   },
+  icons: {
+    success,
+  },
   underPath,
 } = require('../../utils');
 
@@ -21,7 +24,6 @@ const MAP_LIST = [
 ];
 
 function generateDateStr(monthLen = 12, mockStr) {
-
   const {
     curYear,
     curMonth,
@@ -138,18 +140,85 @@ function addonZero(numStr) {
   return +numStr < 10 ? `0${numStr}` : `${numStr}`;
 }
 
-module.exports = function create(cmd) {
-  fse.outputFile(
-    underPath('cur', '_mock/temp.json'),
-    `${JSON.stringify({
+function selectFrom(from, to) {
+  const choices = to - from + 1;
+  return Math.floor(Math.random() * choices + from);
+}
+
+function fillData(arr) {
+  const result = {};
+  let n = 0;
+  let mark = '+';
+  arr.forEach((date) => {
+    if (isWorkday(date)) {
+      if (!n) {
+        n = selectFrom(1, 10);
+        mark = n % 2 ? '+' : '-';
+      }
+      n--;
+      result[date] = `${mark}${addonZero(selectFrom(0, 10))}.${addonZero(selectFrom(0, 90))}`;
+    }
+  });
+  return result;
+}
+
+// 去除周六周日
+function isWorkday(date) {
+  const SUNDAY = 0;
+  const SATURDAY = 6;
+  const day = new Date(date).getDay();
+
+  return day !== SUNDAY && day !== SATURDAY;
+}
+
+module.exports = function create() {
+  const mockOption = {
+    '3month': {
+      date: '2018-08-07',
+      len: 3,
+    },
+    '3monthOverYear': {
+      date: '2018-02-07',
+      len: 3,
+    },
+    '1year': {
+      date: '2018-08-07',
+      len: 12,
+    },
+    'all': {
+      date: '2018-08-07',
+      len: 45,
+    },
+  };
+
+  const promiseOperate = [];
+
+  Object.entries(mockOption).forEach(([key, value]) => {
+    const result = {
       code: 0,
       data: {
-        0: generateDateStr(13, '2018-03-07'),
-        [MAP_LIST[0]]: generateDateStr(13, '2018-03-07'),
-        [MAP_LIST[1]]: generateDateStr(23, '2018-03-07'),
-        [MAP_LIST[2]]: generateDateStr(23, '2018-03-07'),
+        0: fillData(generateDateStr(value.len, value.date)),
+        [MAP_LIST[0]]: fillData(generateDateStr(value.len, value.date)),
+        [MAP_LIST[1]]: fillData(generateDateStr(value.len, value.date)),
+        // [MAP_LIST[2]]: fillData(generateDateStr(value.len, value.date)),
+        // 0: generateDateStr(value.len, value.date),
+        // [MAP_LIST[0]]: generateDateStr(value.len, value.date),
+        // [MAP_LIST[1]]: generateDateStr(value.len, value.date),
+        // [MAP_LIST[2]]: generateDateStr(value.len, value.date),
       },
       message: '',
-    }, null, 2)}`,
-  );
+    };
+
+    promiseOperate.push(fse.outputFile(
+      underPath('cur', `_mock/${key}.json`),
+      `${JSON.stringify(result, null, 2)}`,
+    ));
+  });
+
+  Promise
+    .all(promiseOperate)
+    .then(() => {
+      log(chalk.cyan(`${success} created: file`));
+    })
+    .catch(err => console.error(err));
 };
