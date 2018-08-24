@@ -2,6 +2,7 @@ const cleanArgs = require('./cleanArgs');
 const cmdInfo = require('./cmdInfo');
 const icons = require('./icons');
 const log = require('./log');
+const colorStr = require('./colorStr');
 const packageJson = require('./packageJson');
 const reLink = require('./reLink');
 const spinner = require('./spinner');
@@ -14,6 +15,7 @@ module.exports = {
   cmdInfo,
   icons,
   log,
+  colorStr,
   packageJson,
   reLink,
   spinner,

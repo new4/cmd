@@ -1,5 +1,4 @@
 const fse = require('fs-extra');
-const chalk = require('chalk');
 
 const {
   cmdInfo: {
@@ -7,6 +6,11 @@ const {
   },
   packageJson,
   underPath,
+  colorStr: {
+    red,
+    yellow,
+    cyan,
+  },
   icons: {
     success,
     fail,
@@ -36,13 +40,13 @@ module.exports = function remove(name, cmd) {
 
   // 没有 bin 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {
-    bothlog(chalk.red(`${fail} No command ${chalk.yellow(`${name}`)} existed!`));
+    bothlog(red(`${fail} No command ${yellow(name)} existed!`));
     return;
   }
 
   if (!cmd.force) {
-    beforelog(chalk.red(`${fail} Can not remove ${chalk.yellow(`${name}`)}`));
-    afterlog(chalk.red(`${fail} Use ${chalk.cyan(`xbin remove ${name} --force`)} instead`));
+    beforelog(red(`${fail} Can not remove ${yellow(name)}`));
+    afterlog(red(`${fail} Use ${cyan(`xbin remove ${name} --force`)} instead`));
     return;
   }
 
@@ -65,8 +69,8 @@ module.exports = function remove(name, cmd) {
     .all(promiseOperate)
     .then(() => {
       log();
-      hasBinFile && log(chalk.cyan(`${success} removed: bin/${name}`));
-      hasBinInfo && log(chalk.cyan(`${success} updated: package.json`));
+      hasBinFile && log(cyan(`${success} removed: bin/${name}`));
+      hasBinInfo && log(cyan(`${success} updated: package.json`));
       reLink();
     })
     .catch(err => console.error(err));

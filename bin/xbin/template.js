@@ -1,7 +1,7 @@
 /**
  * 输出到文件的模板字串
  */
-exports.template = `#!/usr/bin/env node
+module.exports = `#!/usr/bin/env node
 
 const program = require('commander');
 const { tipEnhance } = require('../../utils');

@@ -5,7 +5,7 @@ module.exports = function underPath(underpath, subpath) {
   const mapping = {
     root: rootPath, // 在本项目的根目录下
     bin: path.join(rootPath, 'bin'), // 本项目的 bin 目录下
-    cur: process.cwd(), // 在执行命令的当前目录下
+    cur: process.cwd(), // 执行某一命令的当下目录
   };
 
   return path.resolve(path.join(mapping[underpath], subpath || '.'));

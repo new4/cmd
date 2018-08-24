@@ -1,5 +1,6 @@
 const fse = require('fs-extra');
-const chalk = require('chalk');
+
+const template = require('./template');
 
 const {
   cmdInfo: {
@@ -10,6 +11,11 @@ const {
     success,
     fail,
   },
+  colorStr: {
+    red,
+    yellow,
+    cyan,
+  },
   log: {
     log,
     bothlog,
@@ -18,9 +24,6 @@ const {
   reLink,
 } = require('../../utils');
 
-const {
-  template,
-} = require('./template');
 
 /**
  * 新建一个命令
@@ -29,12 +32,9 @@ const {
  *  - 在 bin 目录下创建一个存放该命令的目录
  *  - 在 package.json 中更新 bin 部分，以便用于 yarn link/unlink 的操作
  */
-module.exports = function create(name, cmd) {
+module.exports = function create(name) {
   const file = `bin/${name}/${name}.js`;
   const promiseOperate = []; // 供 Promise.all 处理的数组
-
-  // 是否是私有的命令，若是私有的就不会被上传
-  // const isPrivateCmd = cmd.private || false;
 
   const {
     hasBinInfo,
@@ -43,7 +43,7 @@ module.exports = function create(name, cmd) {
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
-    bothlog(chalk.red(`${fail} Command ${chalk.yellow(`${name}`)} has existed!`));
+    bothlog(red(`${fail} Command ${yellow(name)} has existed!`));
     return;
   }
 
@@ -74,8 +74,8 @@ module.exports = function create(name, cmd) {
     .all(promiseOperate)
     .then(() => {
       log();
-      !hasBinFile && log(chalk.cyan(`${success} created: ${file}`));
-      !hasBinInfo && log(chalk.cyan(`${success} updated: package.json`));
+      !hasBinFile && log(cyan(`${success} created: ${file}`));
+      !hasBinInfo && log(cyan(`${success} updated: package.json`));
       reLink();
     })
     .catch(err => console.error(err));

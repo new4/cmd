@@ -1,5 +1,5 @@
 /**
- * 生成居中对齐的字符串，主要是将 left 字符串调整成固定长度
+ * 生成居中对齐的字符串，主要方法是将 left 字符串调整成固定长度
  *
  * @param {String} center
  * @param {String} left

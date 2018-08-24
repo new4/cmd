@@ -1,5 +1,4 @@
 const fs = require('fs');
-const fse = require('fs-extra');
 const slash = require('slash');
 const packageJson = require('./packageJson');
 const underPath = require('./underPath');
@@ -37,6 +36,6 @@ exports.checkBin = (name) => {
   const file = `bin/${name}/${name}.js`;
   return {
     hasBinInfo: Object.keys(bin).includes(name),
-    hasBinFile: fse.pathExistsSync(file),
+    hasBinFile: fs.existsSync(file),
   };
 };
