@@ -1,9 +1,9 @@
 /**
  * 生成居中对齐的字符串，主要方法是将 left 字符串调整成固定长度
  *
- * @param {String} center
- * @param {String} left
- * @param {String} right
+ * @param {String} center 中间位置的字串
+ * @param {String} left 左边位置的字串
+ * @param {String} right 右边位置的字串
  * @return {String} 拼接的字符串
  */
 exports.center = (center, left, right) => {

@@ -1,5 +1,6 @@
-// commander passes the Command object itself as options,
-// extract only actual options into a fresh object.
+/**
+ * 将 cmd 中的选项参数的值提取成一个新对象
+ */
 module.exports = function cleanArgs(cmd) {
   const args = {};
   cmd.options.forEach((o) => {

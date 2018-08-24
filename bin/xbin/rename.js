@@ -3,6 +3,7 @@ const fse = require('fs-extra');
 const {
   cmdInfo: {
     checkBin,
+    formatBinFile,
   },
   packageJson,
   underPath,
@@ -28,30 +29,31 @@ const {
  *
  * 需要做如下几件事：
  *  - 更新 bin 下存放该命令的目录名
- *  - 在 package.json 中更新 bin 部分，以便用于 yarn link/unlink 的操作
+ *  - 在 package.json 中更新 bin 部分
+ *  - 用 yarn link/unlink 来进行链接操作
  */
 module.exports = function rename(oldName, newName) {
-  const oldFile = `bin/${oldName}/${oldName}.js`;
-  const newFile = `bin/${newName}/${newName}.js`;
+  const oldFile = formatBinFile(oldName);
+  const newFile = formatBinFile(newName);
 
   const {
-    hasBinInfo,
-    hasBinFile,
+    hasBinInfo: oldHasBinInfo,
+    hasBinFile: oldHasBinFile,
   } = checkBin(oldName);
 
   const {
-    hasBinInfo: hasNewBinInfo,
-    hasBinFile: hasNewBinFile,
+    hasBinInfo: newHasBinInfo,
+    hasBinFile: newHasBinFile,
   } = checkBin(newName);
 
-  // 没有 name 文件和信息的，表明没有这个命令，提示错误
-  if (!hasBinInfo && !hasBinFile) {
+  // 没有 oldName 文件和信息的，表明没有这个命令，提示错误
+  if (!oldHasBinInfo && !oldHasBinFile) {
     bothlog(red(`${fail} No command ${yellow(`${oldName}`)} existed!`));
     return;
   }
 
   // 有 newName 文件或信息的，表明已经有这个命令，不可以把其它的命令改成 newName
-  if (hasNewBinInfo || hasNewBinFile) {
+  if (newHasBinInfo || newHasBinFile) {
     bothlog(red(`${fail} New command ${yellow(`${newName}`)} existed!`));
     return;
   }

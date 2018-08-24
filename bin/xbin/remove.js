@@ -29,7 +29,8 @@ const {
  *
  * 需要做如下几件事：
  *  - 移除 bin 下存放该命令的目录
- *  - 在 package.json 中更新 bin 部分，以便用于 yarn link/unlink 的操作
+ *  - 在 package.json 中更新 bin 部分
+ *  - 用 yarn link/unlink 来进行链接操作
  */
 module.exports = function remove(name, cmd) {
   const promiseOperate = []; // 供 Promise.all 处理的数组
