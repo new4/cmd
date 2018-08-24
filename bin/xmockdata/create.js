@@ -172,21 +172,23 @@ function isWorkday(date) {
 }
 
 module.exports = function create() {
+  const date = '2018-02-05';
+
   const mockOption = {
     '3month': {
-      date: '2018-08-07',
+      date,
       len: 3,
     },
     '3monthOverYear': {
-      date: '2018-02-07',
+      date,
       len: 3,
     },
     '1year': {
-      date: '2018-08-07',
+      date,
       len: 12,
     },
     'all': {
-      date: '2018-08-07',
+      date,
       len: 45,
     },
   };
@@ -200,7 +202,7 @@ module.exports = function create() {
         0: fillData(generateDateStr(value.len, value.date)),
         [MAP_LIST[0]]: fillData(generateDateStr(value.len, value.date)),
         [MAP_LIST[1]]: fillData(generateDateStr(value.len, value.date)),
-        // [MAP_LIST[2]]: fillData(generateDateStr(value.len, value.date)),
+        [MAP_LIST[2]]: fillData(generateDateStr(value.len, value.date)),
         // 0: generateDateStr(value.len, value.date),
         // [MAP_LIST[0]]: generateDateStr(value.len, value.date),
         // [MAP_LIST[1]]: generateDateStr(value.len, value.date),
