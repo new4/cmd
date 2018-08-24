@@ -2,11 +2,11 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 const {
-  checkBin,
   cmdInfo: {
     cmdUnderDirBin,
     cmdInPkgJson,
     getCurCmd,
+    checkBin,
   },
   packageJson,
   underPath,

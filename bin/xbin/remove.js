@@ -2,7 +2,9 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 const {
-  checkBin,
+  cmdInfo: {
+    checkBin,
+  },
   packageJson,
   underPath,
   icons: {

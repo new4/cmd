@@ -1,3 +1,1 @@
-const packageJson = require('../package.json');
-
-module.exports = packageJson;
+module.exports = require('../package.json');

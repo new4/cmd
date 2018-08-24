@@ -1,4 +1,3 @@
-const checkBin = require('./checkBin');
 const cleanArgs = require('./cleanArgs');
 const cmdInfo = require('./cmdInfo');
 const icons = require('./icons');
@@ -11,7 +10,6 @@ const tipEnhance = require('./tipEnhance');
 const underPath = require('./underPath');
 
 module.exports = {
-  checkBin,
   cleanArgs,
   cmdInfo,
   icons,

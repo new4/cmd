@@ -6,8 +6,6 @@ const {
   tipEnhance,
 } = require('../../utils');
 
-const chalk = require('chalk');
-
 const create = require('./create');
 const remove = require('./remove');
 const rename = require('./rename');

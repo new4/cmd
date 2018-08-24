@@ -2,7 +2,9 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 const {
-  checkBin,
+  cmdInfo: {
+    checkBin,
+  },
   packageJson,
   icons: {
     success,
@@ -30,8 +32,6 @@ const {
 module.exports = function create(name, cmd) {
   const file = `bin/${name}/${name}.js`;
   const promiseOperate = []; // 供 Promise.all 处理的数组
-
-  log(cmd.private);
 
   // 是否是私有的命令，若是私有的就不会被上传
   // const isPrivateCmd = cmd.private || false;
