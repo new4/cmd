@@ -36,14 +36,11 @@ module.exports = function create(name) {
   const file = `bin/${name}/${name}.js`;
   const promiseOperate = []; // 供 Promise.all 处理的数组
 
-  const {
-    hasBinInfo,
-    hasBinFile,
-  } = checkBin(name);
+  const { hasBinInfo, hasBinFile } = checkBin(name);
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
-    bothlog(red(`${fail} Command ${yellow(name)} has existed!`));
+    bothlog(`${red(fail)} Command ${yellow(name)} has existed`);
     return;
   }
 
