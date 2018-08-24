@@ -33,9 +33,15 @@ exports.getCurCmd = (filename) => {
  */
 exports.checkBin = (name) => {
   const bin = exports.cmdInPkgJson();
-  const file = `bin/${name}/${name}.js`;
+  const file = exports.formatBinFile(name);
   return {
     hasBinInfo: Object.keys(bin).includes(name),
     hasBinFile: fs.existsSync(file),
   };
 };
+
+/**
+ * 统一规范 bin 命令文件的名字和位置
+ * 放在 bin 目录下的同名目录 name 中
+ */
+exports.formatBinFile = name => `bin/${name}/${name}.js`;

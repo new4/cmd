@@ -72,7 +72,7 @@ module.exports = function rename(oldName, newName) {
         underPath('bin', `${newName}`),
       ),
     ])
-    .then(() => {
+    .then(async () => {
       beforelog(cyan(`${success} updated: package.json`));
       log(cyan(`${success} copied : old dir  => new dir`));
 
@@ -91,7 +91,7 @@ module.exports = function rename(oldName, newName) {
       fse.removeSync(underPath('bin', `${newName}/${oldName}.js`));
       log(cyan(`${success} removed: old file`));
 
-      reLink();
+      await reLink();
     })
     .catch(err => console.error(err));
 };

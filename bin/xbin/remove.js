@@ -67,11 +67,11 @@ module.exports = function remove(name, cmd) {
 
   Promise
     .all(promiseOperate)
-    .then(() => {
+    .then(async () => {
       log();
       hasBinFile && log(cyan(`${success} removed: bin/${name}`));
       hasBinInfo && log(cyan(`${success} updated: package.json`));
-      reLink();
+      await reLink();
     })
     .catch(err => console.error(err));
 };

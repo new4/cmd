@@ -117,7 +117,7 @@ module.exports = function check(cmd) {
 
   Promise
     .all(promiseOperate)
-    .then(() => {
+    .then(async () => {
       if (residue.config.length) {
         log('clean residue in package.json:');
         residue.config.forEach((cmdname) => {
@@ -130,7 +130,7 @@ module.exports = function check(cmd) {
           log(cyan(`${success} clean residue ${cmdname} in ./bin`));
         });
       }
-      reLink();
+      await reLink();
     })
     .catch(err => console.error(err));
 };
