@@ -2,6 +2,7 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 const {
+  checkBin,
   packageJson,
   icons: {
     success,
@@ -16,9 +17,8 @@ const {
 } = require('../../utils');
 
 const {
-  checkBin,
   template,
-} = require('./utils');
+} = require('./template');
 
 /**
  * 新建一个命令

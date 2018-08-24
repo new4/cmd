@@ -2,6 +2,7 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 const {
+  checkBin,
   cmdInfo: {
     cmdUnderDirBin,
     cmdInPkgJson,
@@ -24,10 +25,6 @@ const {
   },
   reLink,
 } = require('../../utils');
-
-const {
-  checkBin,
-} = require('./utils');
 
 /**
  * 检查所有的命令，保证 package.json 和命令目录一致

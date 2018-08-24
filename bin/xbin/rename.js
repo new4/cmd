@@ -2,6 +2,7 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 const {
+  checkBin,
   packageJson,
   underPath,
   icons: {
@@ -15,10 +16,6 @@ const {
   },
   reLink,
 } = require('../../utils');
-
-const {
-  checkBin,
-} = require('./utils');
 
 /**
  * 重命名一个命令

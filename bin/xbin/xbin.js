@@ -9,11 +9,11 @@ const {
 const chalk = require('chalk');
 
 const create = require('./create');
-const list = require('./list');
 const remove = require('./remove');
 const rename = require('./rename');
 const check = require('./check');
 const relink = require('./relink');
+const list = require('./list');
 
 program
   .version('0.1.0')
@@ -29,8 +29,8 @@ program
 program
   .command('remove <cmd-name>')
   .alias('rm')
-  .description('移除一个命令，需要带上参数 -f 才是真正的移除')
-  .option('-f, --force', '强制移除')
+  .description('移除一个命令')
+  .option('-f, --force', '，带上参数 -f 才是真正的移除')
   .action((name, cmd) => remove(name, cmd));
 
 program
