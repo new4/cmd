@@ -33,7 +33,7 @@ exports.getCurCmd = (filename) => {
  */
 exports.checkBin = (name) => {
   const bin = exports.cmdInPkgJson();
-  const file = underPath('root', exports.formatBinFile(name));
+  const file = underPath('root', exports.formatBinFile(name)); // 使用完整路径来判断
   return {
     hasBinInfo: Object.keys(bin).includes(name),
     hasBinFile: fs.existsSync(file),

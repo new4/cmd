@@ -13,6 +13,7 @@ const {
   underPath,
   icons: {
     fail,
+    point,
   },
   log: {
     log,
@@ -41,14 +42,15 @@ module.exports = function list() {
     return;
   }
 
-  bothlog(cyan('cmd list:'));
+  log();
+
   entries.forEach(([cmdname, path]) => {
     const isExisted = fse.pathExistsSync(underPath('root', path));
     const isValid = cmdname === getCurCmd(path);
 
     // 以后改造成使用 console.table
     if (isExisted && isValid) {
-      log(cyan(`  ${cmdname}`));
+      log(cyan(` ${point} ${cmdname}`));
     }
   });
 

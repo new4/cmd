@@ -93,7 +93,7 @@ module.exports = function check(cmd) {
   }
 
   if (!residue.config.length && !residue.dir.length) {
-    afterlog(cyan('Nothing to clean.'));
+    afterlog(yellow('Nothing to clean.'));
     return;
   }
 
