@@ -1,3 +1,4 @@
+const fs = require('fs');
 const fse = require('fs-extra');
 
 const {
@@ -55,4 +56,8 @@ module.exports = function list() {
   });
 
   bothlog(`Run ${yellow('xbin <command> --help')} for detailed usage of given command.`);
+
+  const stats = fs.statSync(underPath('bin', 'xbin/xbin.js'));
+  log(`\n${JSON.stringify(stats, null, 2)}`);
+  log((stats.mode & 0o777).toString(8));
 };
