@@ -45,3 +45,11 @@ exports.checkBin = (name) => {
  * 放在 bin 目录下的同名目录 name 中
  */
 exports.formatBinFile = name => `bin/${name}/${name}.js`;
+
+/**
+ * 获取文件的权限信息
+ */
+exports.getFileMode = (file) => {
+  const stat = fs.statSync(file);
+  return (stat.mode & 0o777).toString(8); // eslint-disable-line
+};
