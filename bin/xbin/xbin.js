@@ -39,7 +39,7 @@ program
   .action((name, cmd) => remove(name, cleanArgs(cmd)));
 
 /**
- * 重命名一个命令（不同机子上的问题）
+ * 重命名一个命令
  */
 program
   .command('rename <old-cmd> <new-cmd>')
