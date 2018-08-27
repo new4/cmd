@@ -29,25 +29,25 @@ yarn unlink
 ### 创建一个命令
 
 ```cmd
-xbin create <cmd-name>
+xbin create cmdName
 ```
 
 ### 移除一个命令
 
 ```cmd
-xbin remove <cmd-name>
+xbin remove cmdName
 ```
 
 带上参数 `--force` 或 `-f` 才是真正的移除（防止误删用）：
 
 ```cmd
-xbin remove -f <cmd-name>
+xbin remove -f cmdName
 ```
 
 ### 重命名一个命令
 
 ```cmd
-xbin rename <old-cmd> <new-cmd>
+xbin rename oldCmd newCmd
 ```
 
 ### 检查有无命令文件/配置残留
