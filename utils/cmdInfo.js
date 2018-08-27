@@ -33,7 +33,7 @@ exports.getCurCmd = (filename) => {
  */
 exports.checkBin = (name) => {
   const bin = exports.cmdInPkgJson();
-  const file = exports.formatBinFile(name);
+  const file = underPath('root', exports.formatBinFile(name));
   return {
     hasBinInfo: Object.keys(bin).includes(name),
     hasBinFile: fs.existsSync(file),

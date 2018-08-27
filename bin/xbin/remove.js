@@ -70,9 +70,10 @@ module.exports = function remove(name, cmd) {
     .all(promiseOperate)
     .then(async () => {
       log();
-      hasBinFile && log(cyan(`${success} removed: bin/${name}`));
-      hasBinInfo && log(cyan(`${success} updated: package.json`));
+      hasBinFile && log(cyan(`${success} remove: bin/${name}`));
+      hasBinInfo && log(cyan(`${success} update: package.json`));
       await reLink();
+      afterlog(cyan(`${success} ${yellow(name)} removed!`));
     })
     .catch(err => console.error(err));
 };

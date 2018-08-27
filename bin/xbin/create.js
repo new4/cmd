@@ -20,6 +20,7 @@ const {
   log: {
     log,
     bothlog,
+    afterlog,
   },
   underPath,
   reLink,
@@ -72,9 +73,10 @@ module.exports = function create(name) {
     .all(promiseOperate)
     .then(async () => {
       log();
-      !hasBinFile && log(cyan(`${success} created: ${targetBinFile}`));
-      !hasBinInfo && log(cyan(`${success} updated: package.json`));
+      !hasBinFile && log(cyan(`${success} create: ${targetBinFile}`));
+      !hasBinInfo && log(cyan(`${success} update: package.json`));
       await reLink();
+      afterlog(cyan(`${success} ${yellow(name)} created under path ${yellow(underPath('bin'))}`));
     })
     .catch(err => log(red(err)));
 };
