@@ -19,9 +19,9 @@ program
 program
   .command('login')
   .description('login leetcode')
-  .option('-n, --username <username>', 'username')
-  .option('-p, --password <password>', 'password')
-  .option('-u, --url <url>', 'url')
+  // .option('-n, --username <username>', 'username')
+  // .option('-p, --password <password>', 'password')
+  // .option('-u, --url <url>', 'url')
   .action(cmd => login(cleanArgs(cmd)));
 
 // 强化的提示

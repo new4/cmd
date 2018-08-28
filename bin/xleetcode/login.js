@@ -1,4 +1,7 @@
 const puppeteer = require('puppeteer');
+const prompt = require('prompt');
+const fse = require('fs-extra');
+const path = require('path');
 
 const {
   icons: {
@@ -6,43 +9,75 @@ const {
   },
   colorStr: {
     red,
+    cyan,
   },
   log: {
-    bothlog,
+    afterlog,
   },
 } = require('../../utils');
 
-module.exports = function login(cmd) {
-  const { username, password, url } = cmd;
+const config = require('./config');
 
-  if (!username) {
-    bothlog(red(`${fail} need username`));
-    return;
-  }
+async function login(user) {
+  const start = Date.now();
 
-  if (!password) {
-    bothlog(red(`${fail} need password`));
-    return;
-  }
+  const { username, password } = user;
 
-  (async () => {
-    const browser = await puppeteer.launch({ headless: false });
-    let page = await browser.pages();
-    [page] = page;
-    await page.goto(url || 'https://leetcode-cn.com/accounts/login/');
-    await page.type('#id_login', username, { delay: 50 });
-    await page.type('#id_password', password, { delay: 50 });
+  const browser = await puppeteer.launch({ headless: true });
+  const [page] = await browser.pages();
+  page.on('response', (response) => {
+    if (response.url().includes('graphql')) {
+      response
+        .json()
+        .then(async (responseData) => {
+          if (responseData.data && responseData.data.translations) {
+            await fse.outputFile(path.join(__dirname, '_temp.json'), JSON.stringify(responseData.data.translations, null, 2));
+          }
+        });
+    }
+  });
 
-    page.click('#login_form > div.login-app-base > div > div > div > div.auth-switcher > div > div > div > form > button');
-    await page.waitFor(1000);
+  await page.goto(config.url.login);
+  await page.type('#id_login', username);
+  await page.type('#id_password', password);
 
-    // const targetLink = await page.evaluate(() => {
-    //   return [...document.querySelectorAll('.result a')].filter(item => {
-    //     return item.innerText && item.innerText.includes('Puppeteer的入门和实践')
-    //   }).toString()
-    // });
-    await page.goto('https://leetcode-cn.com/problemset/all/');
-    await page.waitFor(1000);
-    // browser.close();
-  })();
+  page.click('#login_form > div.login-app-base > div > div > div > div.auth-switcher > div > div > div > form > button');
+  await page.waitFor(1000);
+
+  // const targetLink = await page.evaluate(() => {
+  //   return [...document.querySelectorAll('.result a')].filter(item => {
+  //     return item.innerText && item.innerText.includes('Puppeteer的入门和实践')
+  //   }).toString()
+  // });
+  await page.goto(config.url.problemset);
+  await page.waitFor(1000);
+  browser.close();
+  const consume = Date.now() - start;
+  afterlog(red(`consume: ${consume / 1000}s`));
+}
+
+module.exports = () => {
+  prompt.message = '';
+  prompt.start();
+  prompt.get([
+    {
+      name: 'username',
+      description: `Enter your ${cyan('username')}`,
+      required: true,
+      message: red(`\n      ${fail} please enter your username\n`),
+    },
+    {
+      name: 'password',
+      description: `Enter your ${cyan('password')}`,
+      required: true,
+      hidden: true,
+      replace: '*',
+      message: red(`\n      ${fail} please enter your password\n`),
+    },
+  ], async (err, user) => {
+    if (err) {
+      return;
+    }
+    await login(user);
+  });
 };
