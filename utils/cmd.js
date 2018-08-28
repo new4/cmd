@@ -47,9 +47,9 @@ exports.checkBin = (name) => {
 exports.formatBinFile = name => `bin/${name}/${name}.js`;
 
 /**
- * 获取文件的权限信息
+ * 获取 file 的权限信息（wrx）
  */
-exports.getFileMode = (file) => {
+exports.getMode = (file) => {
   const stat = fs.statSync(file);
   return (stat.mode & 0o777).toString(8); // eslint-disable-line
 };

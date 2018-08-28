@@ -1,11 +1,10 @@
-const fs = require('fs');
 const fse = require('fs-extra');
 
 const {
-  cmdInfo: {
+  cmd: {
     cmdInPkgJson,
     getCurCmd,
-    getFileMode,
+    getMode,
   },
   colorStr: {
     red,
@@ -58,5 +57,5 @@ module.exports = function list() {
 
   bothlog(`Run ${yellow('xbin <command> --help')} for detailed usage of given command.`);
 
-  log(getFileMode(underPath('bin', 'xbin/xbin.js')));
+  log(getMode(underPath('bin', 'xbin/xbin.js')));
 };

@@ -3,7 +3,7 @@ const fse = require('fs-extra');
 const template = require('./template');
 
 const {
-  cmdInfo: {
+  cmd: {
     checkBin,
     formatBinFile,
   },

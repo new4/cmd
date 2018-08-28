@@ -1,5 +1,5 @@
 const cleanArgs = require('./cleanArgs');
-const cmdInfo = require('./cmdInfo');
+const cmd = require('./cmd');
 const icons = require('./icons');
 const log = require('./log');
 const colorStr = require('./colorStr');
@@ -12,7 +12,7 @@ const underPath = require('./underPath');
 
 module.exports = {
   cleanArgs,
-  cmdInfo,
+  cmd,
   icons,
   log,
   colorStr,
