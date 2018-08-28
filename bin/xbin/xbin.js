@@ -25,17 +25,21 @@ program
   .command('create <cmd-name>')
   .alias('c')
   .description('create a commander')
-  // .option('-p, --private', 'create a private cmd') // 不想上传到 git 的，可以带上参数 -p，这样仅限本地进行使用
+  // 新创建命令的类型：
+  // root - 根命令，由其来生成一系列的同类型命令
+  // bin - 命令行类型的命令，生成的命令在 bin 目录下
+  // process - 进程类型的命令，生成的命令在 process 目录下
+  // .option('-t, --type <type>', 'type of commander', /^(root|process|bin)$/i, 'bin')
   .action((name, cmd) => create(name, cleanArgs(cmd)));
 
 /**
- * 移除一个命令
+ * 移除一个命令，带上参数 -f 才是真正的移除
  */
 program
   .command('remove <cmd-name>')
   .alias('rm')
   .description('remove a commander')
-  .option('-f, --force', '，带上参数 -f 才是真正的移除')
+  .option('-f, --force', 'use -f to force remove')
   .action((name, cmd) => remove(name, cleanArgs(cmd)));
 
 /**

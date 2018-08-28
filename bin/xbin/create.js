@@ -34,7 +34,9 @@ const {
  *  - 在 package.json 中更新 bin 部分
  *  - 用 yarn link/unlink 来进行链接操作
  */
-module.exports = function create(name) {
+module.exports = function create(name, cmd) {
+  log(red(cmd.type));
+
   const targetBinFile = formatBinFile(name); // 统一命名的文件
   const promiseOperate = []; // 供 Promise.all 处理的数组
 
@@ -63,7 +65,7 @@ module.exports = function create(name) {
       fse.outputFile(
         underPath('root', targetBinFile),
         template, {
-          mode: 0o755,
+          mode: 0o755, // 修改成可执行的权限
         },
       ),
     );

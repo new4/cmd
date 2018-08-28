@@ -60,3 +60,6 @@ A comprehensive, compact MIME type module.
 
 Cross platform setting of environment scripts.
 
+## 15. [node-schedule](https://github.com/node-schedule/node-schedule)
+
+A cron-like and not-cron-like job scheduler for Node.
