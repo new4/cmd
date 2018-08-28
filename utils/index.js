@@ -9,6 +9,7 @@ const spinner = require('./spinner');
 const strAlign = require('./strAlign');
 const tipEnhance = require('./tipEnhance');
 const underPath = require('./underPath');
+const yarn = require('./yarn');
 
 module.exports = {
   cleanArgs,
@@ -22,4 +23,5 @@ module.exports = {
   strAlign,
   tipEnhance,
   underPath,
+  yarn,
 };

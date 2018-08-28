@@ -37,6 +37,7 @@
     "xbin": "bin/xbin/xbin.js",
     "xbrowser": "bin/xbrowser/xbrowser.js",
     "xmocktrans": "bin/xmocktrans/xmocktrans.js",
-    "xmockdata": "bin/xmockdata/xmockdata.js"
+    "xmockdata": "bin/xmockdata/xmockdata.js",
+    "xleetcode": "bin/xleetcode/xleetcode.js"
   }
 }
