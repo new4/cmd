@@ -11,7 +11,6 @@ const {
   },
   log: {
     log,
-    afterlog,
     bothlog,
   },
 } = require('../../utils');
@@ -81,9 +80,9 @@ async function login(user) {
       return;
     }
 
-    log(red(`csrftoken = ${csrftoken}`));
-    log(red(`LEETCODE_SESSION = ${LEETCODE_SESSION}`));
-    log(red(`statusCode = ${response.statusCode}`));
+    // log(red(`csrftoken = ${csrftoken}`));
+    // log(red(`LEETCODE_SESSION = ${LEETCODE_SESSION}`));
+    // log(red(`statusCode = ${response.statusCode}`));
     session.save({
       username,
       csrftoken,
