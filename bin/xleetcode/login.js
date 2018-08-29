@@ -1,7 +1,5 @@
-const puppeteer = require('puppeteer');
 const prompt = require('prompt');
-const fse = require('fs-extra');
-const path = require('path');
+const request = require('request');
 
 const {
   icons: {
@@ -12,72 +10,115 @@ const {
     cyan,
   },
   log: {
+    log,
     afterlog,
+    bothlog,
   },
 } = require('../../utils');
 
+const {
+  getSetCookieValue,
+} = require('./utils');
+
+const session = require('./session');
 const config = require('./config');
 
-async function login(user) {
-  const start = Date.now();
-
-  const { username, password } = user;
-
-  const browser = await puppeteer.launch({ headless: true });
-  const [page] = await browser.pages();
-  page.on('response', (response) => {
-    if (response.url().includes('graphql')) {
-      response
-        .json()
-        .then(async (responseData) => {
-          if (responseData.data && responseData.data.translations) {
-            await fse.outputFile(path.join(__dirname, '_temp.json'), JSON.stringify(responseData.data.translations, null, 2));
-          }
-        });
-    }
+/**
+ * 为了获取 csrftoken 而发的请求
+ */
+function requestCsrfToken(options) {
+  return new Promise((resolve, reject) => {
+    request(options, (err, response) => {
+      if (err) {
+        reject(err);
+      }
+      const csrftoken = getSetCookieValue(response, 'csrftoken');
+      resolve(csrftoken);
+    });
   });
+}
 
-  await page.goto(config.url.login);
-  await page.type('#id_login', username);
-  await page.type('#id_password', password);
+/**
+ * 登录请求，获取登录态
+ */
+function requestLogin(options) {
+  return new Promise((resolve, reject) => {
+    request(options, (err, response) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(response);
+    });
+  });
+}
 
-  page.click('#login_form > div.login-app-base > div > div > div > div.auth-switcher > div > div > div > form > button');
-  await page.waitFor(1000);
+async function login(user) {
+  try {
+    // 先访问一遍 config.url.login 以获取 csrftoken，之后登录请求需要带上它
+    const token = await requestCsrfToken({ url: config.url.login });
+    const { username, password } = user;
+    const options = {
+      url: config.url.login,
+      headers: {
+        Origin: config.url.base,
+        Referer: config.url.login,
+        Cookie: `csrftoken=${token};`,
+      },
+      formData: {
+        csrfmiddlewaretoken: token,
+        login: username,
+        password,
+      },
+    };
 
-  // const targetLink = await page.evaluate(() => {
-  //   return [...document.querySelectorAll('.result a')].filter(item => {
-  //     return item.innerText && item.innerText.includes('Puppeteer的入门和实践')
-  //   }).toString()
-  // });
-  await page.goto(config.url.problemset);
-  await page.waitFor(1000);
-  browser.close();
-  const consume = Date.now() - start;
-  afterlog(red(`consume: ${consume / 1000}s`));
+    // 登录请求
+    const response = await requestLogin(options);
+    const csrftoken = getSetCookieValue(response, 'csrftoken');
+    const LEETCODE_SESSION = getSetCookieValue(response, 'LEETCODE_SESSION');
+    if (response.statusCode !== 302) {
+      bothlog(red(`${fail} invalid username or password`));
+      return;
+    }
+
+    log(red(`csrftoken = ${csrftoken}`));
+    log(red(`LEETCODE_SESSION = ${LEETCODE_SESSION}`));
+    log(red(`statusCode = ${response.statusCode}`));
+    session.save({
+      username,
+      csrftoken,
+      LEETCODE_SESSION,
+    });
+  } catch (err) {
+    log(err);
+  }
 }
 
 module.exports = () => {
-  prompt.message = '';
-  prompt.start();
-  prompt.get([
-    {
-      name: 'username',
-      description: `Enter your ${cyan('username')}`,
-      required: true,
-      message: red(`\n      ${fail} please enter your username\n`),
-    },
-    {
-      name: 'password',
-      description: `Enter your ${cyan('password')}`,
-      required: true,
-      hidden: true,
-      replace: '*',
-      message: red(`\n      ${fail} please enter your password\n`),
-    },
-  ], async (err, user) => {
-    if (err) {
-      return;
-    }
-    await login(user);
+  // prompt.message = '';
+  // prompt.start();
+  // prompt.get([
+  //   {
+  //     name: 'username',
+  //     description: `Enter your ${cyan('username')}`,
+  //     required: true,
+  //     message: red(`\n      ${fail} please enter your username\n`),
+  //   },
+  //   {
+  //     name: 'password',
+  //     description: `Enter your ${cyan('password')}`,
+  //     required: true,
+  //     hidden: true,
+  //     replace: '*',
+  //     message: red(`\n      ${fail} please enter your password\n`),
+  //   },
+  // ], (err, user) => {
+  //   if (err) {
+  //     return;
+  //   }
+  //   login(user);
+  // });
+  login({
+    username: 'new4',
+    password: '',
   });
 };

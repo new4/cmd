@@ -63,3 +63,7 @@ Cross platform setting of environment scripts.
 ## 15. [node-schedule](https://github.com/node-schedule/node-schedule)
 
 A cron-like and not-cron-like job scheduler for Node.
+
+## 16. [cheerio](https://github.com/cheeriojs/cheerio)
+
+Fast, flexible, and lean implementation of core jQuery designed specifically for the server.

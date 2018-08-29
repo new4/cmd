@@ -28,6 +28,7 @@
     "ora": "^3.0.0",
     "prompt": "^1.0.0",
     "puppeteer": "^1.7.0",
+    "request": "^2.88.0",
     "slash": "^2.0.0"
   },
   "devDependencies": {
