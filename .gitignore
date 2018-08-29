@@ -63,4 +63,4 @@ typings/
 package_lock.json
 yarn.lock
 
-bin/leetcode/cache
+bin/xleetcode/cache

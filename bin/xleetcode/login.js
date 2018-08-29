@@ -8,6 +8,7 @@ const {
   colorStr: {
     red,
     cyan,
+    yellow,
   },
   log: {
     log,
@@ -80,14 +81,13 @@ async function login(user) {
       return;
     }
 
-    // log(red(`csrftoken = ${csrftoken}`));
-    // log(red(`LEETCODE_SESSION = ${LEETCODE_SESSION}`));
-    // log(red(`statusCode = ${response.statusCode}`));
     session.save({
       username,
       csrftoken,
       LEETCODE_SESSION,
     });
+
+    bothlog(cyan(`Successfully login as ${yellow(username)}`));
   } catch (err) {
     log(err);
   }
