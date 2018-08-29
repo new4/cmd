@@ -20,7 +20,7 @@ exports.getSetCookieValue = (response, key) => {
     return null;
   }
 
-  bothlog(cyan(JSON.stringify(response.headers, null, 2)));
+  // bothlog(cyan(JSON.stringify(response.headers, null, 2)));
 
   // 找到含有 key 字段的 cookie 项
   const target = setCookies.filter(cookie => cookie.includes(key));

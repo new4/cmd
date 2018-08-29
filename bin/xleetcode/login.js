@@ -58,6 +58,7 @@ async function login(user) {
     const token = await requestCsrfToken({ url: config.url.login });
     const { username, password } = user;
     const options = {
+      method: 'POST',
       url: config.url.login,
       headers: {
         Origin: config.url.base,
@@ -94,31 +95,27 @@ async function login(user) {
 }
 
 module.exports = () => {
-  // prompt.message = '';
-  // prompt.start();
-  // prompt.get([
-  //   {
-  //     name: 'username',
-  //     description: `Enter your ${cyan('username')}`,
-  //     required: true,
-  //     message: red(`\n      ${fail} please enter your username\n`),
-  //   },
-  //   {
-  //     name: 'password',
-  //     description: `Enter your ${cyan('password')}`,
-  //     required: true,
-  //     hidden: true,
-  //     replace: '*',
-  //     message: red(`\n      ${fail} please enter your password\n`),
-  //   },
-  // ], (err, user) => {
-  //   if (err) {
-  //     return;
-  //   }
-  //   login(user);
-  // });
-  login({
-    username: 'new4',
-    password: '',
+  prompt.message = '';
+  prompt.start();
+  prompt.get([
+    {
+      name: 'username',
+      description: `Enter your ${cyan('username')}`,
+      required: true,
+      message: red(`\n      ${fail} please enter your username\n`),
+    },
+    {
+      name: 'password',
+      description: `Enter your ${cyan('password')}`,
+      required: true,
+      hidden: true,
+      replace: '*',
+      message: red(`\n      ${fail} please enter your password\n`),
+    },
+  ], (err, user) => {
+    if (err) {
+      return;
+    }
+    login(user);
   });
 };
