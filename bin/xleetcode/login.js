@@ -83,8 +83,6 @@ async function login(user) {
       sessionExp,
       password: `${encrypt(password)}`,
     });
-
-    // stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
   } catch (err) {
     log(err);
     process.exit(1);
