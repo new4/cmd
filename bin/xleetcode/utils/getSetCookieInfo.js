@@ -10,28 +10,33 @@ const {
 /**
  * 获取响应头中 set-cookie 项对应 key 的值
  */
-module.exports = function getSetCookieValue(response, key) {
+module.exports = function getSetCookieInfo(response, key) {
   const setCookies = response.headers['set-cookie'];
-  let cookieValue = null;
+  let value = null;
+  let expires = null;
   if (!setCookies) {
-    return null;
+    return [];
   }
 
   // 找到含有 key 字段的 cookie 项
   const target = setCookies.filter(cookie => cookie.includes(key));
   if (!target.length) {
     beforelog(red(`no target ${key} in response.headers['set-cookie']`));
-    return null;
+    return [];
   }
 
   target.forEach((item) => {
     item.split(';').forEach((pairs) => {
       const [k, v] = pairs.trim().split('=');
       if (k === key) {
-        cookieValue = v;
+        value = v;
+      }
+      if (k === 'expires') {
+        expires = v;
       }
     });
   });
 
-  return cookieValue;
+  // 返回 cookie 的值以及它的过期时间
+  return [value, expires];
 };

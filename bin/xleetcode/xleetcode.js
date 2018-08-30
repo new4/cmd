@@ -7,7 +7,7 @@ const {
   tipEnhance,
 } = require('../../utils');
 
-const login = require('./login');
+const doLogin = require('./login');
 
 program
   .version('0.1.0')
@@ -22,7 +22,7 @@ program
   // .option('-n, --username <username>', 'username')
   // .option('-p, --password <password>', 'password')
   // .option('-u, --url <url>', 'url')
-  .action(cmd => login(cleanArgs(cmd)));
+  .action(cmd => doLogin(cleanArgs(cmd)));
 
 // 强化的提示
 tipEnhance(program, __filename);

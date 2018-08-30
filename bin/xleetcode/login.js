@@ -1,7 +1,9 @@
+const moment = require('moment');
 const prompt = require('prompt');
 
 const {
   icons: {
+    success,
     fail,
   },
   colorStr: {
@@ -21,12 +23,12 @@ const {
 } = require('../../utils');
 
 const {
-  getSetCookieValue,
+  getSetCookieInfo,
   requestP,
   crypto: {
     encrypt,
+    decrypt,
   },
-  checkLogin,
 } = require('./utils');
 
 const cache = require('./cache');
@@ -37,15 +39,16 @@ const config = require('./config');
  */
 async function requestCsrfToken(options) {
   const [response] = await requestP(options);
-  return getSetCookieValue(response, 'csrftoken');
+  return getSetCookieInfo(response, 'csrftoken');
 }
 
+/**
+ * 发送请求来进行登录
+ */
 async function login(user) {
   try {
-    logWithSpinner(grey('Logining...'));
-
     // 先访问一遍 config.url.login 以获取 csrftoken，之后登录请求需要带上它
-    const token = await requestCsrfToken({ url: config.url.login });
+    const [token] = await requestCsrfToken({ url: config.url.login });
     const { username, password } = user;
     const options = {
       method: 'POST',
@@ -64,29 +67,34 @@ async function login(user) {
 
     // 发送登录请求
     const [response] = await requestP(options);
-    const csrftoken = getSetCookieValue(response, 'csrftoken');
-    const LEETCODE_SESSION = getSetCookieValue(response, 'LEETCODE_SESSION');
+
     if (response.statusCode !== 302) {
       bothlog(red(`${fail} invalid username or password`));
-      return;
+      process.exit(1);
     }
+
+    const [csrftoken] = getSetCookieInfo(response, 'csrftoken');
+    const [LEETCODE_SESSION, sessionExp] = getSetCookieInfo(response, 'LEETCODE_SESSION');
 
     cache.save('session', {
       username,
       csrftoken,
       LEETCODE_SESSION,
+      sessionExp,
       password: `${encrypt(password)}`,
     });
 
-    stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
+    // stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
   } catch (err) {
     log(err);
+    process.exit(1);
   }
 }
 
-module.exports = () => {
-  // return checkLogin();
-  // bothlog(cyan(`Already logged in as ${yellow(asda)}`));
+/**
+ * 手动输入账号来进行登录
+ */
+function promptToLogin() {
   prompt.message = '';
   prompt.start();
   prompt.get([
@@ -104,10 +112,55 @@ module.exports = () => {
       replace: '*',
       message: red(`\n      ${fail} please enter your password\n`),
     },
-  ], (err, user) => {
+  ], async (err, user) => {
     if (err) {
       return;
     }
-    login(user);
+
+    logWithSpinner(grey('Logining ...'));
+    await login(user);
+    stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
+    log();
   });
+}
+
+/**
+ * 自动重新登录，会清掉 session 文件
+ */
+async function autoRelogin(user) {
+  bothlog(red('Your session has expired.'));
+  cache.remove('session');
+  const { username, password } = user;
+
+  logWithSpinner(grey('Auto relogining ...'));
+  await login({ username, password });
+  stopSpinner(cyan(`Successfully relogin as ${yellow(username)}`));
+  log();
+}
+
+/**
+ * 根据多种情形来处理登录
+ */
+module.exports = function doLogin() {
+  const userSession = cache.get('session');
+
+  if (!userSession) {
+    return promptToLogin();
+  }
+
+  const { username, password, sessionExp } = userSession; // 一般 14 天的过期时间
+
+  const curDate = moment().format('YYYYMMDD');
+  const expDate = moment(new Date(sessionExp)).subtract(1, 'd').format('YYYYMMDD'); // 多扣掉 1 天来算
+
+  // cookie 过期了就清掉 session 文件并自动重新登录
+  if (expDate <= curDate) {
+    return autoRelogin({
+      username,
+      password: decrypt(password),
+    });
+  }
+
+  // 没过期的就无需登录，其中有一种改过密码的情形在别处处理
+  return bothlog(cyan(`${success}  Already logged in as ${yellow(username)}`));
 };

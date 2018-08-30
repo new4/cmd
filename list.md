@@ -71,3 +71,7 @@ Fast, flexible, and lean implementation of core jQuery designed specifically for
 ## 17. [crypto-js](https://github.com/brix/crypto-js)
 
 JavaScript library of crypto standards.
+
+## 18. [moment](https://github.com/moment/moment)
+
+Parse, validate, manipulate, and display dates in javascript.

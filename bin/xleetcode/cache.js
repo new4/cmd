@@ -4,8 +4,6 @@ const {
   underPath,
 } = require('../../utils');
 
-const USER_SESSION = underPath('bin', 'xleetcode/cache/user.json');
-
 const FILE_NAME = {
   session: 'user.json',
 };
@@ -20,7 +18,7 @@ exports.save = (type, info) => fse.outputFileSync(getFilePath(type), `${JSON.str
 /**
  * 移除信息
  */
-exports.remove = type => fse.removeFileSync(getFilePath(type));
+exports.remove = type => fse.removeSync(getFilePath(type));
 
 /**
  * 获取信息

@@ -24,7 +24,7 @@ exports.logWithSpinner = (symbol, msg) => {
   }
   spinner.text = ` ${msg}`;
   lastMsg = {
-    symbol: `${symbol} `,
+    symbol: `  ${symbol} `,
     text: msg,
   };
   spinner.start();

@@ -1,11 +1,9 @@
-const getSetCookieValue = require('./getSetCookieValue');
+const getSetCookieInfo = require('./getSetCookieInfo');
 const requestP = require('./requestP');
 const crypto = require('./crypto');
-const checkLogin = require('./checkLogin');
 
 module.exports = {
-  getSetCookieValue,
+  getSetCookieInfo,
   requestP,
   crypto,
-  checkLogin,
 };
