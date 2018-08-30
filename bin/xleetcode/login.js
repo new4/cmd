@@ -165,5 +165,5 @@ module.exports = () => {
 
   // case 3: 没过期的就无需登录，其中有一种改过密码的情形在别处处理
   // -----------------------------------------------------
-  return bothlog(cyan(`${success}  Already logged in as ${yellow(username)}`));
+  return bothlog(cyan(`${success} Already logged in as ${yellow(username)}`));
 };

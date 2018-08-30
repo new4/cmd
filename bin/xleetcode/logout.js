@@ -17,5 +17,5 @@ const cache = require('./cache');
  */
 module.exports = () => {
   cache.remove('session');
-  bothlog(cyan(`${success}  Successfully logout.`));
+  bothlog(cyan(`${success} Successfully logout.`));
 };
