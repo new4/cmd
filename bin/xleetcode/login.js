@@ -1,5 +1,4 @@
 const prompt = require('prompt');
-const request = require('request');
 
 const {
   icons: {
@@ -9,10 +8,15 @@ const {
     red,
     cyan,
     yellow,
+    grey,
   },
   log: {
     log,
     bothlog,
+  },
+  spinner: {
+    logWithSpinner,
+    stopSpinner,
   },
 } = require('../../utils');
 
@@ -34,6 +38,8 @@ async function requestCsrfToken(options) {
 
 async function login(user) {
   try {
+    logWithSpinner(grey('Logining...'));
+
     // 先访问一遍 config.url.login 以获取 csrftoken，之后登录请求需要带上它
     const token = await requestCsrfToken({ url: config.url.login });
     const { username, password } = user;
@@ -67,7 +73,7 @@ async function login(user) {
       LEETCODE_SESSION,
     });
 
-    bothlog(cyan(`Successfully login as ${yellow(username)}`));
+    stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
   } catch (err) {
     log(err);
   }

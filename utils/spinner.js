@@ -4,7 +4,7 @@ const spinner = ora();
 let lastMsg = null;
 
 const {
-  red,
+  cyan,
 } = require('./colorStr');
 
 const {
@@ -14,7 +14,7 @@ const {
 exports.logWithSpinner = (symbol, msg) => {
   if (!msg) {
     msg = symbol;
-    symbol = red(success);
+    symbol = cyan(success);
   }
   if (lastMsg) {
     spinner.stopAndPersist({
@@ -34,7 +34,7 @@ exports.stopSpinner = (persist) => {
   if (lastMsg && persist !== false) {
     spinner.stopAndPersist({
       symbol: lastMsg.symbol,
-      text: lastMsg.text,
+      text: persist,
     });
   } else {
     spinner.stop();
