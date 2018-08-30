@@ -141,19 +141,21 @@ async function autoRelogin(user) {
 /**
  * 根据多种情形来处理登录
  */
-module.exports = function doLogin() {
+module.exports = () => {
   const userSession = cache.get('session');
 
+  // case 1: 没有 session 文件的情况，需要手动输入账号登录
+  // -----------------------------------------------------
   if (!userSession) {
     return promptToLogin();
   }
 
+  // case 2: cookie 过期了就清掉 session 文件并自动重新登录
+  // -----------------------------------------------------
   const { username, password, sessionExp } = userSession; // 一般 14 天的过期时间
-
   const curDate = moment().format('YYYYMMDD');
   const expDate = moment(new Date(sessionExp)).subtract(1, 'd').format('YYYYMMDD'); // 多扣掉 1 天来算
 
-  // cookie 过期了就清掉 session 文件并自动重新登录
   if (expDate <= curDate) {
     return autoRelogin({
       username,
@@ -161,6 +163,7 @@ module.exports = function doLogin() {
     });
   }
 
-  // 没过期的就无需登录，其中有一种改过密码的情形在别处处理
+  // case 3: 没过期的就无需登录，其中有一种改过密码的情形在别处处理
+  // -----------------------------------------------------
   return bothlog(cyan(`${success}  Already logged in as ${yellow(username)}`));
 };
