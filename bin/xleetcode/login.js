@@ -29,7 +29,7 @@ const {
   checkLogin,
 } = require('./utils');
 
-const session = require('./session');
+const cache = require('./cache');
 const config = require('./config');
 
 /**
@@ -71,7 +71,7 @@ async function login(user) {
       return;
     }
 
-    session.save({
+    cache.save('session', {
       username,
       csrftoken,
       LEETCODE_SESSION,
