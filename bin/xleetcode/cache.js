@@ -5,6 +5,7 @@ const {
 } = require('../../utils');
 
 const FILE_NAME = {
+  temp: '_temp.json',
   session: 'user.json',
   allProblems: 'allProblems.json',
 };

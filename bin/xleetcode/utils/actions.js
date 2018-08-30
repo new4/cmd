@@ -1,12 +1,19 @@
+const _ = require('lodash');
 const {
   icons: {
     fail,
+    star: ac,
+    hollowStar: notac,
   },
   colorStr: {
     red,
     yellow,
+    grey,
+    cyan,
+    green,
   },
   log: {
+    log,
     bothlog,
   },
 } = require('../../../utils');
@@ -39,14 +46,35 @@ exports.parse = () => {
     user_name: username,
   } = allProblems;
 
-  const result = [];
+  const lastStatStatus = statStatusPairs[0];
+  const {
+    frontend_question_id: lastFrontendQuestionId,
+  } = lastStatStatus.stat;
 
-  statStatusPairs.forEach((statStatus, index) => {
-    if (index === 0) {
-      bothlog(red(statStatus.stat.question_id));
-    }
-    result.unshift(statStatus.stat.question_id);
+  const result = new Array(lastFrontendQuestionId);
+  _.fill(result, null);
 
-    bothlog(JSON.stringify(result, null, 2));
+  statStatusPairs.forEach((statStatus) => {
+    const {
+      frontend_question_id: id,
+    } = statStatus.stat;
+
+    result[id] = statStatus;
   });
+
+  // bothlog(JSON.stringify(result, null, 2));
+  cache.save('temp', result);
+
+  log(` ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)}`);
+  log(` ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)}`);
+  log(` ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)}`);
+  log(` ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)}`);
+  log(` ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)}`);
+  log(` ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)}`);
+  log(` ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)}`);
+  log(` ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)}`);
+  log(` ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)}`);
+  log(` ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)}`);
+  log(` ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)}`);
+  log(` ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)} ${grey(notac)} ${grey(notac)} ${green(ac)}`);
 };

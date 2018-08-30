@@ -6,4 +6,6 @@ module.exports = {
   fail: '✘',
   block: '■',
   point: '●',
+  star: '★',
+  hollowStar: '☆',
 };
