@@ -18,6 +18,7 @@ const {
 
 const {
   getSetCookieValue,
+  requestP,
 } = require('./utils');
 
 const session = require('./session');
@@ -26,30 +27,9 @@ const config = require('./config');
 /**
  * 为了获取 csrftoken 而发的请求
  */
-function requestCsrfToken(options) {
-  return new Promise((resolve, reject) => {
-    request(options, (err, response) => {
-      if (err) {
-        reject(err);
-      }
-      const csrftoken = getSetCookieValue(response, 'csrftoken');
-      resolve(csrftoken);
-    });
-  });
-}
-
-/**
- * 登录请求，获取登录态
- */
-function requestLogin(options) {
-  return new Promise((resolve, reject) => {
-    request(options, (err, response) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(response);
-    });
-  });
+async function requestCsrfToken(options) {
+  const [response] = await requestP(options);
+  return getSetCookieValue(response, 'csrftoken');
 }
 
 async function login(user) {
@@ -72,8 +52,8 @@ async function login(user) {
       },
     };
 
-    // 登录请求
-    const response = await requestLogin(options);
+    // 发送登录请求
+    const [response] = await requestP(options);
     const csrftoken = getSetCookieValue(response, 'csrftoken');
     const LEETCODE_SESSION = getSetCookieValue(response, 'LEETCODE_SESSION');
     if (response.statusCode !== 302) {
