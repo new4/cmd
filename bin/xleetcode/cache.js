@@ -6,6 +6,7 @@ const {
 
 const FILE_NAME = {
   session: 'user.json',
+  allProblems: 'allProblems.json',
 };
 
 const getFilePath = type => underPath('bin', `xleetcode/cache/${FILE_NAME[type]}`);
