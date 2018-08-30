@@ -23,6 +23,10 @@ const {
 const {
   getSetCookieValue,
   requestP,
+  crypto: {
+    encrypt,
+  },
+  checkLogin,
 } = require('./utils');
 
 const session = require('./session');
@@ -71,6 +75,7 @@ async function login(user) {
       username,
       csrftoken,
       LEETCODE_SESSION,
+      password: `${encrypt(password)}`,
     });
 
     stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
@@ -80,6 +85,8 @@ async function login(user) {
 }
 
 module.exports = () => {
+  // return checkLogin();
+  // bothlog(cyan(`Already logged in as ${yellow(asda)}`));
   prompt.message = '';
   prompt.start();
   prompt.get([

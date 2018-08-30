@@ -67,3 +67,7 @@ A cron-like and not-cron-like job scheduler for Node.
 ## 16. [cheerio](https://github.com/cheeriojs/cheerio)
 
 Fast, flexible, and lean implementation of core jQuery designed specifically for the server.
+
+## 17. [crypto-js](https://github.com/brix/crypto-js)
+
+JavaScript library of crypto standards.
