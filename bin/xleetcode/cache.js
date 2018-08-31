@@ -23,6 +23,11 @@ exports.save = (type, info) => fse.outputFileSync(getFilePath(type), `${JSON.str
 exports.remove = type => fse.removeSync(getFilePath(type));
 
 /**
+ * 是否有缓存
+ */
+exports.has = type => fse.pathExistsSync(getFilePath(type));
+
+/**
  * 获取信息
  */
 exports.get = (type) => {
@@ -32,3 +37,4 @@ exports.get = (type) => {
   }
   return null;
 };
+

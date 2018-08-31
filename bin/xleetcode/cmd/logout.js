@@ -8,9 +8,9 @@ const {
   log: {
     bothlog,
   },
-} = require('../../utils');
+} = require('../../../utils');
 
-const cache = require('./cache');
+const cache = require('../cache');
 
 /**
  * 登出，清空 cache 中的 session 即可

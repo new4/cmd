@@ -1,3 +1,4 @@
+const addonZero = require('./addonZero');
 const cleanArgs = require('./cleanArgs');
 const cmd = require('./cmd');
 const icons = require('./icons');
@@ -12,6 +13,7 @@ const underPath = require('./underPath');
 const yarn = require('./yarn');
 
 module.exports = {
+  addonZero,
   cleanArgs,
   cmd,
   icons,

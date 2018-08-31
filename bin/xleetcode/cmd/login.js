@@ -20,7 +20,7 @@ const {
     logWithSpinner,
     stopSpinner,
   },
-} = require('../../utils');
+} = require('../../../utils');
 
 const {
   getSetCookieInfo,
@@ -29,10 +29,10 @@ const {
     encrypt,
     decrypt,
   },
-} = require('./utils');
+} = require('../utils');
 
-const cache = require('./cache');
-const config = require('./config');
+const cache = require('../cache');
+const config = require('../config');
 
 /**
  * 为了获取 csrftoken 而发的请求

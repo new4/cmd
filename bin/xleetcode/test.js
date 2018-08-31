@@ -2,8 +2,8 @@ const {
   actions,
 } = require('./utils');
 
-module.exports = () => {
-  actions.getAllProblems();
+module.exports = async () => {
+  // await actions.getAllProblems();
 
   actions.parse();
 };

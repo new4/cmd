@@ -8,4 +8,6 @@ module.exports = {
   point: '●',
   star: '★',
   hollowStar: '☆',
+  checked: '☑',
+  notChecked: '☐',
 };

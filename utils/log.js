@@ -1,4 +1,9 @@
+const { isObjectLike } = require('lodash');
+
 function log(str) {
+  if (isObjectLike(str)) {
+    str = JSON.stringify(str, null, 2);
+  }
   console.log(str ? `  ${str}` : '');
 }
 

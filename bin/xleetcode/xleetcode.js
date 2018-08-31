@@ -7,8 +7,9 @@ const {
   tipEnhance,
 } = require('../../utils');
 
-const login = require('./login');
-const logout = require('./logout');
+const login = require('./cmd/login');
+const logout = require('./cmd/logout');
+const status = require('./cmd/status');
 
 const ts = require('./test');
 
@@ -25,12 +26,20 @@ program
   .action(cmd => login(cleanArgs(cmd)));
 
 /**
- * 登入
+ * 登出
  */
 program
   .command('logout')
   .description('logout leetcode')
   .action(cmd => logout(cleanArgs(cmd)));
+
+/**
+ * 显示账户当前 ac 状态
+ */
+program
+  .command('status')
+  .description('show status')
+  .action(cmd => status(cmd));
 
 /**
  * test
