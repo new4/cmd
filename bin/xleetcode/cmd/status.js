@@ -13,16 +13,13 @@ const {
     log,
     bothlog,
   },
-  spinner: {
-    logWithSpinner,
-    pauseSpinner,
-  },
 } = require('../../../utils');
 
 const {
   actions: {
     getAllProblems,
     showAcStatusMap,
+    showTotalStatistics,
   },
 } = require('../utils');
 
@@ -30,8 +27,7 @@ const cache = require('../cache');
 const config = require('../config');
 
 module.exports = async function status() {
-  logWithSpinner('get ... ');
   const allProblems = await getAllProblems();
+  showTotalStatistics(allProblems);
   showAcStatusMap(allProblems);
-  pauseSpinner();
 };

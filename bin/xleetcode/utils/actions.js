@@ -3,6 +3,7 @@ const _ = require('lodash');
 const {
   addonZero,
   icons: {
+    point,
     fail,
     checked: ac,
     notChecked: notac,
@@ -12,12 +13,21 @@ const {
     yellow,
     grey,
     cyan,
+    blue,
     green,
   },
   log: {
     log,
     bothlog,
     beforelog,
+    afterlog,
+  },
+  spinner: {
+    logWithSpinner,
+    stopSpinner,
+  },
+  strAlign: {
+    center,
   },
 } = require('../../../utils');
 
@@ -30,11 +40,18 @@ const requestP = require('./requestP');
  * 获取与当前用户相关的所有题目的信息
  */
 exports.getAllProblems = async () => {
-  const [, body] = await requestP({
+  logWithSpinner('get data ...');
+
+  const [response, body] = await requestP({
     url: config.url.problemsAll,
     headers: getHeaders(),
     json: true,
   });
+
+  stopSpinner('success');
+
+  // log(red(response.statusCode));
+
   cache.save('allProblems', body);
   return body;
 };
@@ -60,6 +77,45 @@ function parseByFrontendId(allProblems) {
 
   return statusInfo;
 }
+
+/**
+ * 显示统计信息
+ */
+exports.showTotalStatistics = (allProblems) => {
+  const all = {
+    total: 0,
+    easy: 0,
+    medium: 0,
+    hard: 0,
+  };
+
+  const accept = {
+    total: 0,
+    easy: 0,
+    medium: 0,
+    hard: 0,
+  };
+
+  const statStatusPairs = allProblems.stat_status_pairs;
+  all.total = statStatusPairs.length;
+
+  function statistic(status, level) {
+    const map = [null, 'easy', 'medium', 'hard'];
+    if (status === 'ac') {
+      accept.total++;
+      accept[map[level]]++;
+    }
+    all[map[level]]++;
+  }
+
+  statStatusPairs.forEach(statStatus => statistic(statStatus.status, statStatus.difficulty.level));
+
+  beforelog(green(center(grey(':'), 'Resolved', `${addonZero(accept.total)}/${all.total}`, 8)));
+  log(grey(center(':', '--------', '--------', 8)));
+  log(blue(center(grey(':'), 'Easy', `${addonZero(accept.easy)}/${all.easy}`, 8)));
+  log(yellow(center(grey(':'), 'Medium', `${addonZero(accept.medium)}/${all.medium}`, 8)));
+  afterlog(red(center(grey(':'), 'Hard', `${addonZero(accept.hard)}/${all.hard}`, 8)));
+};
 
 /**
  * 显示 AC 状态图
