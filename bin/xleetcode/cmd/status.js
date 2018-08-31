@@ -15,27 +15,23 @@ const {
   },
   spinner: {
     logWithSpinner,
-    stopSpinner,
+    pauseSpinner,
   },
 } = require('../../../utils');
 
 const {
-  getSetCookieInfo,
-  requestP,
-  crypto: {
-    encrypt,
-    decrypt,
-  },
   actions: {
     getAllProblems,
-    parseByFrontendId,
-  }
+    showAcStatusMap,
+  },
 } = require('../utils');
 
 const cache = require('../cache');
 const config = require('../config');
 
-module.exports = function status() {
-  const allProblems = cache.get('allProblems');
-  parseByFrontendId(allProblems);
+module.exports = async function status() {
+  logWithSpinner('get ... ');
+  const allProblems = await getAllProblems();
+  showAcStatusMap(allProblems);
+  pauseSpinner();
 };

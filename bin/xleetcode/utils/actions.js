@@ -17,6 +17,7 @@ const {
   log: {
     log,
     bothlog,
+    beforelog,
   },
 } = require('../../../utils');
 
@@ -35,6 +36,7 @@ exports.getAllProblems = async () => {
     json: true,
   });
   cache.save('allProblems', body);
+  return body;
 };
 
 function parseByFrontendId(allProblems) {
@@ -60,10 +62,9 @@ function parseByFrontendId(allProblems) {
 }
 
 /**
- * 解析
+ * 显示 AC 状态图
  */
-exports.parse = () => {
-  const allProblems = cache.get('allProblems');
+exports.showAcStatusMap = (allProblems) => {
   const statusInfo = parseByFrontendId(allProblems);
   const chunkSize = 50; // 每 50 个值分割成行
   const subChunkSize = 10; // 每 10 个值分割成列
@@ -81,7 +82,7 @@ exports.parse = () => {
     topStr = `${topStr}${item.join('')}  `;
   });
 
-  log(topStr); // 头部标尺
+  beforelog(topStr); // 头部标尺
 
   _.chunk(statusInfo, chunkSize).forEach((chunk, index) => {
     const row = [`${addonZero(index * chunkSize)} `]; // 左侧标尺
@@ -100,4 +101,6 @@ exports.parse = () => {
     });
     log(row.join(' ')); // 打印一行
   });
+
+  log();
 };
