@@ -36,3 +36,8 @@ exports.bothlog = (str) => {
   log(str);
   console.log();
 };
+
+/**
+ * 清空输出
+ */
+exports.clearlog = () => process.stdout.write('\u001b[2J\u001b[0;0H');

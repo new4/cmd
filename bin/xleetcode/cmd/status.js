@@ -12,6 +12,7 @@ const {
   log: {
     log,
     bothlog,
+    clearlog,
   },
 } = require('../../../utils');
 
@@ -28,6 +29,7 @@ const config = require('../config');
 
 module.exports = async function status() {
   const allProblems = await getAllProblems();
+  clearlog();
   showTotalStatistics(allProblems);
   showAcStatusMap(allProblems);
 };

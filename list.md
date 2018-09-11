@@ -75,3 +75,7 @@ JavaScript library of crypto standards.
 ## 18. [moment](https://github.com/moment/moment)
 
 Parse, validate, manipulate, and display dates in javascript.
+
+## 19. [Chokidar](https://github.com/paulmillr/chokidar)
+
+A neat wrapper around node.js fs.watch / fs.watchFile / fsevents.
