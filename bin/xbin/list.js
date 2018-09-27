@@ -58,7 +58,7 @@ module.exports = function list() {
 
   bothlog(`Run ${yellow('xbin <command> --help')} for detailed usage of given command.`);
 
-  log(getMode(underPath('bin', 'xbin/xbin.js')));
+  // log(getMode(underPath('bin', 'xbin/xbin.js')));
 
-  log(slash(process.env.HOME || process.env.USERPROFILE));
+  // log(slash(process.env.HOME || process.env.USERPROFILE));
 };
