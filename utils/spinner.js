@@ -42,10 +42,6 @@ exports.stopSpinner = (persist) => {
   lastMsg = null;
 };
 
-exports.pauseSpinner = () => {
-  spinner.stop();
-};
+exports.pauseSpinner = () => spinner.stop();
 
-exports.resumeSpinner = () => {
-  spinner.start();
-};
+exports.resumeSpinner = () => spinner.start();

@@ -63,4 +63,5 @@ typings/
 package_lock.json
 yarn.lock
 
+# xleetcode 缓存
 bin/xleetcode/cache
