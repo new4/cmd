@@ -7,12 +7,12 @@ const {
   tipEnhance,
 } = require('../../utils');
 
-const create = require('./create');
-const remove = require('./remove');
-const rename = require('./rename');
-const check = require('./check');
-const relink = require('./relink');
-const list = require('./list');
+const create = require('./cmd/create');
+const remove = require('./cmd/remove');
+const rename = require('./cmd/rename');
+const check = require('./cmd/check');
+const relink = require('./cmd/relink');
+const list = require('./cmd/list');
 
 program
   .version('0.1.0')

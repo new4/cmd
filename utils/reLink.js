@@ -1,6 +1,9 @@
 const execa = require('execa');
 const underPath = require('./underPath');
-const { success } = require('./icons');
+
+const {
+  success,
+} = require('./icons');
 
 const cwd = underPath('root');
 
@@ -27,7 +30,9 @@ module.exports = async function relink() {
  * 执行 yarn unlink 取消链接
  */
 async function unlink() {
-  await execa('yarn', ['unlink'], { cwd });
+  await execa('yarn', ['unlink'], {
+    cwd
+  });
   log(cyan(`  ${success} unlink`));
 }
 
@@ -35,6 +40,8 @@ async function unlink() {
  * 执行 yarn link 建立链接
  */
 async function link() {
-  await execa('yarn', ['link'], { cwd });
+  await execa('yarn', ['link'], {
+    cwd
+  });
   afterlog(cyan(`  ${success} link`));
 }

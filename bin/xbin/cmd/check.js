@@ -28,7 +28,7 @@ const {
     center,
   },
   reLink,
-} = require('../../utils');
+} = require('../../../utils');
 
 /**
  * 检查所有的命令，保证 package.json 和命令目录一致

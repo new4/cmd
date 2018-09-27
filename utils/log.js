@@ -1,4 +1,6 @@
-const { isObjectLike } = require('lodash');
+const {
+  isObjectLike,
+} = require('lodash');
 
 function log(str) {
   if (isObjectLike(str)) {

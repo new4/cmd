@@ -1,5 +1,8 @@
 const chalk = require('chalk');
-const { isObjectLike } = require('lodash');
+
+const {
+  isObjectLike,
+} = require('lodash');
 
 const colors = {
   red: '#F04134', // 热情/警示

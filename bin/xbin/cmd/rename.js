@@ -22,7 +22,7 @@ const {
     bothlog,
   },
   reLink,
-} = require('../../utils');
+} = require('../../../utils');
 
 /**
  * 重命名一个命令

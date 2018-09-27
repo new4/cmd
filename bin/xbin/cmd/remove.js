@@ -22,7 +22,7 @@ const {
     bothlog,
   },
   reLink,
-} = require('../../utils');
+} = require('../../../utils');
 
 /**
  * 移除一个命令

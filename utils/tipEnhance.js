@@ -1,7 +1,9 @@
 const program = require('commander');
 const chalk = require('chalk');
 
-const { getCurCmd } = require('./cmd');
+const {
+  getCurCmd,
+} = require('./cmd');
 
 const {
   afterlog,

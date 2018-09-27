@@ -1,6 +1,3 @@
-/**
- * 输出到文件的模板字串
- */
 module.exports = `#!/usr/bin/env node
 
 const program = require('commander');

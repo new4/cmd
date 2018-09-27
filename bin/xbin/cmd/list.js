@@ -21,7 +21,7 @@ const {
     log,
     bothlog,
   },
-} = require('../../utils');
+} = require('../../../utils');
 
 /**
  * 显示当前已有的命令

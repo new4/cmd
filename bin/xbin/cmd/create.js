@@ -1,7 +1,7 @@
 const fse = require('fs-extra');
 const slash = require('slash');
 
-const template = require('./template');
+const template = require('./_template');
 
 const {
   cmd: {
@@ -25,7 +25,7 @@ const {
   },
   underPath,
   reLink,
-} = require('../../utils');
+} = require('../../../utils');
 
 /**
  * 新建一个命令
