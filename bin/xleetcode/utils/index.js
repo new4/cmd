@@ -1,13 +1,5 @@
-const getSetCookieInfo = require('./getSetCookieInfo');
-const requestP = require('./requestP');
-const crypto = require('./crypto');
-const getHeaders = require('./getHeaders');
-const actions = require('./actions');
-
-module.exports = {
-  getSetCookieInfo,
-  requestP,
-  crypto,
-  getHeaders,
-  actions,
-};
+exports.getSetCookieInfo = require('./getSetCookieInfo');
+exports.requestP = require('./requestP');
+exports.crypto = require('./crypto');
+exports.getHeaders = require('./getHeaders');
+exports.actions = require('./actions');
