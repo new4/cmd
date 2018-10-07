@@ -21,6 +21,10 @@ const {
     log,
     bothlog,
   },
+  yarnOp: {
+    yarnGlobalDir,
+    yarnGlobalBin,
+  },
 } = require('../../../utils');
 
 /**
@@ -29,7 +33,7 @@ const {
  * 需要做到如下：
  *  - 检查 package.json 中的 bin 字段对应文件是否存在
  */
-module.exports = function list() {
+module.exports = async function list() {
   const cmdInPkgJsonList = cmdInPkgJson();
 
   if (!cmdInPkgJsonList) {
@@ -59,6 +63,10 @@ module.exports = function list() {
   bothlog(`Run ${yellow('xbin <command> --help')} for detailed usage of given command.`);
 
   // log(getMode(underPath('bin', 'xbin/xbin.js')));
+
+  log(await yarnGlobalDir());
+
+  log(await yarnGlobalBin());
 
   // log(slash(process.env.HOME || process.env.USERPROFILE));
 };

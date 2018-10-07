@@ -43,7 +43,7 @@ module.exports = function create(name) {
 
   const {
     hasBinInfo,
-    hasBinFile
+    hasBinFile,
   } = checkBin(name);
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误

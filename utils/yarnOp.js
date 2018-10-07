@@ -22,26 +22,20 @@ const {
  * 执行 yarn link 建立链接
  */
 async function link() {
-  const {
-    stdout,
-  } = await execa('yarn', ['link'], {
+  await execa('yarn', ['link'], {
     cwd,
   });
-  console.log(stdout);
-  afterlog(cyan(`  ${success} link`));
+  afterlog(cyan(`${success} link`));
 }
 
 /**
  * 执行 yarn unlink 取消链接
  */
 async function unlink() {
-  const {
-    stdout,
-  } = await execa('yarn', ['unlink'], {
+  await execa('yarn', ['unlink'], {
     cwd,
   });
-  console.log(stdout);
-  log(cyan(`  ${success} unlink`));
+  log(cyan(`${success} unlink`));
 }
 
 /**
