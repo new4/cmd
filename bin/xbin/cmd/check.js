@@ -27,7 +27,9 @@ const {
   strAlign: {
     center,
   },
-  reLink,
+  yarnOp: {
+    relink,
+  },
 } = require('../../../utils');
 
 /**
@@ -75,7 +77,11 @@ module.exports = function check(cmd) {
 
   bothlog(cyan('cmd info in dir ./bin:'));
   cmdUnderDirBinList.forEach((cmdname) => {
-    const { hasBinInfo, hasBinFile } = checkBin(cmdname);
+    const {
+      hasBinInfo,
+      hasBinFile,
+    } = checkBin(cmdname);
+
     if (hasBinInfo && hasBinFile) {
       log(cyan(center(`[${success}]`, `${cmdname}`, 'has listed in bin config of package.json')));
     } else {
@@ -130,7 +136,7 @@ module.exports = function check(cmd) {
           log(cyan(`${success} clean residue ${cmdname} in ./bin`));
         });
       }
-      await reLink();
+      await relink();
     })
     .catch(err => console.error(err));
 };

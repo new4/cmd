@@ -21,7 +21,9 @@ const {
     beforelog,
     bothlog,
   },
-  reLink,
+  yarnOp: {
+    relink,
+  },
 } = require('../../../utils');
 
 /**
@@ -93,7 +95,7 @@ module.exports = function rename(oldName, newName) {
       fse.removeSync(underPath('bin', `${newName}/${oldName}.js`));
       log(cyan(`${success} removed: old file`));
 
-      await reLink();
+      await relink();
     })
     .catch(err => console.error(err));
 };

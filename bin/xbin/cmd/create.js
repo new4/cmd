@@ -24,7 +24,9 @@ const {
     afterlog,
   },
   underPath,
-  reLink,
+  yarnOp: {
+    relink,
+  },
 } = require('../../../utils');
 
 /**
@@ -39,7 +41,10 @@ module.exports = function create(name) {
   const targetBinFile = formatBinFile(name); // 统一命名的文件
   const promiseOperate = []; // 供 Promise.all 处理的数组
 
-  const { hasBinInfo, hasBinFile } = checkBin(name);
+  const {
+    hasBinInfo,
+    hasBinFile
+  } = checkBin(name);
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
@@ -76,7 +81,7 @@ module.exports = function create(name) {
       log();
       !hasBinFile && log(cyan(`${success} create: ${targetBinFile}`));
       !hasBinInfo && log(cyan(`${success} update: package.json`));
-      await reLink();
+      await relink();
       afterlog(cyan(`${success} ${yellow(name)} created under path ${yellow(slash(underPath('bin')))}`));
     })
     .catch(err => log(red(err)));

@@ -21,7 +21,9 @@ const {
     afterlog,
     bothlog,
   },
-  reLink,
+  yarnOp: {
+    relink,
+  },
 } = require('../../../utils');
 
 /**
@@ -72,7 +74,7 @@ module.exports = function remove(name, cmd) {
       log();
       hasBinFile && log(cyan(`${success} remove: bin/${name}`));
       hasBinInfo && log(cyan(`${success} update: package.json`));
-      await reLink();
+      await relink();
       afterlog(cyan(`${success} ${yellow(name)} removed!`));
     })
     .catch(err => console.error(err));
