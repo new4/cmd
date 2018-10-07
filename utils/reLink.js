@@ -31,7 +31,7 @@ module.exports = async function relink() {
  */
 async function unlink() {
   await execa('yarn', ['unlink'], {
-    cwd
+    cwd,
   });
   log(cyan(`  ${success} unlink`));
 }
@@ -41,7 +41,7 @@ async function unlink() {
  */
 async function link() {
   await execa('yarn', ['link'], {
-    cwd
+    cwd,
   });
   afterlog(cyan(`  ${success} link`));
 }
