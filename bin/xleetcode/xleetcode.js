@@ -45,7 +45,7 @@ program
  * test
  */
 program
-  .command('ts')
+  .command('test')
   .description('for test')
   .action(cmd => ts(cmd));
 
