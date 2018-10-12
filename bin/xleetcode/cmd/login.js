@@ -20,11 +20,11 @@ const {
     logWithSpinner,
     stopSpinner,
   },
+  requestP,
 } = require('../../../utils');
 
 const {
   getSetCookieInfo,
-  requestP,
   crypto: {
     encrypt,
     decrypt,

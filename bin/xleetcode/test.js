@@ -1,47 +1,44 @@
 const {
-  log: {
-    log,
-  },
+  requestP,
 } = require('../../utils');
 
-const request = require('request');
-
-// const {
-//   // actions,
-//   requestP,
-// } = require('./utils');
-
-const config = require('./config');
-
-const createQueryQuestionData = require('./graphql/queryQuestion');
-
-const {
-  csrftoken,
-} = require('./cache/user.json');
-
 module.exports = async () => {
-  // await actions.getAllProblems();
-
-  // actions.parse();
-
-  const formData = createQueryQuestionData('best-time-to-buy-and-sell-stock-ii');
-
-  // log(formData);
-
-  const options = {
-    method: 'POST',
-    url: 'https://leetcode-cn.com/graphql',
-    headers: {
-      'Origin': config.url.base,
-      'Referer': 'https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/',
-      'x-csrftoken': `${csrftoken};`,
-    },
-    formData,
-    json: true,
+  const formData = {
+    operationName: 'question',
+    variables: JSON.stringify({
+      titleSlug: 'two-sum',
+    }),
+    query: `
+      query question($titleSlug: String!) {
+        question(titleSlug: $titleSlug) {
+          questionId
+          questionFrontendId
+          boundTopicId
+          title
+          content
+          translatedTitle
+          translatedContent
+        }
+      }
+    `,
   };
 
-  request(options, (e, resp, body) => {
-    log(resp);
-  });
+  const options = {
+    url: 'https://leetcode-cn.com/graphql',
+    formData,
+    method: 'post',
+    headers: {
+      'Referer': 'https://leetcode-cn.com',
+      'Cookie': 'csrftoken=tDcyWgEbd0LjogrnrCVNudfEuxTz2WfOW489ogDOWzIysYWi97aCwHcLOmLAim09',
+      'Content-Type': 'application/json',
+      'x-csrftoken': 'tDcyWgEbd0LjogrnrCVNudfEuxTz2WfOW489ogDOWzIysYWi97aCwHcLOmLAim09',
+    },
+  };
 
+  try {
+    const [, body] = await requestP(options);
+    console.log(body);
+  } catch (e) {
+    console.log(e);
+  }
 };

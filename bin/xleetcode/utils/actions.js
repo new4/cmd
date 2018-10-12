@@ -29,12 +29,12 @@ const {
   strAlign: {
     center,
   },
+  requestP,
 } = require('../../../utils');
 
 const config = require('../config');
 const cache = require('../cache');
 const getHeaders = require('./getHeaders');
-const requestP = require('./requestP');
 
 /**
  * 获取与当前用户相关的所有题目的信息
@@ -42,7 +42,7 @@ const requestP = require('./requestP');
 exports.getAllProblems = async () => {
   logWithSpinner('get data ...');
 
-  const [response, body] = await requestP({
+  const [, body] = await requestP({
     url: config.url.problemsAll,
     headers: getHeaders(),
     json: true,
@@ -110,11 +110,24 @@ exports.showTotalStatistics = (allProblems) => {
 
   statStatusPairs.forEach(statStatus => statistic(statStatus.status, statStatus.difficulty.level));
 
-  beforelog(green(center(grey(':'), 'Resolved', `${addonZero(accept.total)}/${all.total}`, 8)));
-  log(grey(center(':', '--------', '--------', 8)));
-  log(blue(center(grey(':'), 'Easy', `${addonZero(accept.easy)}/${all.easy}`, 8)));
-  log(yellow(center(grey(':'), 'Medium', `${addonZero(accept.medium)}/${all.medium}`, 8)));
-  afterlog(red(center(grey(':'), 'Hard', `${addonZero(accept.hard)}/${all.hard}`, 8)));
+  const LEFT_LEN = 8; // 左边字符串长度
+  log();
+  log(green(
+    center(grey(':'), 'Resolved', `${addonZero(accept.total)}/${all.total}`, LEFT_LEN),
+  ));
+  log(grey(
+    center(':', '--------', '--------', LEFT_LEN),
+  ));
+  log(blue(
+    center(grey(':'), 'Easy', `${addonZero(accept.easy)}/${all.easy}`, LEFT_LEN),
+  ));
+  log(yellow(
+    center(grey(':'), 'Medium', `${addonZero(accept.medium)}/${all.medium}`, LEFT_LEN),
+  ));
+  log(red(
+    center(grey(':'), 'Hard', `${addonZero(accept.hard)}/${all.hard}`, LEFT_LEN),
+  ));
+  log();
 };
 
 /**
