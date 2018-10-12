@@ -20,15 +20,15 @@ const {
     logWithSpinner,
     stopSpinner,
   },
+  crypto: {
+    encrypt,
+    decrypt,
+  },
   requestP,
 } = require('../../../utils');
 
 const {
   getSetCookieInfo,
-  crypto: {
-    encrypt,
-    decrypt,
-  },
 } = require('../utils');
 
 const cache = require('../cache');
@@ -48,8 +48,15 @@ async function requestCsrfToken(options) {
 async function login(user) {
   try {
     // 先访问一遍 config.url.login 以获取 csrftoken，之后登录请求需要带上它
-    const [token] = await requestCsrfToken({ url: config.url.login });
-    const { username, password } = user;
+    const [token] = await requestCsrfToken({
+      url: config.url.login,
+    });
+
+    const {
+      username,
+      password,
+    } = user;
+
     const options = {
       method: 'POST',
       url: config.url.login,
@@ -93,23 +100,27 @@ async function login(user) {
  * 手动输入账号来进行登录
  */
 function promptToLogin() {
+  const usernameOption = {
+    name: 'username',
+    description: `Enter your ${cyan('username')}`,
+    required: true,
+    message: red(`\n      ${fail} please enter your username\n`),
+  };
+
+  const passwordOption = {
+    name: 'password',
+    description: `Enter your ${cyan('password')}`,
+    required: true,
+    hidden: true,
+    replace: '*',
+    message: red(`\n      ${fail} please enter your password\n`),
+  };
+
   prompt.message = '';
   prompt.start();
   prompt.get([
-    {
-      name: 'username',
-      description: `Enter your ${cyan('username')}`,
-      required: true,
-      message: red(`\n      ${fail} please enter your username\n`),
-    },
-    {
-      name: 'password',
-      description: `Enter your ${cyan('password')}`,
-      required: true,
-      hidden: true,
-      replace: '*',
-      message: red(`\n      ${fail} please enter your password\n`),
-    },
+    usernameOption,
+    passwordOption,
   ], async (err, user) => {
     if (err) {
       return;
@@ -128,10 +139,16 @@ function promptToLogin() {
 async function autoRelogin(user) {
   bothlog(red('Your session has expired.'));
   cache.remove('session');
-  const { username, password } = user;
+  const {
+    username,
+    password,
+  } = user;
 
   logWithSpinner(grey('Auto relogining ...'));
-  await login({ username, password });
+  await login({
+    username,
+    password,
+  });
   stopSpinner(cyan(`Successfully relogin as ${yellow(username)}`));
   log();
 }
@@ -150,7 +167,11 @@ module.exports = () => {
 
   // case 2: cookie 过期了就清掉 session 文件并自动重新登录
   // -----------------------------------------------------
-  const { username, password, sessionExp } = userSession; // 一般 14 天的过期时间
+  const {
+    username,
+    password,
+    sessionExp,
+  } = userSession; // 一般 14 天的过期时间
   const curDate = moment().format('YYYYMMDD');
   const expDate = moment(new Date(sessionExp)).subtract(1, 'd').format('YYYYMMDD'); // 多扣掉 1 天来算
 
