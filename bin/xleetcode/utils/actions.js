@@ -3,8 +3,6 @@ const _ = require('lodash');
 const {
   addonZero,
   icons: {
-    point,
-    fail,
     checked: ac,
     notChecked: notac,
   },
@@ -12,15 +10,12 @@ const {
     red,
     yellow,
     grey,
-    cyan,
     blue,
     green,
   },
   log: {
     log,
-    bothlog,
     beforelog,
-    afterlog,
   },
   spinner: {
     logWithSpinner,

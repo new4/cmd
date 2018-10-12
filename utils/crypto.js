@@ -1,4 +1,5 @@
 const cryptoJs = require('crypto-js');
+
 const KEY = 'x-bin-4fun';
 
 // Encrypt
