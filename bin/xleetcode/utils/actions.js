@@ -29,12 +29,12 @@ const {
   strAlign: {
     center,
   },
+  requestP,
 } = require('../../../utils');
 
 const config = require('../config');
 const cache = require('../cache');
 const getHeaders = require('./getHeaders');
-const requestP = require('./requestP');
 
 /**
  * 获取与当前用户相关的所有题目的信息
@@ -42,7 +42,7 @@ const requestP = require('./requestP');
 exports.getAllProblems = async () => {
   logWithSpinner('get data ...');
 
-  const [response, body] = await requestP({
+  const [, body] = await requestP({
     url: config.url.problemsAll,
     headers: getHeaders(),
     json: true,
