@@ -14,7 +14,7 @@ const {
   },
 } = require('../config');
 
-const getHeaders = require('./getHeaders');
+const generateHeaders = require('./generateHeaders');
 
 /**
  * 获取与当前用户相关的所有题目的信息
@@ -24,7 +24,7 @@ module.exports = async () => {
 
   const [, body] = await requestP({
     url: problemsAllUrl,
-    headers: getHeaders(),
+    headers: generateHeaders(),
     json: true,
   });
 

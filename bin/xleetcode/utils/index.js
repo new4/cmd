@@ -1,4 +1,4 @@
 exports.getAllProblems = require('./getAllProblems');
 exports.getSetCookieInfo = require('./getSetCookieInfo');
-exports.getHeaders = require('./getHeaders');
+exports.generateHeaders = require('./generateHeaders');
 exports.actions = require('./actions');
