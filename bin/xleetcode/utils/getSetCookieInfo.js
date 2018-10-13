@@ -10,11 +10,12 @@ const {
 /**
  * 获取响应头中 set-cookie 项对应 key 的值
  */
-module.exports = function getSetCookieInfo(response, key) {
+module.exports = (response, key) => {
   const setCookies = response.headers['set-cookie'];
   let value = null;
   let expires = null;
   if (!setCookies) {
+    beforelog(red('no set-cookie in response.headers'));
     return [];
   }
 

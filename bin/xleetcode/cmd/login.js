@@ -29,6 +29,7 @@ const {
 
 const {
   getSetCookieInfo,
+  requestCsrfToken,
 } = require('../utils');
 
 const cache = require('../cache');
@@ -38,14 +39,6 @@ const {
     login: loginUrl,
   },
 } = require('../config');
-
-/**
- * 为了获取 csrftoken 而发的请求
- */
-async function requestCsrfToken(options) {
-  const [response] = await requestP(options);
-  return getSetCookieInfo(response, 'csrftoken');
-}
 
 /**
  * 发送请求来进行登录
@@ -123,19 +116,22 @@ function promptToLogin() {
 
   prompt.message = '';
   prompt.start();
-  prompt.get([
-    usernameOption,
-    passwordOption,
-  ], async (err, user) => {
-    if (err) {
-      return;
-    }
+  prompt.get(
+    [
+      usernameOption,
+      passwordOption,
+    ],
+    async (err, user) => {
+      if (err) {
+        return;
+      }
 
-    logWithSpinner(grey('Logining ...'));
-    await login(user);
-    stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
-    log();
-  });
+      logWithSpinner(grey('Logining ...'));
+      await login(user);
+      stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
+      log();
+    },
+  );
 }
 
 /**
@@ -144,17 +140,10 @@ function promptToLogin() {
 async function autoRelogin(user) {
   bothlog(red('Your session has expired.'));
   cache.remove('session');
-  const {
-    username,
-    password,
-  } = user;
 
   logWithSpinner(grey('Auto relogining ...'));
-  await login({
-    username,
-    password,
-  });
-  stopSpinner(cyan(`Successfully relogin as ${yellow(username)}`));
+  await login(user);
+  stopSpinner(cyan(`Successfully relogin as ${yellow(user.username)}`));
   log();
 }
 
