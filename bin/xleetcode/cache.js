@@ -6,7 +6,7 @@ const {
 
 const FILE_NAME = {
   temp: '_temp.json',
-  session: 'user.json',
+  session: 'session.json',
   allProblems: 'allProblems.json',
 };
 

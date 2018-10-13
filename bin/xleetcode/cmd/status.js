@@ -36,12 +36,7 @@ function parseByFrontendId(allProblems) {
 
   _.fill(statusInfo, null);
 
-  statStatusPairs.forEach((statStatus) => {
-    const {
-      frontend_question_id: id,
-    } = statStatus.stat;
-    statusInfo[id] = statStatus;
-  });
+  statStatusPairs.forEach(statStatus => statusInfo[statStatus.stat.frontend_question_id] = statStatus);
 
   statusInfo.shift(); // id 从 1 开始
   cache.save('temp', statusInfo);
@@ -98,7 +93,6 @@ function showTotalStatistics(allProblems) {
   ));
   log();
 }
-
 
 /**
  * 显示 AC 状态图
