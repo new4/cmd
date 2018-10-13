@@ -27,7 +27,11 @@ const {
   requestP,
 } = require('../../../utils');
 
-const config = require('../config');
+const {
+  url: {
+    problemsAll: problemsAllUrl,
+  },
+} = require('../config');
 const cache = require('../cache');
 const getHeaders = require('./getHeaders');
 
@@ -38,7 +42,7 @@ exports.getAllProblems = async () => {
   logWithSpinner('get data ...');
 
   const [, body] = await requestP({
-    url: config.url.problemsAll,
+    url: problemsAllUrl,
     headers: getHeaders(),
     json: true,
   });

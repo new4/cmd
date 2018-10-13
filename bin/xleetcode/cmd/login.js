@@ -32,7 +32,12 @@ const {
 } = require('../utils');
 
 const cache = require('../cache');
-const config = require('../config');
+const {
+  url: {
+    base: baseUrl,
+    login: loginUrl,
+  },
+} = require('../config');
 
 /**
  * 为了获取 csrftoken 而发的请求
@@ -49,7 +54,7 @@ async function login(user) {
   try {
     // 先访问一遍 config.url.login 以获取 csrftoken，之后登录请求需要带上它
     const [token] = await requestCsrfToken({
-      url: config.url.login,
+      url: loginUrl,
     });
 
     const {
@@ -59,10 +64,10 @@ async function login(user) {
 
     const options = {
       method: 'POST',
-      url: config.url.login,
+      url: loginUrl,
       headers: {
-        Origin: config.url.base,
-        Referer: config.url.login,
+        Origin: baseUrl,
+        Referer: loginUrl,
         Cookie: `csrftoken=${token};`,
       },
       formData: {
