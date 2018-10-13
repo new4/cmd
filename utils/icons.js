@@ -8,6 +8,6 @@ module.exports = {
   point: '●',
   star: '★',
   hollowStar: '☆',
-  checked: '☑',
-  notChecked: '☐',
+  checked: process.platform === 'win32' ? '☑' : '★',
+  notChecked: process.platform === 'win32' ? '☐' : '☆',
 };

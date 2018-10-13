@@ -6,10 +6,10 @@ const {
 
 const {
   actions: {
-    getAllProblems,
     showAcStatusMap,
     showTotalStatistics,
   },
+  getAllProblems,
 } = require('../utils');
 
 module.exports = async function status() {

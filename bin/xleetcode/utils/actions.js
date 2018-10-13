@@ -17,43 +17,12 @@ const {
     log,
     beforelog,
   },
-  spinner: {
-    logWithSpinner,
-    stopSpinner,
-  },
   strAlign: {
     center,
   },
-  requestP,
 } = require('../../../utils');
 
-const {
-  url: {
-    problemsAll: problemsAllUrl,
-  },
-} = require('../config');
 const cache = require('../cache');
-const getHeaders = require('./getHeaders');
-
-/**
- * 获取与当前用户相关的所有题目的信息
- */
-exports.getAllProblems = async () => {
-  logWithSpinner('get data ...');
-
-  const [, body] = await requestP({
-    url: problemsAllUrl,
-    headers: getHeaders(),
-    json: true,
-  });
-
-  stopSpinner('success');
-
-  // log(red(response.statusCode));
-
-  cache.save('allProblems', body);
-  return body;
-};
 
 function parseByFrontendId(allProblems) {
   const statStatusPairs = allProblems.stat_status_pairs;
@@ -70,9 +39,9 @@ function parseByFrontendId(allProblems) {
     statusInfo[id] = statStatus;
   });
 
-  cache.save('temp', statusInfo);
-
   statusInfo.shift(); // id 从 1 开始
+
+  cache.save('temp', statusInfo);
 
   return statusInfo;
 }
