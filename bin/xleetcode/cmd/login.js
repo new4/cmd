@@ -28,11 +28,12 @@ const {
 } = require('../../../utils');
 
 const {
-  getSetCookieInfo,
-  requestCsrfToken,
+  getRespSetCookieInfo,
+  requestCsrftoken,
 } = require('../utils');
 
 const cache = require('../cache');
+
 const {
   url: {
     base: baseUrl,
@@ -45,22 +46,22 @@ const {
  */
 async function login(user) {
   try {
-    // 先访问一遍 config.url.login 以获取 csrftoken，之后登录请求需要带上它
-    const [token] = await requestCsrfToken({
-      url: loginUrl,
-    });
+    // 先访问一遍登录的 url 以获取 csrftoken，之后登录请求需带上它
+    // 这个 token bu用存，登录之后会重新生成一个
+    const [token] = await requestCsrftoken(loginUrl);
 
     const {
       username,
       password,
     } = user;
 
-    const options = {
+    // 发送登录请求
+    const [response] = await requestP({
       method: 'POST',
       url: loginUrl,
       headers: {
         Origin: baseUrl,
-        Referer: loginUrl,
+        Referer: baseUrl,
         Cookie: `csrftoken=${token};`,
       },
       formData: {
@@ -68,18 +69,16 @@ async function login(user) {
         login: username,
         password,
       },
-    };
-
-    // 发送登录请求
-    const [response] = await requestP(options);
+    });
 
     if (response.statusCode !== 302) {
       bothlog(red(`${fail} invalid username or password`));
       process.exit(1);
     }
 
-    const [csrftoken] = getSetCookieInfo(response, 'csrftoken');
-    const [LEETCODE_SESSION, sessionExp] = getSetCookieInfo(response, 'LEETCODE_SESSION');
+    // 将登陆成功之后获取的 csrftoken/LEETCODE_SESSION/expires 信息缓存起来
+    const [csrftoken] = getRespSetCookieInfo(response, 'csrftoken');
+    const [LEETCODE_SESSION, sessionExp] = getRespSetCookieInfo(response, 'LEETCODE_SESSION');
 
     cache.save('session', {
       username,

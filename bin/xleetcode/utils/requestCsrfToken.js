@@ -3,13 +3,22 @@ const {
 } = require('../../../utils');
 
 const {
-  getSetCookieInfo,
-} = require('../utils');
+  getRespSetCookieInfo,
+} = require('.');
+
+const {
+  url: {
+    login: loginUrl,
+  },
+} = require('../config');
 
 /**
  * 为了获取 csrftoken 而发的请求
+ * 默认使用登录的 url，其实任意一个 url 都能够获取
  */
-module.exports = async (options) => {
-  const [response] = await requestP(options);
-  return getSetCookieInfo(response, 'csrftoken');
+module.exports = async (url = loginUrl) => {
+  const [response] = await requestP({
+    url,
+  });
+  return getRespSetCookieInfo(response, 'csrftoken');
 };

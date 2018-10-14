@@ -11,6 +11,12 @@ const {
   },
 } = require('../../../utils');
 
+const {
+  url: {
+    base: baseUrl,
+  },
+} = require('../config');
+
 const cache = require('../cache');
 
 /**
@@ -30,7 +36,9 @@ module.exports = () => {
   } = sessionCache;
 
   return {
-    'cookie': `LEETCODE_SESSION=${LEETCODE_SESSION};csrftoken=${csrftoken};`,
+    'Origin': baseUrl,
+    'Referer': baseUrl,
+    'Cookie': `LEETCODE_SESSION=${LEETCODE_SESSION};csrftoken=${csrftoken};`,
     'x-csrftoken': `${csrftoken};`,
     'x-requested-with': 'XMLHttpRequest',
   };
