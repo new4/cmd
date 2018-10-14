@@ -19,8 +19,8 @@ const generateHeaders = require('./generateHeaders');
 /**
  * 获取与当前用户相关的所有题目的信息
  */
-module.exports = async () => {
-  logWithSpinner('get data ...');
+module.exports = async (showSpinner) => {
+  showSpinner && logWithSpinner('get data ...');
 
   const [, body] = await requestP({
     url: problemsAllUrl,
@@ -28,7 +28,8 @@ module.exports = async () => {
     json: true,
   });
 
-  stopSpinner('success');
+  showSpinner && stopSpinner('success');
+
   cache.save('allProblems', body);
   return body;
 };

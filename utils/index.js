@@ -11,4 +11,5 @@ exports.spinner = require('./spinner');
 exports.strAlign = require('./strAlign');
 exports.tipEnhance = require('./tipEnhance');
 exports.underPath = require('./underPath');
+exports.validator = require('./validator');
 exports.yarnOp = require('./yarnOp');

@@ -10,6 +10,7 @@ const {
 const login = require('./cmd/login');
 const logout = require('./cmd/logout');
 const status = require('./cmd/status');
+const get = require('./cmd/get');
 
 const ts = require('./test');
 
@@ -40,6 +41,16 @@ program
   .command('status')
   .description('show status')
   .action(cmd => status(cmd));
+
+/**
+ * 拉取题目
+ */
+program
+  .command('get')
+  .description('get problems')
+  .option('-n, --number <number>', 'specify problem number')
+  .option('-o, --output <dir>', 'specify output directory')
+  .action(cmd => get(cleanArgs(cmd)));
 
 /**
  * test

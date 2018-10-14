@@ -1,0 +1,1 @@
+exports.queryQuestion = require('./queryQuestion');

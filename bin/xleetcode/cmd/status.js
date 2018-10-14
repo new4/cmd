@@ -139,7 +139,7 @@ function showAcStatusMap(allProblems) {
 }
 
 module.exports = async function status() {
-  const allProblems = await getAllProblems();
+  const allProblems = await getAllProblems(true);
   clearlog();
   showTotalStatistics(allProblems);
   showAcStatusMap(allProblems);
