@@ -81,7 +81,10 @@ module.exports = async function get(cmd) {
     },
   } = questionInfoParsed;
 
-  let text = cheerio.load(translatedContent).text();
+  let text = cheerio.load(translatedContent, {
+    normalizeWhitespace: true,
+    decodeEntities: true,
+  }).text();
 
   // bothlog(text);
 
@@ -92,6 +95,7 @@ module.exports = async function get(cmd) {
   ];
 
   text = text.split('\n').map(p => ` * ${p}`);
+  // text = text.split('\n').map(p => ` * ${p.replace(/\s+$/, '')}`);
 
   const bottom = [
     ' * ==================================================================',
