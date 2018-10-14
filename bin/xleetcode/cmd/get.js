@@ -1,3 +1,9 @@
+const cheerio = require('cheerio');
+const fse = require('fs-extra');
+const {
+  concat,
+} = require('lodash');
+
 const {
   icons: {
     fail,
@@ -12,6 +18,7 @@ const {
   validator: {
     shouldBeNumber,
   },
+  underPath,
 } = require('../../../utils');
 
 const {
@@ -59,7 +66,46 @@ module.exports = async function get(cmd) {
 
   const questionInfo = await queryQuestion(titleSlug);
 
-  bothlog(questionInfo);
+  // bothlog(questionInfo);
 
-  cache.save('questionInfo', JSON.parse(questionInfo));
+  const questionInfoParsed = JSON.parse(questionInfo);
+
+  cache.save('questionInfo', questionInfoParsed);
+
+  const {
+    data: {
+      question: {
+        translatedTitle,
+        translatedContent,
+      },
+    },
+  } = questionInfoParsed;
+
+  let text = cheerio.load(translatedContent).text();
+
+  // bothlog(text);
+
+  const top = [
+    '/**',
+    ` * ${translatedTitle}`,
+    ' *',
+  ];
+
+  text = text.split('\n').map(p => ` * ${p}`);
+
+  const bottom = [
+    ' * ==================================================================',
+    ' *',
+    ' * 解法:',
+    ' *',
+    ' */',
+  ];
+
+  text = concat(top, text, bottom);
+
+  bothlog(text);
+
+  text = text.join('\n');
+
+  fse.outputFileSync(underPath('bin', 'xleetcode/cache/_text.js'), text);
 };
