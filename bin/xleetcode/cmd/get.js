@@ -1,10 +1,13 @@
 const cheerio = require('cheerio');
+const fs = require('fs');
 const fse = require('fs-extra');
+const path = require('path');
 const {
   concat,
 } = require('lodash');
 
 const {
+  addonZero,
   icons: {
     fail,
   },
@@ -32,8 +35,8 @@ const {
 const cache = require('../cache');
 
 const {
-  queryQuestion: {
-    outputDir: questionOutput,
+  question: {
+    outputDir: questionOutputDir,
     lang: questionLang,
   },
 } = require('../config');
@@ -43,11 +46,30 @@ const {
 const handleStr = str => str.replace(/\s+$/g, '').replace(/\s/g, ' ');
 
 /**
+ * 处理 js 代码，使其符合 eslint 检测
+ */
+const jsCodeStrHandler = (codeStr) => {
+  if (codeStr.includes('function')) {
+    const [funcName, funcParams] = codeStr.replace(/var|function|\{/g, '').split('=');
+    return `function ${funcName.trim()}${funcParams.trim()} { // eslint-disable-line`;
+  }
+  return codeStr.replace('};', '}'); // 去掉最后的 ';'
+};
+
+/**
+ * 获取 dir 目录下所有的文件名
+ */
+function getExistedFiles(dir) {
+  return fs.readdirSync(dir).filter(file => fs.statSync(path.join(dir, file)).isFile());
+}
+
+/**
  * 登出，清空 cache 中的 session 即可
  */
 module.exports = async function get(cmd) {
   const {
-    number,
+    number, // 题号
+    output, // 输出目录
   } = cmd;
 
   if (!number) {
@@ -75,9 +97,16 @@ module.exports = async function get(cmd) {
 
   bothlog(yellow(`questionTitle = ${title}`));
 
-  const questionInfo = await queryQuestion(titleSlug);
+  const outputFile = underPath('cur', `${questionOutputDir}/${addonZero(number)} ${title}.js`);
 
-  // bothlog(questionInfo);
+  const existedFiles = getExistedFiles(underPath('cur', `${questionOutputDir}`));
+
+  if (existedFiles.filter(file => file.includes(addonZero(number))).length) {
+    bothlog(red(`${fail} file existed！number: ${yellow(number)}`));
+    return;
+  }
+
+  const questionInfo = await queryQuestion(titleSlug);
 
   const questionInfoParsed = JSON.parse(questionInfo);
 
@@ -97,16 +126,7 @@ module.exports = async function get(cmd) {
     decodeEntities: true,
   }).text();
 
-  // bothlog(text);
-
-  const codeSnippet = codeSnippets.filter((snippet) => {
-    const {
-      lang,
-      langSlug,
-    } = snippet;
-
-    return lang === questionLang || langSlug === questionLang;
-  });
+  const codeSnippet = codeSnippets.filter(snippet => snippet.langSlug === questionLang);
 
   if (!codeSnippet.length) {
     bothlog(red(`${fail} lang:${questionLang} in config.js dismatch any lang type in Leetcode`));
@@ -116,7 +136,7 @@ module.exports = async function get(cmd) {
   let [{
     code,
   }] = codeSnippet;
-  code = code.split('\n').map(p => `${handleCodeStr(handleStr(p))}`);
+  code = code.split('\n').map(p => `${jsCodeStrHandler(handleStr(p))}`);
 
   const top = [
     '/**',
@@ -141,13 +161,5 @@ module.exports = async function get(cmd) {
 
   text = text.join('\n');
 
-  fse.outputFileSync(underPath('bin', 'xleetcode/cache/_text.js'), text);
+  fse.outputFileSync(outputFile, text);
 };
-
-function handleCodeStr(codeStr) {
-  if (codeStr.includes('function')) {
-    const [funcName, funcParams] = codeStr.replace(/var|function|\{/g, '').split('=');
-    return `function ${funcName.trim()}${funcParams.trim()} { // eslint-disable-line`;
-  }
-  return codeStr.replace('};', '}'); // 去掉最后的 ';'
-}

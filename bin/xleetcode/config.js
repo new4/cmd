@@ -7,8 +7,8 @@ module.exports = {
     cardInfo: 'https://leetcode-cn.com/problems/api/card-info/',
     problemsAll: 'https://leetcode-cn.com/api/problems/all/',
   },
-  queryQuestion: {
+  question: {
     outputDir: './solutions',
-    lang: 'javascript',
+    lang: 'javascript', // 拉 js 代码，拉其它代码意义不大
   },
 };
