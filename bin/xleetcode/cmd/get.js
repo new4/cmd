@@ -31,6 +31,17 @@ const {
 
 const cache = require('../cache');
 
+const {
+  queryQuestion: {
+    outputDir: questionOutput,
+    lang: questionLang,
+  },
+} = require('../config');
+
+// 1. 去除 str 末尾的空格
+// 2. 处理 &nbsp;
+const handleStr = str => str.replace(/\s+$/g, '').replace(/\s/g, ' ');
+
 /**
  * 登出，清空 cache 中的 session 即可
  */
@@ -77,6 +88,7 @@ module.exports = async function get(cmd) {
       question: {
         translatedTitle,
         translatedContent,
+        codeSnippets,
       },
     },
   } = questionInfoParsed;
@@ -87,14 +99,32 @@ module.exports = async function get(cmd) {
 
   // bothlog(text);
 
+  const codeSnippet = codeSnippets.filter((snippet) => {
+    const {
+      lang,
+      langSlug,
+    } = snippet;
+
+    return lang === questionLang || langSlug === questionLang;
+  });
+
+  if (!codeSnippet.length) {
+    bothlog(red(`${fail} lang:${questionLang} in config.js dismatch any lang type in Leetcode`));
+    return;
+  }
+
+  let [{
+    code,
+  }] = codeSnippet;
+  code = code.split('\n').map(p => `${handleCodeStr(handleStr(p))}`);
+
   const top = [
     '/**',
     ` * ${translatedTitle}`,
     ' *',
   ];
 
-  // text = text.replace(/&nbsp;/gi, ' ').split('\n').map(p => ` * ${p}`);
-  text = text.split('\n').map(p => ` * ${p.replace(/\s+$/g, '').replace(/\s/g, ' ')}`);
+  text = text.split('\n').map(p => ` * ${handleStr(p)}`);
 
   const bottom = [
     ' * ==================================================================',
@@ -102,13 +132,22 @@ module.exports = async function get(cmd) {
     ' * 解法:',
     ' *',
     ' */',
+    '',
   ];
 
-  text = concat(top, text, bottom);
+  text = concat(top, text, bottom, code, '');
 
-  bothlog(text);
+  // bothlog(text);
 
   text = text.join('\n');
 
   fse.outputFileSync(underPath('bin', 'xleetcode/cache/_text.js'), text);
 };
+
+function handleCodeStr(codeStr) {
+  if (codeStr.includes('function')) {
+    const [funcName, funcParams] = codeStr.replace(/var|function|\{/g, '').split('=');
+    return `function ${funcName.trim()}${funcParams.trim()} { // eslint-disable-line`;
+  }
+  return codeStr.replace('};', '}'); // 去掉最后的 ';'
+}

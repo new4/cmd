@@ -7,4 +7,8 @@ module.exports = {
     cardInfo: 'https://leetcode-cn.com/problems/api/card-info/',
     problemsAll: 'https://leetcode-cn.com/api/problems/all/',
   },
+  queryQuestion: {
+    outputDir: './solutions',
+    lang: 'javascript',
+  },
 };

@@ -34,11 +34,15 @@ module.exports = async (titleSlug) => {
         question(titleSlug: $titleSlug) {
           questionId
           questionFrontendId
-          boundTopicId
           title
-          content
           translatedTitle
+          content
           translatedContent
+          codeSnippets {
+            lang
+            langSlug
+            code
+          }
         }
       }
     `,
