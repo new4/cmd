@@ -97,9 +97,11 @@ module.exports = async function get(cmd) {
 
   bothlog(yellow(`questionTitle = ${title}`));
 
-  const outputFile = underPath('cur', `${questionOutputDir}/${addonZero(number)} ${title}.js`);
+  const outputDir = underPath('cur', output || questionOutputDir);
+  fse.ensureDirSync(outputDir);
 
-  const existedFiles = getExistedFiles(underPath('cur', `${questionOutputDir}`));
+  const outputFile = path.join(outputDir, `${addonZero(number)} ${title}.js`);
+  const existedFiles = getExistedFiles(outputDir);
 
   if (existedFiles.filter(file => file.includes(addonZero(number))).length) {
     bothlog(red(`${fail} file existed！number: ${yellow(number)}`));

@@ -16,6 +16,9 @@ const {
   bothlog,
 } = require('./log');
 
+/**
+ * number 应该是一个数字
+ */
 function shouldBeNumber(number, errStr = 'should be number') {
   const num = toNumber(number);
   if (!isNumber(num) || isNaN(num)) {
@@ -24,6 +27,14 @@ function shouldBeNumber(number, errStr = 'should be number') {
   }
 }
 
+/**
+ * value 应该是一个非空值
+ */
+function shouldBeValidValue(value, errStr = 'should be valid value') {
+
+}
+
 module.exports = {
   shouldBeNumber,
+  shouldBeValidValue,
 };
