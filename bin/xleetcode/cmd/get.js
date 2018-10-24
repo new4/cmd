@@ -8,19 +8,17 @@ const {
 
 const {
   addonZero,
-  icons: {
-    fail,
-  },
   colorStr: {
-    red,
     yellow,
   },
   log: {
     bothlog,
   },
   shouldBe: {
-    shouldBeNumber,
-    shouldBeValidValue,
+    sbNumber,
+    sbValidValue,
+    sbEmptyArray,
+    sbValidArray,
   },
   underPath,
 } = require('../../../utils');
@@ -73,18 +71,24 @@ module.exports = async function get(cmd) {
     output, // 输出目录
   } = cmd;
 
-  if (!number) {
-    bothlog(red(`${fail} need option ${yellow('-n, --number <number>')}`));
-    return;
-  }
+  sbValidValue(
+    number,
+    `need option ${yellow('-n, --number <number>')}`,
+  );
 
-  shouldBeNumber(number, `option ${yellow('-n, --number <number>')} should be a number`);
+  sbNumber(
+    number,
+    `option ${yellow('-n, --number <number>')} should be a number`,
+  );
 
   const allProblems = await getAllProblems();
   const statStatusPairs = allProblems.stat_status_pairs;
   const [targetStatus] = statStatusPairs.filter(statStatus => +number === statStatus.stat.frontend_question_id);
 
-  shouldBeValidValue(targetStatus, `no question has id ${yellow(number)}`);
+  sbValidValue(
+    targetStatus,
+    `no question has id ${yellow(number)}`,
+  );
 
   const {
     stat: {
@@ -101,10 +105,10 @@ module.exports = async function get(cmd) {
   const outputFile = path.join(outputDir, `${addonZero(number)} ${title}.js`);
   const existedFiles = getExistedFiles(outputDir);
 
-  if (existedFiles.filter(file => file.includes(addonZero(number))).length) {
-    bothlog(red(`${fail} file existed！number: ${yellow(number)}`));
-    return;
-  }
+  sbEmptyArray(
+    existedFiles.filter(file => file.includes(addonZero(number))),
+    `file existed！number: ${yellow(number)}`,
+  );
 
   const questionInfo = await queryQuestion(titleSlug);
 
@@ -128,10 +132,10 @@ module.exports = async function get(cmd) {
 
   const codeSnippet = codeSnippets.filter(snippet => snippet.langSlug === questionLang);
 
-  if (!codeSnippet.length) {
-    bothlog(red(`${fail} lang:${questionLang} in config.js dismatch any lang type in Leetcode`));
-    return;
-  }
+  sbValidArray(
+    codeSnippet,
+    `lang:${questionLang} in config.js dismatch any lang type in Leetcode`,
+  );
 
   let [{
     code,

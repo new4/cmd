@@ -4,6 +4,7 @@ const {
   isNaN,
   isUndefined,
   isNull,
+  isArray,
 } = require('lodash');
 
 const {
@@ -35,7 +36,7 @@ const creator = (value, errStr, fn) => {
 /**
  * number 应该是一个数字
  */
-const shouldBeNumber = (value, errStr = 'should be number') => {
+const sbNumber = (value, errStr = 'should be number') => {
   creator(
     value,
     errStr,
@@ -49,7 +50,7 @@ const shouldBeNumber = (value, errStr = 'should be number') => {
 /**
  * value 应该是一个非空值（非 null/undefined）
  */
-const shouldBeValidValue = (value, errStr = 'should be valid value') => {
+const sbValidValue = (value, errStr = 'should be valid value') => {
   creator(
     value,
     errStr,
@@ -57,7 +58,31 @@ const shouldBeValidValue = (value, errStr = 'should be valid value') => {
   );
 };
 
+/**
+ * value 应该是一个有效的数组（长度不为 0 的数组）
+ */
+const sbValidArray = (value, errStr = 'should be valid array') => {
+  creator(
+    value,
+    errStr,
+    val => isArray(val) && val.length,
+  );
+};
+
+/**
+ * value 应该是一个空数组
+ */
+const sbEmptyArray = (value, errStr = 'should be empty array') => {
+  creator(
+    value,
+    errStr,
+    val => isArray(val) && !val.length,
+  );
+};
+
 module.exports = {
-  shouldBeNumber,
-  shouldBeValidValue,
+  sbNumber,
+  sbValidValue,
+  sbValidArray,
+  sbEmptyArray,
 };
