@@ -18,8 +18,9 @@ const {
   log: {
     bothlog,
   },
-  validator: {
+  shouldBe: {
     shouldBeNumber,
+    shouldBeValidValue,
   },
   underPath,
 } = require('../../../utils');
@@ -83,10 +84,7 @@ module.exports = async function get(cmd) {
   const statStatusPairs = allProblems.stat_status_pairs;
   const [targetStatus] = statStatusPairs.filter(statStatus => +number === statStatus.stat.frontend_question_id);
 
-  if (!targetStatus) {
-    bothlog(red(`${fail} no question has id ${yellow(number)}`));
-    return;
-  }
+  shouldBeValidValue(targetStatus, `no question has id ${yellow(number)}`);
 
   const {
     stat: {
