@@ -1,13 +1,9 @@
 const {
-  icons: {
-    fail,
-  },
   colorStr: {
-    red,
     yellow,
   },
-  log: {
-    bothlog,
+  shouldBe: {
+    sbValidValue,
   },
 } = require('../../../utils');
 
@@ -25,10 +21,10 @@ const cache = require('../cache');
 module.exports = () => {
   const sessionCache = cache.get('session');
 
-  if (!sessionCache) {
-    bothlog(red(`${fail} Need login. Use ${yellow('xleetcode login')}`));
-    process.exit(1);
-  }
+  sbValidValue(
+    sessionCache,
+    `Need login. Use ${yellow('xleetcode login')}`,
+  );
 
   const {
     LEETCODE_SESSION,

@@ -23,12 +23,17 @@ const {
     beforelog,
     afterlog,
     bothlog,
+    successlog,
   },
   strAlign: {
     center,
   },
   yarnOp: {
     relink,
+  },
+  shouldBe: {
+    sbValidValue,
+    sbValidArray,
   },
 } = require('../../../utils');
 
@@ -47,17 +52,17 @@ module.exports = function check(cmd) {
 
   const cmdInPkgJsonList = cmdInPkgJson();
 
-  if (!cmdInPkgJsonList) {
-    bothlog(red(`${fail} No bin config in package.json`));
-    return;
-  }
+  sbValidValue(
+    cmdInPkgJsonList,
+    'No bin config in package.json',
+  );
 
   const entries = Object.entries(cmdInPkgJsonList);
 
-  if (!entries || !entries.length) {
-    bothlog(red(`${fail} No cmd config in bin of package.json`));
-    return;
-  }
+  sbValidArray(
+    entries,
+    'No cmd config in bin of package.json',
+  );
 
   bothlog(cyan('cmd info in package.json:'));
   entries.forEach(([cmdname, path]) => {

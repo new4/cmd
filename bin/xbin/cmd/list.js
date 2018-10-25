@@ -8,13 +8,11 @@ const {
     getMode,
   },
   colorStr: {
-    red,
     yellow,
     cyan,
   },
   underPath,
   icons: {
-    fail,
     point,
   },
   log: {
@@ -24,6 +22,10 @@ const {
   yarnOp: {
     yarnGlobalDir,
     yarnGlobalBin,
+  },
+  shouldBe: {
+    sbValidValue,
+    sbValidArray,
   },
 } = require('../../../utils');
 
@@ -36,17 +38,17 @@ const {
 module.exports = async function list() {
   const cmdInPkgJsonList = cmdInPkgJson();
 
-  if (!cmdInPkgJsonList) {
-    bothlog(red(`${fail} No bin config in package.json`));
-    return;
-  }
+  sbValidValue(
+    cmdInPkgJsonList,
+    'No bin config in package.json',
+  );
 
   const entries = Object.entries(cmdInPkgJsonList);
 
-  if (!entries || !entries.length) {
-    bothlog(red(`${fail} No cmd config in bin of package.json`));
-    return;
-  }
+  sbValidArray(
+    entries,
+    'No cmd config in bin of package.json',
+  );
 
   log();
 
