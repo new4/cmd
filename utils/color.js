@@ -3,15 +3,13 @@
  * 色彩取自 bootstrap 的 scss/_variables.scss (https://github.com/twbs/bootstrap)
  */
 module.exports = {
-  red: '#dc3545',
-  yellow: '#ffc107',
-  blue: '#007bff',
-  green: '#28a745',
-  grey: '#868e96',
-  indigo: '#6610f2',
-  purple: '#6f42c1',
-  pink: '#e83e8c',
-  orange: '#fd7e14',
-  teal: '#20c997',
-  cyan: '#17a2b8',
+  red: '#F04134',
+  blue: '#108EE9',
+  green: '#00A854',
+  yellow: '#FFBF00',
+  cyan: '#00A2AE',
+  grey: '#919191',
+  pink: '#F5317F',
+  orange: '#F56A00',
+  purple: '#7265E6',
 };
