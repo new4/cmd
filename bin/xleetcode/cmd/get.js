@@ -36,7 +36,7 @@ const cache = require('../cache');
 const {
   question: {
     outputDir: questionOutputDir,
-    lang: questionLang,
+    lang: targetLang,
   },
 } = require('../config');
 
@@ -58,10 +58,61 @@ const jsCodeStrHandler = (codeStr) => {
 /**
  * 获取 dir 目录下所有的文件名
  */
-const getExistedFiles = dir => fs.readdirSync(dir).filter(file => fs.statSync(path.join(dir, file)).isFile());
+const getExistFiles = dir => fs.readdirSync(dir).filter(file => fs.statSync(path.join(dir, file)).isFile());
 
 /**
- * 登出，清空 cache 中的 session 即可
+ * 根据 questionInfo 构建出题目的注释部分（包括题目的标题+描述+解法）
+ */
+function createComments(questionInfo) {
+  const {
+    translatedTitle,
+    translatedContent,
+  } = questionInfo;
+
+  const commentTitle = [
+    '/**',
+    ` * ${translatedTitle}`,
+    ' *',
+  ];
+
+  const commentDescription = cheerio.load(translatedContent).text().split('\n').map(p => ` * ${handleStr(p)}`);
+
+  const commentSolution = [
+    ' * ==================================================================',
+    ' *',
+    ' * 解法:',
+    ' *',
+    ' */',
+    '',
+  ];
+
+  return concat(commentTitle, commentDescription, commentSolution);
+}
+
+/**
+ * 根据 questionInfo 构建出题目的代码部分
+ */
+function createCode(questionInfo) {
+  const {
+    codeSnippets,
+  } = questionInfo;
+
+  const codeSnippet = codeSnippets.filter(snippet => snippet.langSlug === targetLang);
+
+  sbValidArray(
+    codeSnippet,
+    `lang:${targetLang} in config.js dismatch any lang type in Leetcode`,
+  );
+
+  let [{
+    code,
+  }] = codeSnippet;
+  code = code.split('\n').map(p => `${jsCodeStrHandler(handleStr(p))}`);
+  return code;
+}
+
+/**
+ * 拉取并生成某一题对应的文件
  */
 module.exports = async function get(cmd) {
   const {
@@ -79,7 +130,10 @@ module.exports = async function get(cmd) {
     `option ${yellow('-n, --number <number>')} should be a number`,
   );
 
-  const { stat_status_pairs: statStatusPairs } = await getAllProblems();
+  const {
+    stat_status_pairs: statStatusPairs,
+  } = await getAllProblems();
+
   const [targetStatus] = statStatusPairs.filter(statStatus => +number === statStatus.stat.frontend_question_id);
 
   sbValidValue(
@@ -100,67 +154,31 @@ module.exports = async function get(cmd) {
   fse.ensureDirSync(outputDir);
 
   const outputFile = path.join(outputDir, `${addonZero(number)} ${title}.js`);
-  const existedFiles = getExistedFiles(outputDir);
+  const existFiles = getExistFiles(outputDir);
 
   sbEmptyArray(
-    existedFiles.filter(file => file.includes(addonZero(number))),
+    existFiles.filter(file => file.includes(addonZero(number))),
     `file existed！number: ${yellow(number)}`,
   );
 
-  const questionInfo = await queryQuestion(titleSlug);
+  const questionData = await queryQuestion(titleSlug);
 
-  const questionInfoParsed = JSON.parse(questionInfo);
+  const questionDataParsed = JSON.parse(questionData);
 
-  cache.save('questionInfo', questionInfoParsed);
+  cache.save('questionData', questionDataParsed);
 
   const {
     data: {
-      question: {
-        translatedTitle,
-        translatedContent,
-        codeSnippets,
-      },
+      question: questionInfo,
     },
-  } = questionInfoParsed;
+  } = questionDataParsed;
 
-  let text = cheerio.load(translatedContent, {
-    decodeEntities: true,
-  }).text();
-
-  const codeSnippet = codeSnippets.filter(snippet => snippet.langSlug === questionLang);
-
-  sbValidArray(
-    codeSnippet,
-    `lang:${questionLang} in config.js dismatch any lang type in Leetcode`,
+  fse.outputFileSync(
+    outputFile,
+    concat(
+      createComments(questionInfo),
+      createCode(questionInfo),
+      '',
+    ).join('\n'),
   );
-
-  let [{
-    code,
-  }] = codeSnippet;
-  code = code.split('\n').map(p => `${jsCodeStrHandler(handleStr(p))}`);
-
-  const top = [
-    '/**',
-    ` * ${translatedTitle}`,
-    ' *',
-  ];
-
-  text = text.split('\n').map(p => ` * ${handleStr(p)}`);
-
-  const bottom = [
-    ' * ==================================================================',
-    ' *',
-    ' * 解法:',
-    ' *',
-    ' */',
-    '',
-  ];
-
-  text = concat(top, text, bottom, code, '');
-
-  // bothlog(text);
-
-  text = text.join('\n');
-
-  fse.outputFileSync(outputFile, text);
 };

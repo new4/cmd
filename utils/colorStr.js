@@ -21,7 +21,8 @@ const createColorStr = (str, color) => {
 };
 
 /**
- * 带颜色的字符串
+ * 暴露出去带颜色的字符串
+ * red|blue|green|yellow|cyan|grey|pink|orange|purple
  */
 Object.entries(colors).forEach(([name, color]) => {
   exports[name] = str => createColorStr(str, color);
