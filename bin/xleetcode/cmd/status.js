@@ -3,8 +3,8 @@ const _ = require('lodash');
 const {
   addonZero,
   icons: {
-    checked: ac,
-    notChecked: notac,
+    solidStar: iconAC,
+    hollowStar: iconNotAC,
   },
   log: {
     log,
@@ -125,7 +125,7 @@ function showAcStatusMap(allProblems) {
         row.push(' ');
       } else {
         // 只判断是否 AC
-        row.push(item.status === 'ac' ? green(ac) : grey(notac));
+        row.push(item.status === 'ac' ? green(iconAC) : grey(iconNotAC));
       }
       // 逢 subChunkSize 的倍数加上空格进行视觉上的分割
       if (!((jndex + 1) % subChunkSize)) {

@@ -4,10 +4,11 @@
 module.exports = {
   success: '✔',
   fail: '✘',
-  block: '■',
-  point: '●',
-  star: '★',
+  checked: '☑',
+  solidSquare: '■',
+  hollowSquare: '☐',
+  solidCircle: '●',
+  hollowCircle: '○',
+  solidStar: '★',
   hollowStar: '☆',
-  checked: process.platform === 'win32' ? '☑' : '★',
-  notChecked: process.platform === 'win32' ? '☐' : '☆',
 };

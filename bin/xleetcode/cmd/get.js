@@ -58,9 +58,7 @@ const jsCodeStrHandler = (codeStr) => {
 /**
  * 获取 dir 目录下所有的文件名
  */
-function getExistedFiles(dir) {
-  return fs.readdirSync(dir).filter(file => fs.statSync(path.join(dir, file)).isFile());
-}
+const getExistedFiles = dir => fs.readdirSync(dir).filter(file => fs.statSync(path.join(dir, file)).isFile());
 
 /**
  * 登出，清空 cache 中的 session 即可
@@ -81,8 +79,7 @@ module.exports = async function get(cmd) {
     `option ${yellow('-n, --number <number>')} should be a number`,
   );
 
-  const allProblems = await getAllProblems();
-  const statStatusPairs = allProblems.stat_status_pairs;
+  const { stat_status_pairs: statStatusPairs } = await getAllProblems();
   const [targetStatus] = statStatusPairs.filter(statStatus => +number === statStatus.stat.frontend_question_id);
 
   sbValidValue(

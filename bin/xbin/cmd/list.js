@@ -13,7 +13,7 @@ const {
   },
   underPath,
   icons: {
-    point,
+    hollowCircle,
   },
   log: {
     log,
@@ -58,7 +58,7 @@ module.exports = async function list() {
 
     // 以后改造成使用 console.table
     if (isExisted && isValid) {
-      log(cyan(` ${point} ${cmdname}`));
+      log(cyan(` ${hollowCircle} ${cmdname}`));
     }
   });
 
