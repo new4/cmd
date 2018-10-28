@@ -16,6 +16,9 @@ const {
     success,
     fail,
   },
+  jsonOp: {
+    jsonStringify,
+  },
   log: {
     log,
     beforelog,
@@ -68,7 +71,7 @@ module.exports = function rename(oldName, newName) {
       // 更新 package.json
       fse.outputFile(
         underPath('root', 'package.json'),
-        `${JSON.stringify(packageJson, null, 2)}\n`,
+        `${jsonStringify(packageJson)}\n`,
       ),
       // 复制目录
       fse.copy(

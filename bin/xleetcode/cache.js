@@ -2,6 +2,9 @@ const fse = require('fs-extra');
 
 const {
   underPath,
+  jsonOp: {
+    jsonStringify,
+  },
 } = require('../../utils');
 
 const FILE_NAME = {
@@ -16,7 +19,7 @@ const getFilePath = type => underPath('bin', `xleetcode/cache/${FILE_NAME[type]}
 /**
  * 保存信息
  */
-exports.save = (type, info) => fse.outputFileSync(getFilePath(type), `${JSON.stringify(info, null, 2)}\n`);
+exports.save = (type, info) => fse.outputFileSync(getFilePath(type), `${jsonStringify(info)}\n`);
 
 /**
  * 移除信息

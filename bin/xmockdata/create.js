@@ -9,6 +9,9 @@ const {
     success,
   },
   underPath,
+  jsonOp: {
+    jsonStringify,
+  },
 } = require('../../utils');
 
 const MAP_LIST = [
@@ -213,7 +216,7 @@ module.exports = function create() {
 
     promiseOperate.push(fse.outputFile(
       underPath('cur', `_mock/${key}.json`),
-      `${JSON.stringify(result, null, 2)}`,
+      `${jsonStringify(result)}`,
     ));
   });
 

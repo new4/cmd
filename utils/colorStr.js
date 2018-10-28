@@ -4,6 +4,10 @@ const {
   isObjectLike,
 } = require('lodash');
 
+const {
+  jsonStringify,
+} = require('./jsonOp');
+
 const colors = {
   red: '#F04134', // 热情/警示
   green: '#00A854', // 通过/安全
@@ -22,7 +26,7 @@ const colors = {
 Object.entries(colors).forEach(([name, color]) => {
   exports[name] = (str) => {
     if (isObjectLike(str)) {
-      str = JSON.stringify(str, null, 2);
+      str = jsonStringify(str);
     }
     return chalk.hex(color)(str);
   };

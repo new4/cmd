@@ -12,12 +12,16 @@ const {
   cyan,
 } = require('./colorStr');
 
+const {
+  jsonStringify,
+} = require('./jsonOp');
+
 /**
  * console.log 的代理
  */
 const log = (str) => {
   if (isObjectLike(str)) {
-    str = JSON.stringify(str, null, 2);
+    str = jsonStringify(str);
   }
   console.log(str ? `  ${str}` : '');
 };

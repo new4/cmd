@@ -15,6 +15,9 @@ const {
     success,
     fail,
   },
+  jsonOp: {
+    jsonStringify,
+  },
   log: {
     log,
     beforelog,
@@ -57,7 +60,7 @@ module.exports = function remove(name, cmd) {
   if (hasBinInfo) {
     delete packageJson.bin[name];
     promiseOperate.push(
-      fse.outputFile(underPath('root', 'package.json'), `${JSON.stringify(packageJson, null, 2)}\n`),
+      fse.outputFile(underPath('root', 'package.json'), `${jsonStringify(packageJson)}\n`),
     );
   }
 

@@ -18,12 +18,14 @@ const {
     yellow,
     cyan,
   },
+  jsonOp: {
+    jsonStringify,
+  },
   log: {
     log,
     beforelog,
     afterlog,
     bothlog,
-    successlog,
   },
   strAlign: {
     center,
@@ -114,7 +116,7 @@ module.exports = function check(cmd) {
       delete packageJson.bin[cmdname];
     });
     promiseOperate.push(
-      fse.outputFile(underPath('root', 'package.json'), `${JSON.stringify(packageJson, null, 2)}\n`),
+      fse.outputFile(underPath('root', 'package.json'), `${jsonStringify(packageJson)}\n`),
     );
   }
 

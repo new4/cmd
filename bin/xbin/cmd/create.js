@@ -18,6 +18,9 @@ const {
     yellow,
     cyan,
   },
+  jsonOp: {
+    jsonStringify,
+  },
   log: {
     log,
     bothlog,
@@ -58,7 +61,7 @@ module.exports = function create(name) {
     promiseOperate.push(
       fse.outputFile(
         underPath('root', 'package.json'),
-        `${JSON.stringify(packageJson, null, 2)}\n`,
+        `${jsonStringify(packageJson)}\n`,
       ),
     );
   }
