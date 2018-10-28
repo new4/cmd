@@ -1,5 +1,4 @@
 const cheerio = require('cheerio');
-const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
 const {
@@ -10,8 +9,13 @@ const {
   addonZero,
   colorStr: {
     yellow,
+    cyan,
+  },
+  icons: {
+    success,
   },
   log: {
+    beforelog,
     bothlog,
   },
   shouldBe: {
@@ -21,6 +25,7 @@ const {
     sbValidArray,
   },
   underPath,
+  getExistFiles,
 } = require('../../../utils');
 
 const {
@@ -30,8 +35,6 @@ const {
 const {
   queryQuestion,
 } = require('../graphql');
-
-const cache = require('../cache');
 
 const {
   question: {
@@ -56,11 +59,6 @@ const jsCodeStrHandler = (codeStr) => {
 };
 
 /**
- * 获取 dir 目录下所有的文件名
- */
-const getExistFiles = dir => fs.readdirSync(dir).filter(file => fs.statSync(path.join(dir, file)).isFile());
-
-/**
  * 根据 questionInfo 构建出题目的注释部分（包括题目的标题+描述+解法）
  */
 function createComments(questionInfo) {
@@ -69,15 +67,16 @@ function createComments(questionInfo) {
     translatedContent,
   } = questionInfo;
 
-  const commentTitle = [
+  const title = [
     '/**',
     ` * ${translatedTitle}`,
     ' *',
   ];
 
-  const commentDescription = cheerio.load(translatedContent).text().split('\n').map(p => ` * ${handleStr(p)}`);
+  // 取出文本节点内容，并逐行处理空白字符
+  const description = cheerio.load(translatedContent).text().split('\n').map(p => ` * ${handleStr(p)}`);
 
-  const commentSolution = [
+  const solution = [
     ' * ==================================================================',
     ' *',
     ' * 解法:',
@@ -86,7 +85,7 @@ function createComments(questionInfo) {
     '',
   ];
 
-  return concat(commentTitle, commentDescription, commentSolution);
+  return concat(title, description, solution);
 }
 
 /**
@@ -148,12 +147,11 @@ module.exports = async function get(cmd) {
     },
   } = targetStatus;
 
-  bothlog(yellow(`questionTitle = ${title}`));
-
   const outputDir = underPath('cur', output || questionOutputDir);
   fse.ensureDirSync(outputDir);
 
-  const outputFile = path.join(outputDir, `${addonZero(number)} ${title}.js`);
+  const fileName = `${addonZero(number)} ${title}.js`;
+  const outputFile = path.join(outputDir, `${fileName}`);
   const existFiles = getExistFiles(outputDir);
 
   sbEmptyArray(
@@ -161,24 +159,23 @@ module.exports = async function get(cmd) {
     `file existed！number: ${yellow(number)}`,
   );
 
-  const questionData = await queryQuestion(titleSlug);
-
-  const questionDataParsed = JSON.parse(questionData);
-
-  cache.save('questionData', questionDataParsed);
+  const questionInfoParsed = await queryQuestion(titleSlug);
 
   const {
     data: {
       question: questionInfo,
     },
-  } = questionDataParsed;
+  } = questionInfoParsed;
 
   fse.outputFileSync(
     outputFile,
     concat(
-      createComments(questionInfo),
-      createCode(questionInfo),
-      '',
+      createComments(questionInfo), // 注释部分
+      createCode(questionInfo), // 代码部分
+      '', // 使文件末尾多一行
     ).join('\n'),
   );
+
+  beforelog(cyan(`${success} File ${yellow(fileName)} created!`));
+  bothlog(cyan(`Under Path: ${outputDir}`));
 };

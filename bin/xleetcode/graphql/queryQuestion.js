@@ -68,5 +68,9 @@ module.exports = async (titleSlug) => {
     return bothlog(red(`${fail} graphql statusCode = ${resp.statusCode}`));
   }
 
-  return body;
+  const questionInfoParsed = JSON.parse(body);
+
+  cache.save('questionInfo', questionInfoParsed);
+
+  return questionInfoParsed;
 };
