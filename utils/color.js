@@ -1,6 +1,5 @@
 /**
  * 将一些颜色暴露出去
- * 色彩取自 bootstrap 的 scss/_variables.scss (https://github.com/twbs/bootstrap)
  */
 module.exports = {
   red: '#F04134',
