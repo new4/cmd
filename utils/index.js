@@ -15,3 +15,4 @@ exports.underPath = require('./underPath');
 exports.shouldBe = require('./shouldBe');
 exports.yarnOp = require('./yarnOp');
 exports.getExistFiles = require('./getExistFiles');
+exports.randomStr = require('./randomStr');
