@@ -8,5 +8,5 @@ module.exports = function underPath(underpath, subpath) {
     cur: process.cwd(), // 执行某一命令的当下目录
   };
 
-  return path.resolve(path.join(mapping[underpath], subpath || '.'));
+  return path.resolve(path.join(mapping[underpath] || underpath, subpath || '.'));
 };

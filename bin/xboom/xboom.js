@@ -3,7 +3,6 @@
 const program = require('commander');
 
 const {
-  cleanArgs,
   tipEnhance,
 } = require('../../utils');
 
@@ -20,7 +19,9 @@ program
 program
   .command('chaos <phone-number>')
   .description('make chaos')
-  .action(phone => chaos(phone));
+  .action(async (phone) => {
+    await chaos(phone);
+  });
 
 /**
  * test
@@ -28,7 +29,9 @@ program
 program
   .command('test')
   .description('for test')
-  .action(async cmd => await ts(cmd));
+  .action(async (cmd) => {
+    await ts(cmd);
+  });
 
 // 强化的提示
 tipEnhance(program, __filename);
