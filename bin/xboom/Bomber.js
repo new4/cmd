@@ -1,13 +1,14 @@
+const {
+  randomStr,
+} = require('../../utils');
+
 class Bomber {
   constructor() {
-    this.name = '';
-    this.email = '';
+    this.name = randomStr(); // 生成一个用户名
+    this.url = '';
     this.phone = '';
+    this.browser = '';
   }
-
-  async drop() { }
-
-  async check() { }
 }
 
 module.exports = Bomber;

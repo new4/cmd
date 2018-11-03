@@ -34,6 +34,18 @@ const creator = (value, errStr, fn) => {
 };
 
 /**
+ * fn 应该返回 true, 否则会报错
+ * 用于自定义规则函数
+ */
+const sb = (fn, errStr = 'fn should return true') => {
+  creator(
+    fn(),
+    errStr,
+    val => val,
+  );
+};
+
+/**
  * number 应该是一个数字
  */
 const sbNumber = (value, errStr = 'should be number') => {
@@ -81,6 +93,7 @@ const sbEmptyArray = (value, errStr = 'should be empty array') => {
 };
 
 module.exports = {
+  sb,
   sbNumber,
   sbValidValue,
   sbValidArray,

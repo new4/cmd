@@ -7,8 +7,7 @@ const {
   tipEnhance,
 } = require('../../utils');
 
-const example = () => console.log('hello world!');
-
+const chaos = require('./cmd/chaos');
 const ts = require('./test');
 
 program
@@ -19,11 +18,9 @@ program
  * example
  */
 program
-  .command('hello <cmd-name>')
-  .alias('ex')
-  .description('a example commander')
-  .option('-p, --params', 'option')
-  .action((name, cmd) => example(name, cleanArgs(cmd)));
+  .command('chaos <phone-number>')
+  .description('make chaos')
+  .action(phone => chaos(phone));
 
 /**
  * test
@@ -31,7 +28,7 @@ program
 program
   .command('test')
   .description('for test')
-  .action(async (cmd) => await ts(cmd));
+  .action(async cmd => await ts(cmd));
 
 // 强化的提示
 tipEnhance(program, __filename);
