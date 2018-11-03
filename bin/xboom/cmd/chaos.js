@@ -31,5 +31,11 @@ module.exports = async (phone) => {
 
   // 取出所有炸弹
   const allBombs = autoloader(underPath('bin', 'xboom/bomber'));
-  Promise.all(allBombs.map(bomb => bomb.chaos(ctx)));
+  await Promise.all(allBombs.map(async (bomb) => {
+    try {
+      await bomb.chaos(ctx);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }));
 };

@@ -10,10 +10,10 @@ const {
 class Bomb extends Bomber {
   constructor() {
     super({
-      id: '1号店',
-      url: 'https://passport.yhd.com/passport/register_input.do',
-      phoneSelector: 'input#phone',
-      sendButtonSelector: 'a.receive_code',
+      id: '51book',
+      url: 'http://caigou.51book.com/caigou/manage/designatedRegistryNewSignon.in',
+      phoneSelector: 'input[name="moblie"]', // emm...他们的单词拼错了
+      sendButtonSelector: 'input#sendMSgBtu',
     });
   }
 
@@ -43,15 +43,16 @@ class Bomb extends Bomber {
 
     await phoneInputElement.type(phone);
     await page.waitFor(200);
-    await sendButtonElement.click(); // 为了使手机输入框失焦
-    await page.waitFor(200);
     await sendButtonElement.click(); // 发送验证码
 
     // 检验是否发送成功
-    if (/\(\d+\)/.test(sendButtonElement.innerText)) {
+    try {
+      await page.waitForSelector('#sendMSgBtu[disabled]', {
+        timeout: 300,
+      });
       successlog(`${id}`);
       await page.close();
-    } else {
+    } catch (e) {
       faillog(`${id}`);
     }
   }

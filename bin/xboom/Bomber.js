@@ -1,11 +1,14 @@
-const {
-  randomStr,
-} = require('../../utils');
-
 class Bomber {
-  constructor() {
-    this.name = randomStr(); // 生成一个用户名
-    this.url = '';
+  constructor({
+    id = '',
+    url = '',
+    phoneSelector = '',
+    sendButtonSelector = '',
+  }) {
+    this.id = id;
+    this.url = url;
+    this.phoneSelector = phoneSelector;
+    this.sendButtonSelector = sendButtonSelector;
   }
 }
 

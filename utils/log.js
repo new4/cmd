@@ -59,12 +59,12 @@ const clearlog = () => process.stdout.write('\u001b[2J\u001b[0;0H');
 /**
  * 成功的 log
  */
-const successlog = str => bothlog(cyan(`${success} ${str}`));
+const successlog = str => log(cyan(`${success} ${str}`));
 
 /**
  * 失败的 log
  */
-const faillog = str => bothlog(red(`${fail} ${str}`));
+const faillog = str => log(red(`${fail} ${str}`));
 
 module.exports = {
   log,
