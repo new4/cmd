@@ -1,3 +1,5 @@
+const puppeteer = require('puppeteer');
+
 const {
   shouldBe: {
     sb,
@@ -8,7 +10,6 @@ const {
   underPath,
 } = require('../../../utils');
 
-const getBrowser = require('../getBrowser');
 const {
   autoloader,
 } = require('../utils');
@@ -19,7 +20,9 @@ module.exports = async (phone) => {
     'invalid phone number',
   );
 
-  const browser = await getBrowser();
+  const browser = await puppeteer.launch({
+    headless: false,
+  });
 
   const ctx = {
     browser,

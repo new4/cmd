@@ -1,4 +1,4 @@
-const Bomber = require('./bomber');
+const Bomber = require('../Bomber');
 
 class Bomb extends Bomber {
   constructor() {

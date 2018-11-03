@@ -1,6 +1,6 @@
 const {
   randomStr,
-} = require('../../../utils');
+} = require('../../utils');
 
 class Bomber {
   constructor() {
