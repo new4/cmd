@@ -1,3 +1,4 @@
+const fs = require('fs');
 const {
   isNumber,
   toNumber,
@@ -71,6 +72,17 @@ const sbValidValue = (value, errStr = 'should be valid value') => {
 };
 
 /**
+ * value 应该是一个存在的目录
+ */
+const sbValidDir = (value, errStr = 'should be valid directory') => {
+  creator(
+    value,
+    errStr,
+    dir => fs.existsSync(dir) && fs.statSync(dir).isDirectory(dir),
+  );
+};
+
+/**
  * value 应该是一个有效的数组（长度不为 0 的数组）
  */
 const sbValidArray = (value, errStr = 'should be valid array') => {
@@ -98,4 +110,5 @@ module.exports = {
   sbValidValue,
   sbValidArray,
   sbEmptyArray,
+  sbValidDir,
 };
