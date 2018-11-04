@@ -1,7 +1,8 @@
 const path = require('path');
+const getNodeModulesDir = require('./getNodeModulesDir');
 
 module.exports = function underPath(underpath, subpath) {
-  const rootPath = path.resolve(__dirname, '..');
+  const rootPath = getNodeModulesDir();
   const mapping = {
     root: rootPath, // 在本项目的根目录下
     bin: path.join(rootPath, 'bin'), // 本项目的 bin 目录下

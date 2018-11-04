@@ -73,7 +73,7 @@ async function login(user) {
 
     if (response.statusCode !== 302) {
       bothlog(red(`${fail} invalid username or password`));
-      process.exit(1);
+      process.exit(0);
     }
 
     // 将登陆成功之后获取的 csrftoken/LEETCODE_SESSION/expires 信息缓存起来
@@ -89,7 +89,7 @@ async function login(user) {
     });
   } catch (err) {
     log(err);
-    process.exit(1);
+    process.exit(0);
   }
 }
 

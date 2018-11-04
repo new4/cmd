@@ -2,16 +2,11 @@ const slash = require('slash');
 const execa = require('execa');
 const underPath = require('./underPath');
 
-const {
-  success,
-} = require('./icons');
-
 const cwd = underPath('root');
 
 const {
   log,
-  beforelog,
-  afterlog,
+  successlog,
 } = require('./log');
 
 const {
@@ -25,7 +20,7 @@ async function link() {
   await execa('yarn', ['link'], {
     cwd,
   });
-  afterlog(cyan(`${success} link`));
+  successlog('link');
 }
 
 /**
@@ -35,44 +30,41 @@ async function unlink() {
   await execa('yarn', ['unlink'], {
     cwd,
   });
-  log(cyan(`${success} unlink`));
-}
-
-/**
- * 执行 unlink -> link 来重建链接
- */
-async function relink() {
-  beforelog(cyan('[re-link]:'));
-  await unlink();
-  await link();
-}
-
-/**
- * 执行 yarn global dir
- */
-async function yarnGlobalDir() {
-  const {
-    stdout,
-  } = await execa('yarn', ['global', 'dir']);
-
-  return slash(stdout);
-}
-
-/**
- * 执行 yarn global bin
- */
-async function yarnGlobalBin() {
-  const {
-    stdout,
-  } = await execa('yarn', ['global', 'bin']);
-
-  return slash(stdout);
+  successlog('unlink');
 }
 
 module.exports = {
   link,
   unlink,
-  relink,
-  yarnGlobalDir,
-  yarnGlobalBin,
+
+  /**
+   * 执行 unlink -> link 来重建链接
+   */
+  async relink() {
+    log(cyan('[re-link]:'));
+    await unlink();
+    await link();
+  },
+
+  /**
+   * 执行 yarn global dir
+   */
+  async yarnGlobalDir() {
+    const {
+      stdout,
+    } = await execa('yarn', ['global', 'dir']);
+
+    return slash(stdout);
+  },
+
+  /**
+   * 执行 yarn global bin
+   */
+  async yarnGlobalBin() {
+    const {
+      stdout,
+    } = await execa('yarn', ['global', 'bin']);
+
+    return slash(stdout);
+  },
 };

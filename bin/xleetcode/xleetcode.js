@@ -22,7 +22,7 @@ program
 program
   .command('login')
   .description('login leetcode')
-  .action(cmd => login(cleanArgs(cmd)));
+  .action(() => login());
 
 /**
  * 登出
@@ -30,7 +30,7 @@ program
 program
   .command('logout')
   .description('logout leetcode')
-  .action(cmd => logout(cleanArgs(cmd)));
+  .action(() => logout());
 
 /**
  * 显示账户当前 ac 状态
@@ -38,7 +38,7 @@ program
 program
   .command('status')
   .description('show status')
-  .action(cmd => status(cmd));
+  .action(() => status());
 
 /**
  * 拉取题目

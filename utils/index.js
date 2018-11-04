@@ -5,6 +5,7 @@ exports.color = require('./color');
 exports.colorStr = require('./colorStr');
 exports.crypto = require('./crypto');
 exports.getExistFiles = require('./getExistFiles');
+exports.getNodeModulesDir = require('./getNodeModulesDir');
 exports.icons = require('./icons');
 exports.jsonOp = require('./jsonOp');
 exports.log = require('./log');

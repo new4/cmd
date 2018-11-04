@@ -30,7 +30,7 @@ const {
 const creator = (value, errStr, fn) => {
   if (!fn(value)) {
     bothlog(red(`${fail} ${errStr}`));
-    process.exit(1);
+    process.exit(0);
   }
 };
 

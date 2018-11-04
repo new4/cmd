@@ -1,5 +1,3 @@
-const chalk = require('chalk');
-
 const {
   getCurCmd,
 } = require('./cmd');
@@ -9,6 +7,12 @@ const {
   bothlog,
 } = require('./log');
 
+const {
+  red,
+  yellow,
+  cyan,
+} = require('./colorStr');
+
 // 改写 Command.prototype 的一些原型方法
 function enhance(program, methodName, log) {
   program.Command.prototype[methodName] = (...args) => {
@@ -16,8 +20,8 @@ function enhance(program, methodName, log) {
       return;
     }
     program.outputHelp();
-    afterlog(`${chalk.red(log(...args))}`);
-    process.exit(1);
+    afterlog(`${red(log(...args))}`);
+    process.exit(0);
   };
 }
 
@@ -28,7 +32,7 @@ module.exports = function tipEnhance(prog, filename) {
    * 对 --help 事件，输出多一些信息
    */
   prog.on('--help', () => {
-    bothlog(`Run ${chalk.cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
+    bothlog(`Run ${cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
   });
 
   /**
@@ -37,19 +41,19 @@ module.exports = function tipEnhance(prog, filename) {
   enhance(
     prog,
     'missingArgument',
-    argName => `Missing required argument ${chalk.yellow(`<${argName}>`)}`,
+    argName => `Missing required argument ${yellow(`<${argName}>`)}`,
   );
 
   enhance(
     prog,
     'unknownOption',
-    optionName => `Unknown option ${chalk.yellow(optionName)}`,
+    optionName => `Unknown option ${yellow(optionName)}`,
   );
 
   enhance(
     prog,
     'optionMissingArgument',
-    (option, flag) => `Missing required argument for option ${chalk.yellow(option.flags) + (flag ? `, got ${chalk.yellow(flag)}` : '')}`,
+    (option, flag) => `Missing required argument for option ${yellow(option.flags) + (flag ? `, got ${yellow(flag)}` : '')}`,
   );
 
   /**
@@ -59,7 +63,7 @@ module.exports = function tipEnhance(prog, filename) {
     .arguments('<command>')
     .action((cmd) => {
       prog.outputHelp();
-      afterlog(chalk.red(`Unknown command ${chalk.yellow(cmd)}`));
+      afterlog(red(`Unknown command ${yellow(cmd)}`));
     });
 
   /**
