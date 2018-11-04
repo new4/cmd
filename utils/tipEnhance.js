@@ -1,4 +1,3 @@
-const program = require('commander');
 const chalk = require('chalk');
 
 const {
@@ -11,7 +10,7 @@ const {
 } = require('./log');
 
 // 改写 Command.prototype 的一些原型方法
-function enhance(methodName, log) {
+function enhance(program, methodName, log) {
   program.Command.prototype[methodName] = (...args) => {
     if (methodName === 'unknownOption' && this._allowUnknownOption) {
       return;
@@ -36,16 +35,19 @@ module.exports = function tipEnhance(prog, filename) {
    * 给提示的部分字串加上颜色
    */
   enhance(
+    prog,
     'missingArgument',
     argName => `Missing required argument ${chalk.yellow(`<${argName}>`)}`,
   );
 
   enhance(
+    prog,
     'unknownOption',
     optionName => `Unknown option ${chalk.yellow(optionName)}`,
   );
 
   enhance(
+    prog,
     'optionMissingArgument',
     (option, flag) => `Missing required argument for option ${chalk.yellow(option.flags) + (flag ? `, got ${chalk.yellow(flag)}` : '')}`,
   );
