@@ -8,7 +8,6 @@ const {
 } = require('../../utils');
 
 const chaos = require('./cmd/chaos');
-const ts = require('./test');
 
 program
   .version('0.1.0')
@@ -23,16 +22,6 @@ program
   .option('-o, --only <bomber-name>', 'specify bomber name')
   .action(async (phone, cmd) => {
     await chaos(phone, cleanArgs(cmd));
-  });
-
-/**
- * test
- */
-program
-  .command('test')
-  .description('for test')
-  .action(async (cmd) => {
-    await ts(cmd);
   });
 
 // 强化的提示
