@@ -3,6 +3,7 @@
 const program = require('commander');
 
 const {
+  cleanArgs,
   tipEnhance,
 } = require('../../utils');
 
@@ -19,8 +20,9 @@ program
 program
   .command('chaos <phone-number>')
   .description('make chaos')
-  .action(async (phone) => {
-    await chaos(phone);
+  .option('-o, --only <bomber-name>', 'specify bomber name')
+  .action(async (phone, cmd) => {
+    await chaos(phone, cleanArgs(cmd));
   });
 
 /**
