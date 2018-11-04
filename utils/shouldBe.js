@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const {
   isNumber,
   toNumber,
@@ -9,15 +10,8 @@ const {
 } = require('lodash');
 
 const {
-  fail,
-} = require('./icons');
-
-const {
-  red,
-} = require('./colorStr');
-
-const {
-  bothlog,
+  log,
+  faillog,
 } = require('./log');
 
 /**
@@ -29,7 +23,9 @@ const {
  */
 const creator = (value, errStr, fn) => {
   if (!fn(value)) {
-    bothlog(red(`${fail} ${errStr}`));
+    log();
+    faillog(`${errStr}`);
+    log();
     process.exit(0);
   }
 };
