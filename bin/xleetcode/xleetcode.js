@@ -12,8 +12,6 @@ const logout = require('./cmd/logout');
 const status = require('./cmd/status');
 const get = require('./cmd/get');
 
-const ts = require('./test');
-
 program
   .version('0.1.0')
   .usage('<command> [options]');
@@ -51,14 +49,6 @@ program
   .option('-n, --number <number>', 'specify problem number')
   .option('-o, --output <dir>', 'specify output directory')
   .action(cmd => get(cleanArgs(cmd)));
-
-/**
- * test
- */
-program
-  .command('test')
-  .description('for test')
-  .action(cmd => ts(cmd));
 
 // 强化的提示
 tipEnhance(program, __filename);
