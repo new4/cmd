@@ -44,15 +44,20 @@ class Bomb extends Bomber {
     await phoneInputElement.type(phone);
     await page.waitFor(200);
     await sendButtonElement.click(); // 发送验证码
+    await page.waitFor(200);
 
-    // 检验是否发送成功
-    try {
-      await page.waitForSelector('#sendMSgBtu[disabled]', {
-        timeout: 300,
-      });
+    const value = await page.evaluate((selector) => {
+      const $sendButtonElement = document.querySelector(selector);
+      return Promise.resolve($sendButtonElement.value);
+    }, sendButtonSelector);
+
+    if (/\d+/.test(value)) {
+      // await page.waitForSelector('#sendMSgBtu[disabled]', {
+      //   timeout: 300,
+      // });
       successlog(`${id}`);
       await page.close();
-    } catch (e) {
+    } else {
       faillog(`${id}`);
     }
   }
