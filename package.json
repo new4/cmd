@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/new4/x-bin#readme",
   "dependencies": {
-    "@new4/utils": "^0.0.4",
+    "@new4/utils": "^0.0.8",
     "chalk": "^2.4.1",
     "cheerio": "^1.0.0-rc.2",
     "commander": "^2.19.0",

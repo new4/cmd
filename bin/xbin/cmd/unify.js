@@ -6,14 +6,13 @@ const {
     yellow,
   },
   log: {
-    log,
-    successlog,
+    successlogBoth,
   },
   shouldBe: {
     sbValidDir,
   },
   getExistFiles,
-} = require('../../../utils');
+} = require('@new4/utils');
 
 /**
  * 整合某一目录，将其中的模块统一输出
@@ -31,7 +30,7 @@ module.exports = (folder) => {
   const exportStr = [];
   files.forEach((file) => {
     if (file !== 'index.js') {
-      const module = file.replace('.js', '');
+      const module = file.replace(/\.js$/, '');
       exportStr.push(`exports.${module} = require('./${module}');`);
     }
   });
@@ -40,7 +39,5 @@ module.exports = (folder) => {
   const exportIndex = underPath(dir, 'index.js');
   fse.outputFileSync(exportIndex, exportStr.join('\n'));
 
-  log();
-  successlog(`unity success in folder: ${yellow(dir)}`);
-  log();
+  successlogBoth(`unity success in folder: ${yellow(dir)}`);
 };

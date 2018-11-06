@@ -4,6 +4,9 @@ const {
   cmd: {
     checkBin,
   },
+} = require('../../../utils');
+
+const {
   packageJson,
   underPath,
   colorStr: {
@@ -20,14 +23,14 @@ const {
   },
   log: {
     log,
-    beforelog,
-    afterlog,
-    bothlog,
+    logBefore,
+    logAfter,
+    logBoth,
   },
   yarnOp: {
     relink,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 /**
  * 移除一个命令
@@ -46,13 +49,13 @@ module.exports = function remove(name, cmd) {
 
   // 没有 bin 文件和信息的，表明没有这个命令，提示错误
   if (!hasBinInfo && !hasBinFile) {
-    bothlog(red(`${fail} No command ${yellow(name)} existed!`));
+    logBoth(red(`${fail} No command ${yellow(name)} existed!`));
     return;
   }
 
   if (!cmd.force) {
-    beforelog(red(`${fail} Can not remove ${yellow(name)}`));
-    afterlog(red(`${fail} Use ${cyan(`xbin remove ${name} --force`)} instead`));
+    logBefore(red(`${fail} Can not remove ${yellow(name)}`));
+    logAfter(red(`${fail} Use ${cyan(`xbin remove ${name} --force`)} instead`));
     return;
   }
 
@@ -78,7 +81,7 @@ module.exports = function remove(name, cmd) {
       hasBinFile && log(cyan(`${success} remove: bin/${name}`));
       hasBinInfo && log(cyan(`${success} update: package.json`));
       await relink();
-      afterlog(cyan(`${success} ${yellow(name)} removed!`));
+      logAfter(cyan(`${success} ${yellow(name)} removed!`));
     })
     .catch(err => console.error(err));
 };

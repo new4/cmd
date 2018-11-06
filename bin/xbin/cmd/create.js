@@ -8,6 +8,9 @@ const {
     checkBin,
     formatBinFile,
   },
+} = require('../../../utils');
+
+const {
   packageJson,
   icons: {
     success,
@@ -23,14 +26,14 @@ const {
   },
   log: {
     log,
-    bothlog,
-    afterlog,
+    logBoth,
+    logAfter,
   },
   underPath,
   yarnOp: {
     relink,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 /**
  * 新建一个命令
@@ -51,7 +54,7 @@ module.exports = function create(name) {
 
   // 有 bin 文件和信息的，表明有这个命令，提示错误
   if (hasBinInfo && hasBinFile) {
-    bothlog(`${red(fail)} Command ${yellow(name)} has existed`);
+    logBoth(`${red(fail)} Command ${yellow(name)} has existed`);
     return;
   }
 
@@ -85,7 +88,7 @@ module.exports = function create(name) {
       !hasBinFile && log(cyan(`${success} create: ${targetBinFile}`));
       !hasBinInfo && log(cyan(`${success} update: package.json`));
       await relink();
-      afterlog(cyan(`${success} ${yellow(name)} created under path ${yellow(slash(underPath('bin')))}`));
+      logAfter(cyan(`${success} ${yellow(name)} created under path ${yellow(slash(underPath('root', 'bin')))}`));
     })
     .catch(err => log(red(err)));
 };

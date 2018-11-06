@@ -5,29 +5,26 @@ const {
     checkBin,
     formatBinFile,
   },
+} = require('../../../utils');
+
+const {
   packageJson,
   underPath,
   colorStr: {
-    red,
     yellow,
-    cyan,
-  },
-  icons: {
-    success,
-    fail,
   },
   jsonOp: {
     jsonStringify,
   },
   log: {
-    log,
-    beforelog,
-    bothlog,
+    successlog,
+    successlogBefore,
+    faillogBoth,
   },
   yarnOp: {
     relink,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 /**
  * 重命名一个命令
@@ -53,13 +50,13 @@ module.exports = function rename(oldName, newName) {
 
   // 没有 oldName 文件和信息的，表明没有这个命令，提示错误
   if (!oldHasBinInfo && !oldHasBinFile) {
-    bothlog(red(`${fail} No command ${yellow(`${oldName}`)} existed!`));
+    faillogBoth(`No command ${yellow(`${oldName}`)} existed!`);
     return;
   }
 
   // 有 newName 文件或信息的，表明已经有这个命令，不可以把其它的命令改成 newName
   if (newHasBinInfo || newHasBinFile) {
-    bothlog(red(`${fail} New command ${yellow(`${newName}`)} existed!`));
+    faillogBoth(`New command ${yellow(`${newName}`)} existed!`);
     return;
   }
 
@@ -75,28 +72,28 @@ module.exports = function rename(oldName, newName) {
       ),
       // 复制目录
       fse.copy(
-        underPath('bin', `${oldName}`),
-        underPath('bin', `${newName}`),
+        underPath('root', `bin/${oldName}`),
+        underPath('root', `bin/${newName}`),
       ),
     ])
     .then(async () => {
-      beforelog(cyan(`${success} updated: package.json`));
-      log(cyan(`${success} copied : old dir  => new dir`));
+      successlogBefore('updated: package.json');
+      successlog('copied : old dir  => new dir');
 
       // 复制文件
       fse.copySync(
         underPath('root', oldFile),
         underPath('root', newFile),
       );
-      log(cyan(`${success} copied : old file => new file`));
+      successlog('copied : old file => new file');
 
       // 移除旧目录
-      fse.removeSync(underPath('bin', `${oldName}`));
-      log(cyan(`${success} removed: old dir`));
+      fse.removeSync(underPath('root', `bin/${oldName}`));
+      successlog('removed: old dir');
 
       // 移除新目录下的旧文件
-      fse.removeSync(underPath('bin', `${newName}/${oldName}.js`));
-      log(cyan(`${success} removed: old file`));
+      fse.removeSync(underPath('root', `bin/${newName}/${oldName}.js`));
+      successlog('removed: old file');
 
       await relink();
     })
