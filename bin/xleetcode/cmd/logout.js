@@ -1,12 +1,6 @@
 const {
-  icons: {
-    success,
-  },
-  colorStr: {
-    cyan,
-  },
   log: {
-    bothlog,
+    successlogBoth,
   },
 } = require('../../../utils');
 
@@ -17,5 +11,5 @@ const cache = require('../cache');
  */
 module.exports = () => {
   cache.remove('session');
-  bothlog(cyan(`${success} Successfully logout.`));
+  successlogBoth('Successfully logout.');
 };

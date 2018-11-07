@@ -39,5 +39,5 @@ module.exports = (folder) => {
   const exportIndex = underPath(dir, 'index.js');
   fse.outputFileSync(exportIndex, exportStr.join('\n'));
 
-  successlogBoth(`unity success in folder: ${yellow(dir)}`);
+  successlogBoth(`unify success in folder: ${yellow(dir)}`);
 };

@@ -1,6 +1,6 @@
 const cryptoJs = require('crypto-js');
 
-const KEY = 'x-bin-4fun';
+const KEY = '@new4/utils';
 
 // Encrypt
 exports.encrypt = str => cryptoJs.AES.encrypt(str, KEY);

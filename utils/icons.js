@@ -3,6 +3,7 @@
  */
 module.exports = {
   success: '✔',
+  warning: '!',
   fail: '✘',
   checked: '☑',
   solidSquare: '■',

@@ -7,6 +7,9 @@ const {
     getCurCmd,
     checkBin,
   },
+} = require('../../../utils');
+
+const {
   packageJson,
   underPath,
   icons: {
@@ -23,9 +26,11 @@ const {
   },
   log: {
     log,
-    beforelog,
-    afterlog,
-    bothlog,
+    logBefore,
+    logAfter,
+    logBoth,
+    successlog,
+    warninglogAfter,
   },
   strAlign: {
     center,
@@ -37,7 +42,7 @@ const {
     sbValidValue,
     sbValidArray,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 /**
  * 检查所有的命令，保证 package.json 和命令目录一致
@@ -46,7 +51,7 @@ const {
  *  - 检查 package.json 中的 bin 字段对应文件是否存在
  *  - 检查 bin 目录下是否存在一些 package.json 中 bin 字段不存在的子目录
  */
-module.exports = function check(cmd) {
+module.exports = (cmd) => {
   const residue = {
     config: [], // 配置残留
     dir: [], // 目录残留
@@ -66,7 +71,7 @@ module.exports = function check(cmd) {
     'No cmd config in bin of package.json',
   );
 
-  bothlog(cyan('cmd info in package.json:'));
+  logBoth(cyan('cmd info in package.json:'));
   entries.forEach(([cmdname, path]) => {
     const isExisted = fse.pathExistsSync(underPath('root', path));
     const isValid = cmdname === getCurCmd(path);
@@ -82,7 +87,7 @@ module.exports = function check(cmd) {
 
   const cmdUnderDirBinList = cmdUnderDirBin();
 
-  bothlog(cyan('cmd info in dir ./bin:'));
+  logBoth(cyan('cmd info in dir ./bin:'));
   cmdUnderDirBinList.forEach((cmdname) => {
     const {
       hasBinInfo,
@@ -101,12 +106,12 @@ module.exports = function check(cmd) {
 
   const needClean = cmd.clean || false; // 是否需要清除残留的目录或配置
   if (!needClean) {
-    afterlog(cyan(`use ${yellow('xbin check -c')} to clean residue`));
+    logAfter(cyan(`use ${yellow('xbin check -c')} to clean residue`));
     return;
   }
 
   if (!residue.config.length && !residue.dir.length) {
-    afterlog(yellow('Nothing to clean.'));
+    warninglogAfter('Nothing to clean.');
     return;
   }
 
@@ -134,13 +139,13 @@ module.exports = function check(cmd) {
       if (residue.config.length) {
         log('clean residue in package.json:');
         residue.config.forEach((cmdname) => {
-          log(cyan(`${success} clean residue ${cmdname} in package.json`));
+          successlog(`clean residue ${cmdname} in package.json`);
         });
       }
       if (residue.dir.length) {
-        beforelog('clean residue in ./bin:');
+        logBefore('clean residue in ./bin:');
         residue.dir.forEach((cmdname) => {
-          log(cyan(`${success} clean residue ${cmdname} in ./bin`));
+          successlog(`clean residue ${cmdname} in ./bin`);
         });
       }
       await relink();

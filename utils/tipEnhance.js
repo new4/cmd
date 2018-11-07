@@ -3,8 +3,8 @@ const {
 } = require('./cmd');
 
 const {
-  afterlog,
-  bothlog,
+  logAfter,
+  logBoth,
 } = require('./log');
 
 const {
@@ -20,7 +20,7 @@ function enhance(program, methodName, log) {
       return;
     }
     program.outputHelp();
-    afterlog(`${red(log(...args))}`);
+    logAfter(`${red(log(...args))}`);
     process.exit(0);
   };
 }
@@ -32,7 +32,7 @@ module.exports = function tipEnhance(prog, filename) {
    * 对 --help 事件，输出多一些信息
    */
   prog.on('--help', () => {
-    bothlog(`Run ${cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
+    logBoth(`Run ${cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
   });
 
   /**
@@ -63,7 +63,7 @@ module.exports = function tipEnhance(prog, filename) {
     .arguments('<command>')
     .action((cmd) => {
       prog.outputHelp();
-      afterlog(red(`Unknown command ${yellow(cmd)}`));
+      logAfter(red(`Unknown command ${yellow(cmd)}`));
     });
 
   /**

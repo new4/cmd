@@ -19,12 +19,15 @@ const {
   log: {
     successlog,
     successlogBefore,
-    faillogBoth,
   },
   yarnOp: {
     relink,
   },
-} = require('@new4/utils');
+  shouldBe: {
+    sb,
+  },
+  // } = require('@new4/utils');
+} = require('../../../utils');
 
 /**
  * 重命名一个命令
@@ -34,7 +37,7 @@ const {
  *  - 在 package.json 中更新 bin 部分
  *  - 用 yarn link/unlink 来进行链接操作
  */
-module.exports = function rename(oldName, newName) {
+module.exports = (oldName, newName) => {
   const oldFile = formatBinFile(oldName);
   const newFile = formatBinFile(newName);
 
@@ -49,16 +52,16 @@ module.exports = function rename(oldName, newName) {
   } = checkBin(newName);
 
   // 没有 oldName 文件和信息的，表明没有这个命令，提示错误
-  if (!oldHasBinInfo && !oldHasBinFile) {
-    faillogBoth(`No command ${yellow(`${oldName}`)} existed!`);
-    return;
-  }
+  sb(
+    () => oldHasBinInfo && oldHasBinFile,
+    `No command ${yellow(`${oldName}`)} existed!`,
+  );
 
   // 有 newName 文件或信息的，表明已经有这个命令，不可以把其它的命令改成 newName
-  if (newHasBinInfo || newHasBinFile) {
-    faillogBoth(`New command ${yellow(`${newName}`)} existed!`);
-    return;
-  }
+  sb(
+    () => !newHasBinInfo && !newHasBinFile,
+    `New command ${yellow(`${newName}`)} existed!`,
+  );
 
   delete packageJson.bin[oldName];
   packageJson.bin[newName] = newFile;
@@ -72,8 +75,8 @@ module.exports = function rename(oldName, newName) {
       ),
       // 复制目录
       fse.copy(
-        underPath('root', `bin/${oldName}`),
-        underPath('root', `bin/${newName}`),
+        underPath('bin', `${oldName}`),
+        underPath('bin', `${newName}`),
       ),
     ])
     .then(async () => {
@@ -88,11 +91,11 @@ module.exports = function rename(oldName, newName) {
       successlog('copied : old file => new file');
 
       // 移除旧目录
-      fse.removeSync(underPath('root', `bin/${oldName}`));
+      fse.removeSync(underPath('bin', `${oldName}`));
       successlog('removed: old dir');
 
       // 移除新目录下的旧文件
-      fse.removeSync(underPath('root', `bin/${newName}/${oldName}.js`));
+      fse.removeSync(underPath('bin', `${newName}/${oldName}.js`));
       successlog('removed: old file');
 
       await relink();

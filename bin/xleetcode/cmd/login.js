@@ -3,7 +3,6 @@ const prompt = require('prompt');
 
 const {
   icons: {
-    success,
     fail,
   },
   colorStr: {
@@ -14,7 +13,8 @@ const {
   },
   log: {
     log,
-    bothlog,
+    logBoth,
+    successlogBoth,
   },
   spinner: {
     logWithSpinner,
@@ -25,6 +25,9 @@ const {
     decrypt,
   },
   requestP,
+  shouldBe: {
+    sb,
+  },
 } = require('../../../utils');
 
 const {
@@ -71,10 +74,10 @@ async function login(user) {
       },
     });
 
-    if (response.statusCode !== 302) {
-      bothlog(red(`${fail} invalid username or password`));
-      process.exit(0);
-    }
+    sb(
+      () => response.statusCode === 302,
+      'invalid username or password',
+    );
 
     // 将登陆成功之后获取的 csrftoken/LEETCODE_SESSION/expires 信息缓存起来
     const [csrftoken] = getRespSetCookieInfo(response, 'csrftoken');
@@ -127,7 +130,7 @@ function promptToLogin() {
 
       logWithSpinner(grey('Logining ...'));
       await login(user);
-      stopSpinner(cyan(`Successfully login as ${yellow(user.username)}`));
+      stopSpinner(cyan(`Successfully login @ ${yellow(user.username)}`));
       log();
     },
   );
@@ -137,12 +140,12 @@ function promptToLogin() {
  * 自动重新登录，会清掉 session 文件
  */
 async function autoRelogin(user) {
-  bothlog(red('Your session has expired.'));
+  logBoth(red('Your session has expired.'));
   cache.remove('session');
 
   logWithSpinner(grey('Auto relogining ...'));
   await login(user);
-  stopSpinner(cyan(`Successfully relogin as ${yellow(user.username)}`));
+  stopSpinner(cyan(`Successfully relogin @ ${yellow(user.username)}`));
   log();
 }
 
@@ -177,5 +180,5 @@ module.exports = () => {
 
   // case 3: 没过期的就无需登录，其中有一种改过密码的情形在别处处理
   // -----------------------------------------------------
-  return bothlog(cyan(`${success} Already logged in as ${yellow(username)}`));
+  return successlogBoth(`Already logged in @ ${yellow(username)}`);
 };

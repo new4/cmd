@@ -2,9 +2,7 @@ const {
   requestP,
 } = require('../../../utils');
 
-const {
-  getRespSetCookieInfo,
-} = require('.');
+const getRespSetCookieInfo = require('./getRespSetCookieInfo');
 
 const {
   url: {

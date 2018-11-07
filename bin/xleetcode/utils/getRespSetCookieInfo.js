@@ -1,9 +1,6 @@
 const {
-  colorStr: {
-    red,
-  },
   log: {
-    beforelog,
+    faillogBefore,
   },
 } = require('../../../utils');
 
@@ -15,14 +12,14 @@ module.exports = (response, key) => {
   let value = null;
   let expires = null;
   if (!setCookies) {
-    beforelog(red('no set-cookie in response.headers'));
+    faillogBefore('no set-cookie in response.headers');
     return [];
   }
 
   // 找到含有 key 字段的 cookie 项
   const target = setCookies.filter(cookie => cookie.includes(key));
   if (!target.length) {
-    beforelog(red(`no target ${key} in response.headers['set-cookie']`));
+    faillogBefore(`no target ${key} in response.headers['set-cookie']`);
     return [];
   }
 

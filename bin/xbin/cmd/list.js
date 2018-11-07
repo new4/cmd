@@ -1,11 +1,11 @@
 const fse = require('fs-extra');
-const slash = require('slash');
+// const slash = require('slash');
 
 const {
   cmd: {
     cmdInPkgJson,
     getCurCmd,
-    getMode,
+    // getMode,
   },
   colorStr: {
     yellow,
@@ -17,11 +17,7 @@ const {
   },
   log: {
     log,
-    bothlog,
-  },
-  yarnOp: {
-    yarnGlobalDir,
-    yarnGlobalBin,
+    logBoth,
   },
   shouldBe: {
     sbValidValue,
@@ -35,7 +31,7 @@ const {
  * 需要做到如下：
  *  - 检查 package.json 中的 bin 字段对应文件是否存在
  */
-module.exports = async function list() {
+module.exports = () => {
   const cmdInPkgJsonList = cmdInPkgJson();
 
   sbValidValue(
@@ -62,13 +58,13 @@ module.exports = async function list() {
     }
   });
 
-  bothlog(`Run ${yellow('xbin <command> --help')} for detailed usage of given command.`);
+  logBoth(`Run ${yellow('<command-name> --help')} for detailed usage of given command.`);
 
   // log(getMode(underPath('bin', 'xbin/xbin.js')));
 
-  log(await yarnGlobalDir());
+  // log(await yarnGlobalDir());
 
-  log(await yarnGlobalBin());
+  // log(await yarnGlobalBin());
 
   // log(slash(process.env.HOME || process.env.USERPROFILE));
 };

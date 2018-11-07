@@ -8,7 +8,7 @@ const {
   },
   log: {
     log,
-    beforelog,
+    logBefore,
     clearlog,
   },
   colorStr: {
@@ -115,7 +115,7 @@ function showAcStatusMap(allProblems) {
     topStr = `${topStr}${item.join('')}  `;
   });
 
-  beforelog(topStr); // 头部标尺
+  logBefore(topStr); // 头部标尺
 
   _.chunk(statusInfo, chunkSize).forEach((chunk, index) => {
     const row = [`${addonZero(index * chunkSize)} `]; // 左侧标尺

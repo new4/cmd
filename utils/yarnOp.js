@@ -5,8 +5,9 @@ const underPath = require('./underPath');
 const cwd = underPath('root');
 
 const {
-  log,
+  logBefore,
   successlog,
+  successlogAfter,
 } = require('./log');
 
 const {
@@ -20,7 +21,7 @@ async function link() {
   await execa('yarn', ['link'], {
     cwd,
   });
-  successlog('link');
+  successlogAfter('link');
 }
 
 /**
@@ -41,7 +42,7 @@ module.exports = {
    * 执行 unlink -> link 来重建链接
    */
   async relink() {
-    log(cyan('[re-link]:'));
+    logBefore(cyan('[re-link]:'));
     await unlink();
     await link();
   },

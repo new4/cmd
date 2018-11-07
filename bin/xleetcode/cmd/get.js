@@ -11,12 +11,9 @@ const {
     yellow,
     cyan,
   },
-  icons: {
-    success,
-  },
   log: {
-    beforelog,
-    bothlog,
+    successlogBefore,
+    logBoth,
   },
   shouldBe: {
     sbNumber,
@@ -100,7 +97,7 @@ function createCode(questionInfo) {
 
   sbValidArray(
     codeSnippet,
-    `lang:${targetLang} in config.js dismatch any lang type in Leetcode`,
+    `lang:${yellow(targetLang)} in config.js dismatch any lang type in Leetcode`,
   );
 
   let [{
@@ -156,7 +153,7 @@ module.exports = async function get(cmd) {
 
   sbEmptyArray(
     existFiles.filter(file => file.includes(addonZero(number))),
-    `file existed！number: ${yellow(number)}`,
+    `file existed! number: ${yellow(number)}`,
   );
 
   const questionInfoParsed = await queryQuestion(titleSlug);
@@ -176,6 +173,6 @@ module.exports = async function get(cmd) {
     ).join('\n'),
   );
 
-  beforelog(cyan(`${success} File ${yellow(fileName)} created!`));
-  bothlog(cyan(`Under Path: ${outputDir}`));
+  successlogBefore(`File ${yellow(fileName)} created!`);
+  logBoth(cyan(`Under Path: ${outputDir}`));
 };

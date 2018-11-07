@@ -1,13 +1,7 @@
 const {
   requestP,
-  log: {
-    bothlog,
-  },
-  colorStr: {
-    red,
-  },
-  icons: {
-    fail,
+  shouldBe: {
+    sb,
   },
 } = require('../../../utils');
 
@@ -64,9 +58,10 @@ module.exports = async (titleSlug) => {
     formData,
   });
 
-  if (resp.statusCode !== 200) {
-    return bothlog(red(`${fail} graphql statusCode = ${resp.statusCode}`));
-  }
+  sb(
+    () => resp.statusCode === 200,
+    `graphql statusCode = ${resp.statusCode}`,
+  );
 
   const questionInfoParsed = JSON.parse(body);
 

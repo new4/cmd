@@ -10,6 +10,10 @@
 exports.center = (center, left, right, leftLen = 17) => {
   const REPLACER = '...'; // 用于替换多余字符的字串
 
+  if (leftLen < REPLACER.length) {
+    return `${REPLACER} ${center} ${right}`;
+  }
+
   // 左边比边界还长的，格式化长度并设最后的三个字符为 ...
   if (left.length > leftLen) {
     left.length = leftLen;
