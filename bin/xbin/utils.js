@@ -1,7 +1,10 @@
 const fs = require('fs');
 const slash = require('slash');
-const packageJson = require('./packageJson');
-const underPath = require('./underPath');
+
+const {
+  packageJson,
+  underPath,
+} = require('../../utils');
 
 /**
  * 获取 bin 目录下的所有命令名称，其实就是检查下目录名
@@ -45,11 +48,3 @@ exports.checkBin = (name) => {
  * 放在 bin 目录下的同名目录 name 中
  */
 exports.formatBinFile = name => `bin/${name}/${name}.js`;
-
-/**
- * 获取 file 的权限信息（wrx）
- */
-exports.getMode = (file) => {
-  const stat = fs.statSync(file);
-  return (stat.mode & 0o777).toString(8); // eslint-disable-line
-};

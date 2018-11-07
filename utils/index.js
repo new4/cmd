@@ -1,10 +1,10 @@
 exports.addonZero = require('./addonZero');
 exports.cache = require('./cache');
 exports.cleanArgs = require('./cleanArgs');
-exports.cmd = require('./cmd');
 exports.color = require('./color');
 exports.colorStr = require('./colorStr');
 exports.crypto = require('./crypto');
+exports.fileOp = require('./fileOp');
 exports.getExistFiles = require('./getExistFiles');
 exports.getRootDir = require('./getRootDir');
 exports.icons = require('./icons');

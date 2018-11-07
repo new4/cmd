@@ -1,16 +1,14 @@
 const {
   getCurCmd,
-} = require('./cmd');
+} = require('./fileOp');
 
 const {
-  logAfter,
+  faillogAfter,
   logBoth,
 } = require('./log');
 
 const {
-  red,
   yellow,
-  cyan,
 } = require('./colorStr');
 
 // 改写 Command.prototype 的一些原型方法
@@ -20,7 +18,7 @@ function enhance(program, methodName, log) {
       return;
     }
     program.outputHelp();
-    logAfter(`${red(log(...args))}`);
+    faillogAfter(`${log(...args)}`);
     process.exit(0);
   };
 }
@@ -32,7 +30,7 @@ module.exports = function tipEnhance(prog, filename) {
    * 对 --help 事件，输出多一些信息
    */
   prog.on('--help', () => {
-    logBoth(`Run ${cyan(`${cmdName} <command> --help`)} for detailed usage of given command.`);
+    logBoth(`Run ${yellow(`${cmdName} <command> --help`)} for detailed usage of given command.`);
   });
 
   /**
@@ -63,7 +61,7 @@ module.exports = function tipEnhance(prog, filename) {
     .arguments('<command>')
     .action((cmd) => {
       prog.outputHelp();
-      logAfter(red(`Unknown command ${yellow(cmd)}`));
+      faillogAfter(`Unknown command ${yellow(cmd)}`);
     });
 
   /**

@@ -1,13 +1,11 @@
 const fse = require('fs-extra');
 
 const {
-  cmd: {
-    cmdUnderDirBin,
-    cmdInPkgJson,
-    getCurCmd,
-    checkBin,
-  },
-} = require('../../../utils');
+  cmdUnderDirBin,
+  cmdInPkgJson,
+  getCurCmd,
+  checkBin,
+} = require('../utils');
 
 const {
   packageJson,

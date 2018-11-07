@@ -1,12 +1,11 @@
 const fse = require('fs-extra');
-// const slash = require('slash');
 
 const {
-  cmd: {
-    cmdInPkgJson,
-    getCurCmd,
-    // getMode,
-  },
+  cmdInPkgJson,
+  getCurCmd,
+} = require('../utils');
+
+const {
   colorStr: {
     yellow,
     cyan,

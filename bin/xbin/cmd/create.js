@@ -4,11 +4,9 @@ const slash = require('slash');
 const template = require('./_template');
 
 const {
-  cmd: {
-    checkBin,
-    formatBinFile,
-  },
-} = require('../../../utils');
+  checkBin,
+  formatBinFile,
+} = require('../utils');
 
 const {
   packageJson,
