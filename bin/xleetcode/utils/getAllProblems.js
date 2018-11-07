@@ -4,7 +4,7 @@ const {
     stopSpinner,
   },
   requestP,
-} = require('../../../utils');
+} = require('@new4/utils');
 
 const cache = require('../cache');
 

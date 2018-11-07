@@ -1,13 +1,6 @@
 const fse = require('fs-extra');
 
 const {
-  cmdUnderDirBin,
-  cmdInPkgJson,
-  getCurCmd,
-  checkBin,
-} = require('../utils');
-
-const {
   packageJson,
   underPath,
   icons: {
@@ -41,6 +34,13 @@ const {
     sbValidArray,
   },
 } = require('@new4/utils');
+
+const {
+  cmdUnderDirBin,
+  cmdInPkgJson,
+  getCurCmd,
+  checkBin,
+} = require('../utils');
 
 /**
  * 检查所有的命令，保证 package.json 和命令目录一致

@@ -3,7 +3,7 @@ const {
   shouldBe: {
     sb,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 const {
   url: {

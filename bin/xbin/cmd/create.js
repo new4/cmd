@@ -1,13 +1,6 @@
 const fse = require('fs-extra');
 const slash = require('slash');
 
-const template = require('./_template');
-
-const {
-  checkBin,
-  formatBinFile,
-} = require('../utils');
-
 const {
   packageJson,
   colorStr: {
@@ -28,8 +21,14 @@ const {
   shouldBe: {
     sb,
   },
-} = require('../../../utils');
-// } = require('@new4/utils');
+} = require('@new4/utils');
+
+const template = require('./_template');
+
+const {
+  checkBin,
+  formatBinFile,
+} = require('../utils');
 
 /**
  * 新建一个命令

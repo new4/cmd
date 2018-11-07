@@ -5,7 +5,7 @@ const {
   shouldBe: {
     sbValidValue,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 const {
   url: {

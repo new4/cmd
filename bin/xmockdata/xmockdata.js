@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const { tipEnhance } = require('../../utils');
+const {
+  tipEnhance,
+} = require('@new4/utils');
 
 const create = require('./create');
 

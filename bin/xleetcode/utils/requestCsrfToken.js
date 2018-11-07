@@ -1,6 +1,6 @@
 const {
   requestP,
-} = require('../../../utils');
+} = require('@new4/utils');
 
 const getRespSetCookieInfo = require('./getRespSetCookieInfo');
 

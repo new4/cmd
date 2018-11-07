@@ -12,7 +12,7 @@ const {
   jsonOp: {
     jsonStringify,
   },
-} = require('../../utils');
+} = require('@new4/utils');
 
 const MAP_LIST = [
   800000,

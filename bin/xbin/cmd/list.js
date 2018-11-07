@@ -1,11 +1,6 @@
 const fse = require('fs-extra');
 
 const {
-  cmdInPkgJson,
-  getCurCmd,
-} = require('../utils');
-
-const {
   colorStr: {
     yellow,
     cyan,
@@ -22,7 +17,12 @@ const {
     sbValidValue,
     sbValidArray,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
+
+const {
+  cmdInPkgJson,
+  getCurCmd,
+} = require('../utils');
 
 /**
  * 显示当前已有的命令

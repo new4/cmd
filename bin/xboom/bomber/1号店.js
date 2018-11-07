@@ -1,11 +1,11 @@
-const Bomber = require('../Bomber');
-
 const {
   log: {
     successlog,
     faillog,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
+
+const Bomber = require('../Bomber');
 
 class Bomb extends Bomber {
   constructor() {

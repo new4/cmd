@@ -5,7 +5,7 @@ const {
   jsonOp: {
     jsonStringify,
   },
-} = require('../../utils');
+} = require('@new4/utils');
 
 const FILE_NAME = {
   temp: '_temp.json',

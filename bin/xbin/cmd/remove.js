@@ -1,10 +1,6 @@
 const fse = require('fs-extra');
 
 const {
-  checkBin,
-} = require('../utils');
-
-const {
   packageJson,
   underPath,
   colorStr: {
@@ -15,10 +11,10 @@ const {
   },
   log: {
     log,
+    logBoth,
     successlog,
     successlogAfter,
     faillogBefore,
-    faillogAfter,
   },
   yarnOp: {
     relink,
@@ -26,8 +22,11 @@ const {
   shouldBe: {
     sb,
   },
-} = require('../../../utils');
-// } = require('@new4/utils');
+} = require('@new4/utils');
+
+const {
+  checkBin,
+} = require('../utils');
 
 /**
  * 移除一个命令
@@ -52,7 +51,7 @@ module.exports = (name, cmd) => {
 
   if (!cmd.force) {
     faillogBefore(`Can not remove ${yellow(name)} directly for safe reason.`);
-    faillogAfter(`Use ${yellow(`xbin remove ${name} --force`)} instead.`);
+    logBoth(`Use ${yellow(`xbin remove ${name} --force`)} instead.`);
     return;
   }
 

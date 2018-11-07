@@ -23,7 +23,7 @@ const {
   },
   underPath,
   getExistFiles,
-} = require('../../../utils');
+} = require('@new4/utils');
 
 const {
   getAllProblems,

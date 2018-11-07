@@ -21,7 +21,7 @@ const {
   strAlign: {
     center,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 const {
   getAllProblems,

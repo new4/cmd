@@ -2,7 +2,7 @@ const {
   log: {
     successlogBoth,
   },
-} = require('../../../utils');
+} = require('@new4/utils');
 
 const cache = require('../cache');
 

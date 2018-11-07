@@ -1,11 +1,6 @@
 const fse = require('fs-extra');
 
 const {
-  checkBin,
-  formatBinFile,
-} = require('../utils');
-
-const {
   packageJson,
   underPath,
   colorStr: {
@@ -24,8 +19,12 @@ const {
   shouldBe: {
     sb,
   },
-  // } = require('@new4/utils');
-} = require('../../../utils');
+} = require('@new4/utils');
+
+const {
+  checkBin,
+  formatBinFile,
+} = require('../utils');
 
 /**
  * 重命名一个命令

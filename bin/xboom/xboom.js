@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-
 const program = require('commander');
 
 const {
   cleanArgs,
   tipEnhance,
-} = require('../../utils');
+} = require('@new4/utils');
 
 const chaos = require('./cmd/chaos');
 

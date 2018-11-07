@@ -4,7 +4,7 @@ const {
   shouldBe: {
     sbValidArray,
   },
-} = require('../../utils');
+} = require('@new4/utils');
 
 /**
  * 从 dir 中取出所有的模块组成数组返回

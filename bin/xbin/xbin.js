@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-
 const program = require('commander');
 
 const {
   cleanArgs,
   tipEnhance,
-} = require('../../utils');
+} = require('@new4/utils');
 
 const create = require('./cmd/create');
 const remove = require('./cmd/remove');
