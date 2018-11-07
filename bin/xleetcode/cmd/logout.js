@@ -2,13 +2,13 @@ const {
   log: {
     successlogBoth,
   },
+  Cache,
 } = require('@new4/utils');
 
 const {
   cacheDir,
 } = require('../config');
 
-const Cache = require('../../../utils/cache');
 const cache = new Cache(cacheDir);
 
 /**

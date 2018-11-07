@@ -3,6 +3,7 @@ const {
   shouldBe: {
     sb,
   },
+  Cache,
 } = require('@new4/utils');
 
 const {
@@ -13,7 +14,6 @@ const {
   cacheDir,
 } = require('../config');
 
-const Cache = require('../../../utils/cache');
 const cache = new Cache(cacheDir);
 
 /**

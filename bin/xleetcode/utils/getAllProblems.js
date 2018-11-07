@@ -4,6 +4,7 @@ const {
     stopSpinner,
   },
   requestP,
+  Cache,
 } = require('@new4/utils');
 
 const {
@@ -13,7 +14,6 @@ const {
   cacheDir,
 } = require('../config');
 
-const Cache = require('../../../utils/cache');
 const cache = new Cache(cacheDir);
 
 const generateHeaders = require('./generateHeaders');
