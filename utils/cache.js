@@ -6,32 +6,59 @@ const {
   jsonStringify,
 } = require('./jsonOp');
 
-const cacheDir = underPath('root', '.cache');
+const defaultDir = underPath('root'); // 默认 .cache 目录位于项目根目录下
 
-/**
- * 获取缓存文件的路径
- */
-const getFilePath = (filename) => {
-  const realname = filename.includes('.') ? filename : `${filename}.json`; // 未指定文件格式的话就默认 json 格式
-  return underPath(cacheDir, realname);
-};
+class Cache {
+  constructor(dir = defaultDir) {
+    this.cacheDir = underPath(dir, '.cache');
+  }
 
-/**
- * 保存信息
- */
-exports.save = (filename, info) => fse.outputFileSync(getFilePath(filename), `${jsonStringify(info)}\n`);
+  /**
+   * 保存信息
+   */
+  save(filename, info) {
+    fse.outputFileSync(this.getFilePath(filename), `${jsonStringify(info)}\n`);
+  }
 
-/**
- * 移除信息
- */
-exports.remove = filename => fse.removeSync(getFilePath(filename));
+  /**
+   * 移除信息
+   */
+  remove(filename) {
+    fse.removeSync(this.getFilePath(filename));
+  }
 
-/**
- * 是否有缓存
- */
-exports.has = filename => fse.pathExistsSync(getFilePath(filename));
+  /**
+   * 是否有缓存
+   */
+  has(filename) {
+    fse.pathExistsSync(this.getFilePath(filename));
+  }
 
-/**
- * 清空所有缓存
+  /**
+ * 获取信息
  */
-exports.cleanAll = () => fse.removeSync(cacheDir);
+  get(filename) {
+    const filePath = this.getFilePath(filename);
+    if (fse.pathExistsSync(filePath)) {
+      return fse.readJsonSync(filePath);
+    }
+    return null;
+  }
+
+  /**
+   * 清空所有缓存
+   */
+  cleanAll() {
+    fse.removeSync(this.cacheDir);
+  }
+
+  /**
+   * 获取缓存文件的路径
+   */
+  getFilePath(filename) {
+    const realname = filename.includes('.') ? filename : `${filename}.json`; // 未指定文件格式时默认 json
+    return underPath(this.cacheDir, realname);
+  }
+}
+
+module.exports = Cache;

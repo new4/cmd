@@ -27,7 +27,12 @@ const {
   getAllProblems,
 } = require('../utils');
 
-const cache = require('../cache');
+const {
+  cacheDir,
+} = require('../config');
+
+const Cache = require('../../../utils/cache');
+const cache = new Cache(cacheDir);
 
 function parseByFrontendId(allProblems) {
   const statStatusPairs = allProblems.stat_status_pairs;

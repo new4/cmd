@@ -35,14 +35,16 @@ const {
   requestCsrftoken,
 } = require('../utils');
 
-const cache = require('../cache');
-
 const {
   url: {
     base: baseUrl,
     login: loginUrl,
   },
+  cacheDir,
 } = require('../config');
+
+const Cache = require('../../../utils/cache');
+const cache = new Cache(cacheDir);
 
 /**
  * 发送请求来进行登录

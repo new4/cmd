@@ -1,3 +1,7 @@
+const {
+  underPath,
+} = require('@new4/utils');
+
 module.exports = {
   url: {
     base: 'https://leetcode-cn.com',
@@ -11,4 +15,5 @@ module.exports = {
     outputDir: './solutions',
     lang: 'javascript', // 拉 js 代码，拉其它代码意义不大
   },
+  cacheDir: underPath('bin', 'xleetcode'),
 };

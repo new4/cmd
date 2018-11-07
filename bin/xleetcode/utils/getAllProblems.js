@@ -6,13 +6,15 @@ const {
   requestP,
 } = require('@new4/utils');
 
-const cache = require('../cache');
-
 const {
   url: {
     problemsAll: problemsAllUrl,
   },
+  cacheDir,
 } = require('../config');
+
+const Cache = require('../../../utils/cache');
+const cache = new Cache(cacheDir);
 
 const generateHeaders = require('./generateHeaders');
 
