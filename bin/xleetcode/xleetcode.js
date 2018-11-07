@@ -51,6 +51,6 @@ program
   .action(cmd => get(cleanArgs(cmd)));
 
 // 强化的提示
-tipEnhance(program, __filename);
+tipEnhance(program, 'xleetcode');
 
 program.parse(process.argv);

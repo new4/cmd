@@ -19,6 +19,6 @@ program
   .action(cmd => create(cmd));
 
 // 强化的提示
-tipEnhance(program, __filename);
+tipEnhance(program, 'xmockdata');
 
 program.parse(process.argv);

@@ -51,8 +51,8 @@ module.exports = (name, cmd) => {
   );
 
   if (!cmd.force) {
-    faillogBefore(`Can not remove ${yellow(name)}`);
-    faillogAfter(`Use ${yellow(`xbin remove ${name} --force`)} instead`);
+    faillogBefore(`Can not remove ${yellow(name)} directly for safe reason.`);
+    faillogAfter(`Use ${yellow(`xbin remove ${name} --force`)} instead.`);
     return;
   }
 

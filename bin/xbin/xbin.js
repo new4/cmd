@@ -90,6 +90,6 @@ program
   .action(folder => unify(folder));
 
 // 强化的提示
-tipEnhance(program, __filename);
+tipEnhance(program, 'xbin');
 
 program.parse(process.argv);

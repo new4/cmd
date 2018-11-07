@@ -1,8 +1,4 @@
 const {
-  getCurCmd,
-} = require('./fileOp');
-
-const {
   faillogAfter,
   logBoth,
 } = require('./log');
@@ -23,9 +19,7 @@ function enhance(program, methodName, log) {
   };
 }
 
-module.exports = function tipEnhance(prog, filename) {
-  const cmdName = getCurCmd(filename);
-
+module.exports = function tipEnhance(prog, cmdName) {
   /**
    * 对 --help 事件，输出多一些信息
    */

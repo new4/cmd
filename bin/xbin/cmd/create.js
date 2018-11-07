@@ -70,7 +70,7 @@ module.exports = (name) => {
     promiseOperate.push(
       fse.outputFile(
         underPath('root', targetBinFile),
-        template, {
+        template(name), {
           mode: 0o755, // 修改成可执行的权限
         },
       ),

@@ -25,6 +25,6 @@ program
   });
 
 // 强化的提示
-tipEnhance(program, __filename);
+tipEnhance(program, 'xboom');
 
 program.parse(process.argv);

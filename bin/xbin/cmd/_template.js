@@ -1,11 +1,10 @@
-module.exports = `#!/usr/bin/env node
-
+module.exports = name => `#!/usr/bin/env node
 const program = require('commander');
 
 const {
   cleanArgs,
   tipEnhance,
-} = require('../../utils');
+} = require('@new4/utils');
 
 const example = () => console.log('hello world!');
 
@@ -24,7 +23,7 @@ program
   .action((name, cmd) => example(name, cleanArgs(cmd)));
 
 // 强化的提示
-tipEnhance(program, __filename);
+tipEnhance(program, '${name}');
 
 program.parse(process.argv);
 `;
