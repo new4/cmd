@@ -154,7 +154,7 @@ async function autoRelogin(user) {
 /**
  * 根据多种情形来处理登录
  */
-module.exports = () => {
+module.exports = (force) => {
   const userSession = cache.get('session');
 
   // case 1: 没有 session 文件的情况，需要手动输入账号登录
@@ -173,7 +173,7 @@ module.exports = () => {
   const curDate = moment().format('YYYYMMDD');
   const expDate = moment(new Date(sessionExp)).subtract(1, 'd').format('YYYYMMDD'); // 多扣掉 1 天来算
 
-  if (expDate <= curDate) {
+  if (force || expDate <= curDate) {
     return autoRelogin({
       username,
       password: decrypt(password),

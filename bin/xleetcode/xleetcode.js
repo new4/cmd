@@ -7,6 +7,7 @@ const {
 } = require('@new4/utils');
 
 const login = require('./cmd/login');
+const relogin = require('./cmd/relogin');
 const logout = require('./cmd/logout');
 const status = require('./cmd/status');
 const session = require('./cmd/session');
@@ -23,6 +24,14 @@ program
   .command('login')
   .description('login leetcode')
   .action(() => login());
+
+/**
+ * 重新登录
+ */
+program
+  .command('relogin')
+  .description('relogin leetcode')
+  .action(() => relogin());
 
 /**
  * 登出
