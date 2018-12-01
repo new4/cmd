@@ -49,3 +49,9 @@ xbin relink
 ```cmd
 xbin list
 ```
+
+## 将某一目录下的文件整合成一个输出模块
+
+```cmd
+xbin unify path/of/some/modules
+```

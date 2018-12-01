@@ -26,7 +26,7 @@ module.exports = (response, key) => {
   target.forEach((item) => {
     item.split(';').forEach((pairs) => {
       const [k, v] = pairs.trim().split('=');
-      if (k === key) {
+      if (k === key && v) {
         value = v;
       }
       if (k === 'expires') {
