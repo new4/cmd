@@ -9,6 +9,7 @@ const {
 const login = require('./cmd/login');
 const logout = require('./cmd/logout');
 const status = require('./cmd/status');
+const session = require('./cmd/session');
 const get = require('./cmd/get');
 
 program
@@ -38,6 +39,14 @@ program
   .command('status')
   .description('show status')
   .action(() => status());
+
+/**
+ * 获取与当前用户相关的所有 session 的信息
+ */
+program
+  .command('session')
+  .description('show session')
+  .action(() => session());
 
 /**
  * 拉取题目

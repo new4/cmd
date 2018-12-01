@@ -10,6 +10,7 @@ module.exports = {
     problemset: 'https://leetcode-cn.com/problemset/all/',
     cardInfo: 'https://leetcode-cn.com/problems/api/card-info/',
     problemsAll: 'https://leetcode-cn.com/api/problems/all/',
+    session: 'https://leetcode-cn.com/session/',
   },
   question: {
     outputDir: './solutions',
