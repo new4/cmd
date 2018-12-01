@@ -21,19 +21,23 @@ const generateHeaders = require('./generateHeaders');
 /**
  * 获取与当前用户相关的所有 session 的信息
  */
-module.exports = async (showSpinner) => {
-  showSpinner && logWithSpinner('get session ...');
+module.exports = async (session) => {
+  logWithSpinner('set session ...');
 
   const [, body] = await requestP({
     url: sessionUrl,
-    method: 'post',
+    method: 'put',
     headers: generateHeaders(),
-    body: {},
+    body: {
+      func: 'activate',
+      target: session.id,
+    },
     json: true,
   });
 
-  showSpinner && pauseSpinner();
+  pauseSpinner();
 
   cache.save('allSessions', body);
+
   return body;
 };

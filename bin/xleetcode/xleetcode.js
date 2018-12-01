@@ -55,7 +55,8 @@ program
 program
   .command('session')
   .description('show session')
-  .action(() => session());
+  .option('-s, --specify <session-name>', 'specify a session')
+  .action(cmd => session(cleanArgs(cmd)));
 
 /**
  * 拉取题目
