@@ -15,8 +15,10 @@ const {
 } = require('@new4/utils');
 
 const {
-  getAllSessions,
-  setSession,
+  session: {
+    getAllSessions,
+    setSession,
+  },
 } = require('../utils');
 
 function showSessionInfo(sessions) {

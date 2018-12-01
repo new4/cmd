@@ -21,7 +21,7 @@ const generateHeaders = require('./generateHeaders');
 /**
  * 获取与当前用户相关的所有 session 的信息
  */
-module.exports = async (showSpinner) => {
+exports.getAllSessions = async (showSpinner) => {
   showSpinner && logWithSpinner('get session ...');
 
   const [, body] = await requestP({
@@ -35,5 +35,29 @@ module.exports = async (showSpinner) => {
   showSpinner && pauseSpinner();
 
   cache.save('allSessions', body);
+  return body;
+};
+
+/**
+ * 设置当前的 session
+ */
+exports.setSession = async (session) => {
+  logWithSpinner('set session ...');
+
+  const [, body] = await requestP({
+    url: sessionUrl,
+    method: 'put',
+    headers: generateHeaders(),
+    body: {
+      func: 'activate',
+      target: session.id,
+    },
+    json: true,
+  });
+
+  pauseSpinner();
+
+  cache.save('allSessions', body);
+
   return body;
 };
