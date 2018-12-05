@@ -2,14 +2,11 @@ const {
   log: {
     successlogBoth,
   },
-  Cache,
 } = require('@new4/utils');
 
 const {
-  cacheDir,
-} = require('../config');
-
-const cache = new Cache(cacheDir);
+  cache,
+} = require('../utils');
 
 /**
  * 登出，清空 cache 中的 session 即可

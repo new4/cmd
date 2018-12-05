@@ -28,10 +28,10 @@ const {
   shouldBe: {
     sb,
   },
-  Cache,
 } = require('@new4/utils');
 
 const {
+  cache,
   getRespSetCookieInfo,
   requestCsrftoken,
 } = require('../utils');
@@ -41,10 +41,7 @@ const {
     base: baseUrl,
     login: loginUrl,
   },
-  cacheDir,
 } = require('../config');
-
-const cache = new Cache(cacheDir);
 
 /**
  * 发送请求来进行登录

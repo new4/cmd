@@ -21,18 +21,12 @@ const {
   strAlign: {
     center,
   },
-  Cache,
 } = require('@new4/utils');
 
 const {
+  cache,
   getAllProblems,
 } = require('../utils');
-
-const {
-  cacheDir,
-} = require('../config');
-
-const cache = new Cache(cacheDir);
 
 function parseByFrontendId(allProblems) {
   const statStatusPairs = allProblems.stat_status_pairs;

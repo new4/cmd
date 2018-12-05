@@ -3,7 +3,6 @@ const {
   shouldBe: {
     sb,
   },
-  Cache,
 } = require('@new4/utils');
 
 const {
@@ -11,10 +10,11 @@ const {
     base: baseUrl,
     graphql: graphqlUrl,
   },
-  cacheDir,
 } = require('../config');
 
-const cache = new Cache(cacheDir);
+const {
+  cache,
+} = require('../utils');
 
 /**
  * 根据题目 slug 查询题目信息的 graphql 语句

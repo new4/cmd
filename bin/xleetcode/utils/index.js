@@ -1,3 +1,4 @@
+exports.cache = require('./cache');
 exports.generateHeaders = require('./generateHeaders');
 exports.getAllProblems = require('./getAllProblems');
 exports.getRespSetCookieInfo = require('./getRespSetCookieInfo');

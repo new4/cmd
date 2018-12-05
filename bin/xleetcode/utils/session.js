@@ -4,17 +4,15 @@ const {
     pauseSpinner,
   },
   requestP,
-  Cache,
 } = require('@new4/utils');
 
 const {
   url: {
     session: sessionUrl,
   },
-  cacheDir,
 } = require('../config');
 
-const cache = new Cache(cacheDir);
+const cache = require('./cache');
 
 const generateHeaders = require('./generateHeaders');
 
