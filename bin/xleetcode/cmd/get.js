@@ -48,7 +48,7 @@ const handleStr = str => str.replace(/\s+$/g, '').replace(/\s/g, ' ');
  * 处理 js 代码，使其符合 eslint 检测
  */
 const jsCodeStrHandler = (codeStr) => {
-  if (codeStr.includes('function')) {
+  if (codeStr.includes('function') && codeStr.includes('var') && codeStr.includes('=')) {
     const [funcName, funcParams] = codeStr.replace(/var|function|\{/g, '').split('=');
     return `function ${funcName.trim()}${funcParams.trim()} { // eslint-disable-line`;
   }
