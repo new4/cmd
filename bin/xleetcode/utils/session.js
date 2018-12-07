@@ -37,6 +37,18 @@ exports.getAllSessions = async (showSpinner) => {
 };
 
 /**
+ * 获取当前 active 的 session
+ */
+exports.getCurrentSession = async (showSpinner) => {
+  const {
+    sessions,
+  } = await exports.getAllSessions(showSpinner);
+
+  const [currentSession] = sessions.filter(session => session.is_active);
+  return currentSession;
+};
+
+/**
  * 设置当前的 session
  */
 exports.setSession = async (session) => {

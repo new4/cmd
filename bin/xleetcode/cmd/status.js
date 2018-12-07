@@ -16,6 +16,7 @@ const {
     yellow,
     grey,
     blue,
+    purple,
     green,
   },
   strAlign: {
@@ -26,6 +27,9 @@ const {
 const {
   cache,
   getAllProblems,
+  session: {
+    getCurrentSession,
+  },
 } = require('../utils');
 
 function parseByFrontendId(allProblems) {
@@ -45,7 +49,7 @@ function parseByFrontendId(allProblems) {
 /**
  * 显示统计信息
  */
-function showTotalStatistics(allProblems) {
+function showTotalStatistics(allProblems, currentSession) {
   const statStatusPairs = allProblems.stat_status_pairs;
 
   const all = {
@@ -74,6 +78,7 @@ function showTotalStatistics(allProblems) {
   statStatusPairs.forEach(statStatus => statistic(statStatus.status, statStatus.difficulty.level));
 
   const LEFT_LEN = 8; // 左边字符串长度
+  log(purple(`Current Session: ${currentSession.name}`));
   log();
   log(green(
     center(grey(':'), 'Resolved', `${addonZero(accept.total)}/${all.total}`, LEFT_LEN),
@@ -139,7 +144,8 @@ function showAcStatusMap(allProblems) {
 
 module.exports = async function status() {
   const allProblems = await getAllProblems(true);
+  const currentSession = await getCurrentSession(false);
   clearlog();
-  showTotalStatistics(allProblems);
+  showTotalStatistics(allProblems, currentSession);
   showAcStatusMap(allProblems);
 };
