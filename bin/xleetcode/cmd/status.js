@@ -21,7 +21,7 @@ const {
   strAlign: {
     center,
   },
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const {
   cache,

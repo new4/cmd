@@ -4,7 +4,7 @@ const program = require('commander');
 const {
   cleanArgs,
   tipEnhance,
-} = require('@new4/utils');
+} = require('../../utils');
 
 const login = require('./cmd/login');
 const relogin = require('./cmd/relogin');

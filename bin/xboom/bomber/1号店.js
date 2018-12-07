@@ -3,7 +3,7 @@ const {
     successlog,
     faillog,
   },
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const Bomber = require('../Bomber');
 

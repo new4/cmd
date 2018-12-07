@@ -12,7 +12,7 @@ const {
     sbValidDir,
   },
   getExistFiles,
-} = require('@new4/utils');
+} = require('../../../utils');
 
 /**
  * 整合某一目录，将其中的模块统一输出

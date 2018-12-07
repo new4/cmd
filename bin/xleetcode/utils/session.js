@@ -4,7 +4,7 @@ const {
     pauseSpinner,
   },
   requestP,
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const {
   url: {

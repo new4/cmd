@@ -2,7 +2,7 @@ const {
   log: {
     faillogBefore,
   },
-} = require('@new4/utils');
+} = require('../../../utils');
 
 /**
  * 获取响应头中 set-cookie 项对应 key 的值

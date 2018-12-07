@@ -4,7 +4,7 @@ const slash = require('slash');
 const {
   packageJson,
   underPath,
-} = require('@new4/utils');
+} = require('../../utils');
 
 /**
  * 获取 bin 目录下的所有命令名称，其实就是检查下目录名

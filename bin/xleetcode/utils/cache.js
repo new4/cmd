@@ -1,6 +1,6 @@
 const {
   Cache,
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const {
   cacheDir,
@@ -9,6 +9,6 @@ const {
 const cache = new Cache(cacheDir);
 
 /**
- * @new4/utils/Cache 包装下再露出去
+ * ../../../utils/Cache 包装下再露出去
  */
 module.exports = cache;

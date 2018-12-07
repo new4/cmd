@@ -12,7 +12,7 @@ const {
   },
   underPath,
   getExistFiles,
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const {
   autoloader,

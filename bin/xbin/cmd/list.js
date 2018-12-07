@@ -17,7 +17,7 @@ const {
     sbValidValue,
     sbValidArray,
   },
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const {
   cmdInPkgJson,

@@ -1,6 +1,6 @@
 const {
   underPath,
-} = require('@new4/utils');
+} = require('../../utils');
 
 module.exports = {
   url: {

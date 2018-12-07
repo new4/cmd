@@ -3,7 +3,7 @@
 const program = require('commander');
 const {
   tipEnhance,
-} = require('@new4/utils');
+} = require('../../utils');
 
 const create = require('./create');
 

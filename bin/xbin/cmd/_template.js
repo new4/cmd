@@ -4,7 +4,7 @@ const program = require('commander');
 const {
   cleanArgs,
   tipEnhance,
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const example = () => console.log('hello world!');
 

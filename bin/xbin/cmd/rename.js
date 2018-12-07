@@ -19,7 +19,7 @@ const {
   shouldBe: {
     sb,
   },
-} = require('@new4/utils');
+} = require('../../../utils');
 
 const {
   checkBin,
