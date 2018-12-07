@@ -77,8 +77,10 @@ function showTotalStatistics(allProblems, currentSession) {
 
   statStatusPairs.forEach(statStatus => statistic(statStatus.status, statStatus.difficulty.level));
 
-  const LEFT_LEN = 8; // 左边字符串长度
-  log(purple(`Current Session: ${currentSession.name}`));
+  const LEFT_LEN = 15; // 左边字符串长度
+  log(purple(
+    center(grey(':'), 'Current Session', `${currentSession.name}`, LEFT_LEN),
+  ));
   log();
   log(green(
     center(grey(':'), 'Resolved', `${addonZero(accept.total)}/${all.total}`, LEFT_LEN),
@@ -95,7 +97,6 @@ function showTotalStatistics(allProblems, currentSession) {
   log(red(
     center(grey(':'), 'Hard', `${addonZero(accept.hard)}/${all.hard}`, LEFT_LEN),
   ));
-  log();
 }
 
 /**
