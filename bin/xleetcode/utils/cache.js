@@ -1,5 +1,5 @@
 const {
-  Cache,
+  cache: Cache,
 } = require('../../../utils');
 
 const {
