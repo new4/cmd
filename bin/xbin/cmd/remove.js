@@ -1,7 +1,8 @@
 const fse = require('fs-extra');
 
 const {
-  packageJson,
+  getPkgJson,
+  getRootDir,
   underPath,
   colorStr: {
     yellow,
@@ -27,6 +28,8 @@ const {
 const {
   checkBin,
 } = require('../utils');
+
+const packageJson = getPkgJson(getRootDir());
 
 /**
  * 移除一个命令

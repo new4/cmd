@@ -2,7 +2,8 @@ const fse = require('fs-extra');
 const slash = require('slash');
 
 const {
-  packageJson,
+  getPkgJson,
+  getRootDir,
   colorStr: {
     yellow,
   },
@@ -29,6 +30,8 @@ const {
   checkBin,
   formatBinFile,
 } = require('../utils');
+
+const packageJson = getPkgJson(getRootDir());
 
 /**
  * 新建一个命令

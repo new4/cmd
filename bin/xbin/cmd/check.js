@@ -1,7 +1,8 @@
 const fse = require('fs-extra');
 
 const {
-  packageJson,
+  getPkgJson,
+  getRootDir,
   underPath,
   icons: {
     success,
@@ -41,6 +42,8 @@ const {
   getCurCmd,
   checkBin,
 } = require('../utils');
+
+const packageJson = getPkgJson(getRootDir());
 
 /**
  * 检查所有的命令，保证 package.json 和命令目录一致
