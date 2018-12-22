@@ -16,7 +16,7 @@ const {
     successlogAfter,
   },
   underPath,
-  yarnOp: {
+  npmOp: {
     relink,
   },
   shouldBe: {

@@ -27,7 +27,7 @@ const {
   strAlign: {
     center,
   },
-  yarnOp: {
+  npmOp: {
     relink,
   },
   shouldBe: {

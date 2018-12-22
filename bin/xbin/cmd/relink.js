@@ -1,5 +1,5 @@
 const {
-  yarnOp: {
+  npmOp: {
     relink,
   },
 } = require('../../../utils');

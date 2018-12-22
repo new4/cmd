@@ -17,7 +17,7 @@ const {
     successlogAfter,
     faillogBefore,
   },
-  yarnOp: {
+  npmOp: {
     relink,
   },
   shouldBe: {

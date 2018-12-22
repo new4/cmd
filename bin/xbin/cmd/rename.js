@@ -14,7 +14,7 @@ const {
     successlog,
     successlogBefore,
   },
-  yarnOp: {
+  npmOp: {
     relink,
   },
   shouldBe: {
