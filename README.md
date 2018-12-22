@@ -6,16 +6,16 @@
 
 ```bash
 # 安装依赖
-yarn install
+npm install
 
-# 在 /usr/local/bin 下生成链接
-yarn link
+# 如果有 nvm 的话，会在 ~/.nvm/versions/node/vxx.xx.xx/bin 下生成链接
+npm link
 ```
 
 若要移除链接，执行：
 
 ```bash
-yarn unlink
+npm unlink
 ```
 
 列表：
@@ -24,4 +24,3 @@ yarn unlink
 |---|---|
 |[xbin](bin/xbin/readme.md)|用于管理本项目的命令|
 |[xleetcode](bin/xleetcode/readme.md)|用于辅助刷 [LeetCode](https://leetcode-cn.com/) 的命令|
-|[xboom](bin/xboom/readme.md)|短信炸弹|
