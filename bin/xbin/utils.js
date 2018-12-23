@@ -2,9 +2,12 @@ const fs = require('fs');
 const slash = require('slash');
 
 const {
-  packageJson,
+  getPkgJson,
+  getRootDir,
   underPath,
 } = require('../../utils');
+
+const packageJson = getPkgJson(getRootDir());
 
 /**
  * 获取 bin 目录下的所有命令名称，其实就是检查下目录名

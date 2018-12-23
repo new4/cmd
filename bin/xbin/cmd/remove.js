@@ -1,7 +1,8 @@
 const fse = require('fs-extra');
 
 const {
-  packageJson,
+  getPkgJson,
+  getRootDir,
   underPath,
   colorStr: {
     yellow,
@@ -16,7 +17,7 @@ const {
     successlogAfter,
     faillogBefore,
   },
-  yarnOp: {
+  npmOp: {
     relink,
   },
   shouldBe: {
@@ -28,13 +29,15 @@ const {
   checkBin,
 } = require('../utils');
 
+const packageJson = getPkgJson(getRootDir());
+
 /**
  * 移除一个命令
  *
  * 需要做如下几件事：
  *  - 移除 bin 下存放该命令的目录
  *  - 在 package.json 中更新 bin 部分
- *  - 用 yarn link/unlink 来进行链接操作
+ *  - 用 npm link/unlink 来进行链接操作
  */
 module.exports = (name, cmd) => {
   const promiseOperate = []; // 供 Promise.all 处理的数组

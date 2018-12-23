@@ -61,7 +61,7 @@ typings/
 # next.js build output
 .next
 
-package_lock.json
+package-lock.json
 yarn.lock
 
 # xleetcode 缓存
