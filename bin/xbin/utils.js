@@ -47,7 +47,13 @@ exports.checkBin = (name) => {
 };
 
 /**
+ * 统一规范 bin 命令文件的目录
+ * 在 bin 目录下的同名目录 name
+ */
+exports.formatBinDir = name => `bin/${name}`;
+
+/**
  * 统一规范 bin 命令文件的名字和位置
  * 放在 bin 目录下的同名目录 name 中
  */
-exports.formatBinFile = name => `bin/${name}/${name}.js`;
+exports.formatBinFile = name => `${exports.formatBinDir(name)}/${name}.js`;

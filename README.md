@@ -24,3 +24,4 @@ npm unlink
 |---|---|
 |[xbin](bin/xbin/readme.md)|用于管理本项目的命令|
 |[xleetcode](bin/xleetcode/readme.md)|用于辅助刷 [LeetCode](https://leetcode-cn.com/) 的命令|
+|[xmodule](bin/xmodule/readme.md)|用于模块的命令|

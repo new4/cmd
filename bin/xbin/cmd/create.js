@@ -28,6 +28,7 @@ const template = require('./_template');
 
 const {
   checkBin,
+  formatBinDir,
   formatBinFile,
 } = require('../utils');
 
@@ -70,11 +71,17 @@ module.exports = (name) => {
   // 没有对应 bin 文件的，创建一个
   if (!hasBinFile) {
     promiseOperate.push(
+      // 命令文件
       fse.outputFile(
         underPath('root', targetBinFile),
         template(name), {
           mode: 0o755, // 修改成可执行的权限
         },
+      ),
+      // 命令的 readme
+      fse.outputFile(
+        underPath('root', `${formatBinDir(name)}/readme.md`),
+        `# ${name}`,
       ),
     );
   }
