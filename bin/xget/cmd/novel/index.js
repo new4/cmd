@@ -1,8 +1,18 @@
+const fse = require('fs-extra');
+const {
+  concat,
+} = require('lodash');
+
 const novels = require('./novels');
 
 const {
-  cache,
-} = require('../../utils');
+  log: {
+    log,
+  },
+  underPath,
+} = require('../../../../utils');
+
+const cacheDir = underPath('bin', 'xget/.cache');
 
 /**
  * 拉小说
@@ -18,17 +28,21 @@ module.exports = async (name, cmd) => {
 
   const target = novels[name];
 
-  console.log(target);
-
-  const {
-    getTitle,
-    getLink,
-    getContent,
-    loadPage,
-  } = target;
-
   await target.loadPage();
-  cache.save('title', target.getTitle());
-  // cache.save('title', getLink());
-  // cache.save('title', getContent());
+  const contentArr = target.contentHandler();
+
+  // contentArr.forEach((line) => {
+  //   log(line);
+  //   fs.appendFileSync(`${cacheDir}/${name}/a.txt`, `${line}\n`);
+  // });
+
+  fse.outputFileSync(
+    `${cacheDir}/${name}/a.txt`,
+    concat(
+      '---------------------',
+      `${name}`,
+      '---------------------',
+      contentArr,
+    ).join('\n\n'),
+  );
 };
