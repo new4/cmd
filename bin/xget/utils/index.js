@@ -1,0 +1,1 @@
+exports.cache = require('./cache');

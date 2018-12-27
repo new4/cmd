@@ -43,6 +43,7 @@
     "xmockdata": "bin/xmockdata/xmockdata.js",
     "xleetcode": "bin/xleetcode/xleetcode.js",
     "xboom": "bin/xboom/xboom.js",
-    "xmodule": "bin/xmodule/xmodule.js"
+    "xmodule": "bin/xmodule/xmodule.js",
+    "xget": "bin/xget/xget.js"
   }
 }
