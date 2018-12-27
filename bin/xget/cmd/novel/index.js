@@ -27,8 +27,8 @@ module.exports = async (name, cmd) => {
     loadPage,
   } = target;
 
-  await loadPage();
-  cache.save('title', getTitle());
+  await target.loadPage();
+  cache.save('title', target.getTitle());
   // cache.save('title', getLink());
   // cache.save('title', getContent());
 };
