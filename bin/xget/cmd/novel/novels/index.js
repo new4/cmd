@@ -1,1 +1,1 @@
-exports.jianlai = require('./jianlai');
+exports.剑来 = require('./剑来');
