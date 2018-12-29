@@ -53,20 +53,30 @@ module.exports = async (name, cmd) => {
     novel,
     `can not find novel ${yellow(name)}, try ${yellow('xget novel -l')} for novels list`,
   );
+  const chapterList = await novel.getChapterList();
 
-  while (novel.url) {
-    await novel.loadPage();
-    const title = novel.getTitle();
-    const contentArr = novel.contentHandler();
-    fse.outputFileSync(
-      `${cacheDir}/${name}/${title}.txt`,
-      concat(
-        '---------------------',
-        `${title}`,
-        '---------------------',
-        contentArr,
-      ).join('\n\n'),
-    );
-    novel.updateUrl();
-  }
+  const chapterDetails = await Promise.all(chapterList.map(async chapterInfo => await novel.getChapterDetails(chapterInfo))); // eslint-disable-line
+
+  console.log(chapterDetails.length);
+
+  // chapterDetails.forEach(([title, ...contents]) => {
+  //   console.log(title);
+  // });
+
+
+  // while (novel.url) {
+  //   await novel.loadPage();
+  //   const title = novel.getTitle();
+  //   const contentArr = novel.contentHandler();
+  //   fse.outputFileSync(
+  //     `${cacheDir}/${name}/${title}.txt`,
+  //     concat(
+  //       '---------------------',
+  //       `${title}`,
+  //       '---------------------',
+  //       contentArr,
+  //     ).join('\n\n'),
+  //   );
+  //   novel.updateUrl();
+  // }
 };
