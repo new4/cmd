@@ -24,11 +24,6 @@ program
   .command('create <cmd-name>')
   .alias('c')
   .description('create a commander')
-  // 新创建命令的类型：
-  // root - 根命令，由其来生成一系列的同类型命令
-  // bin - 命令行类型的命令，生成的命令在 bin 目录下
-  // process - 进程类型的命令，生成的命令在 process 目录下
-  // .option('-t, --type <type>', 'type of commander', /^(root|process|bin)$/i, 'bin')
   .action((name, cmd) => create(name, cleanArgs(cmd)));
 
 /**

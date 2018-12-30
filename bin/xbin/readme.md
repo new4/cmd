@@ -5,25 +5,25 @@
 ## 创建一个命令
 
 ```cmd
-xbin create cmdName
+xbin create <cmd-name>
 ```
 
 ## 移除一个命令
 
 ```cmd
-xbin remove cmdName
+xbin remove <cmd-name>
 ```
 
 带上参数 `--force` 或 `-f` 才是真正的移除（防止误删用）：
 
 ```cmd
-xbin remove -f cmdName
+xbin remove -f <cmd-name>
 ```
 
 ## 重命名一个命令
 
 ```cmd
-xbin rename oldCmd newCmd
+xbin rename <old-cmd-name> <new-cmd-name>
 ```
 
 ## 检查有无命令文件/配置残留
@@ -48,10 +48,4 @@ xbin relink
 
 ```cmd
 xbin list
-```
-
-## 将某一目录下的文件整合成一个输出模块
-
-```cmd
-xbin unify path/of/some/modules
 ```
