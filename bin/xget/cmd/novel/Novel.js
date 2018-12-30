@@ -2,6 +2,9 @@ const cheerio = require('cheerio');
 
 const {
   requestP,
+  log: {
+    faillogBoth,
+  },
   shouldBe: {
     sb,
   },
@@ -14,14 +17,22 @@ const {
  * 加载页面内容
  */
 async function loadPage(name, url) {
-  const [response, body] = await requestP({
-    url,
-  });
+  let response;
+  let body;
+  try {
+    [response, body] = await requestP({
+      url,
+      timeout: 1500,
+    });
 
-  sb(
-    () => response.statusCode === 200,
-    `[${name} error] res status not 200: ${yellow(url)}`,
-  );
+    sb(
+      () => response.statusCode === 200,
+      `[${name} error] res status not 200: ${yellow(url)}`,
+    );
+  } catch (e) {
+    faillogBoth(`[${e.message}] url: ${yellow(url)}`);
+    process.exit(1);
+  }
 
   return cheerio.load(body);
 }

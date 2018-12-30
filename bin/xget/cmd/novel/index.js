@@ -60,6 +60,7 @@ module.exports = async (name, cmd) => {
     chapterList.map(chapterInfo => (async () => await novel.getChapterDetails(chapterInfo))), // eslint-disable-line
     5, // 5 个一组进行分割
   );
+
   // return console.log(chapterList.length);
 
   // const asyncFuncList = chapterList.map(chapterInfo => (async () => await novel.getChapterDetails(chapterInfo))); // eslint-disable-line
