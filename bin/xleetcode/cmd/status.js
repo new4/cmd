@@ -26,6 +26,9 @@ const {
 
 const {
   cache,
+  loginStatus: {
+    checkLoginStatus,
+  },
   getAllProblems,
   session: {
     getCurrentSession,
@@ -144,6 +147,7 @@ function showAcStatusMap(allProblems) {
 }
 
 module.exports = async function status() {
+  await checkLoginStatus();
   const allProblems = await getAllProblems(true);
   const currentSession = await getCurrentSession(false);
   clearlog();

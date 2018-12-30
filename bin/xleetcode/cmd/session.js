@@ -19,6 +19,9 @@ const {
     getAllSessions,
     setSession,
   },
+  loginStatus: {
+    checkLoginStatus,
+  },
 } = require('../utils');
 
 function showSessionInfo(sessions) {
@@ -44,6 +47,8 @@ function showSessionInfo(sessions) {
  * 显示账户当前的所有 session 信息
  */
 module.exports = async (cmd) => {
+  await checkLoginStatus();
+
   const {
     sessions,
   } = await getAllSessions();

@@ -1,4 +1,3 @@
-const moment = require('moment');
 const prompt = require('prompt');
 
 const {
@@ -34,6 +33,10 @@ const {
   cache,
   getRespSetCookieInfo,
   requestCsrftoken,
+  loginStatus: {
+    checkLoginSession,
+    checkLoginUrl,
+  },
 } = require('../utils');
 
 const {
@@ -151,33 +154,35 @@ async function autoRelogin(user) {
 /**
  * 根据多种情形来处理登录
  */
-module.exports = (force) => {
-  const userSession = cache.get('session');
+module.exports = async (force) => {
+  const loginSession = checkLoginSession(true);
 
   // case 1: 没有 session 文件的情况，需要手动输入账号登录
   // -----------------------------------------------------
-  if (!userSession) {
+  if (!loginSession) {
     return promptToLogin();
   }
 
-  // case 2: cookie 过期了就清掉 session 文件并自动重新登录
+  // case 2: 指定自动重新登录自动重新登录
   // -----------------------------------------------------
   const {
     username,
     password,
-    sessionExp,
-  } = userSession; // 一般 14 天的过期时间
-  const curDate = moment().format('YYYYMMDD');
-  const expDate = moment(new Date(sessionExp)).subtract(1, 'd').format('YYYYMMDD'); // 多扣掉 1 天来算
+  } = loginSession;
 
-  if (force || expDate <= curDate) {
+  if (force) {
     return autoRelogin({
       username,
       password: decrypt(password),
     });
   }
 
-  // case 3: 没过期的就无需登录，其中有一种改过密码的情形在别处处理
+  // case 3: 登录链接验不过的情形
   // -----------------------------------------------------
-  return successlogBoth(`Already logged in @ ${yellow(username)}`);
+  const loginUrlStatus = await checkLoginUrl(true);
+  if (!loginUrlStatus) {
+    return promptToLogin();
+  }
+
+  return successlogBoth(`Already logged in @${yellow(username)}`);
 };
