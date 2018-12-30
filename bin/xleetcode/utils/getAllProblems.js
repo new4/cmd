@@ -8,7 +8,7 @@ const {
 
 const {
   url: {
-    problemsAll: problemsAllUrl,
+    problemsAllUrl,
   },
 } = require('../config');
 

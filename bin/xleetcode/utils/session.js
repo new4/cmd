@@ -8,7 +8,7 @@ const {
 
 const {
   url: {
-    session: sessionUrl,
+    sessionUrl,
   },
 } = require('../config');
 

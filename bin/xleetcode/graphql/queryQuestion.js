@@ -7,8 +7,8 @@ const {
 
 const {
   url: {
-    base: baseUrl,
-    graphql: graphqlUrl,
+    baseUrl,
+    graphqlUrl,
   },
 } = require('../config');
 

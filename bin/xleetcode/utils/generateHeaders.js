@@ -1,7 +1,4 @@
 const {
-  colorStr: {
-    yellow,
-  },
   shouldBe: {
     sbValidValue,
   },
@@ -9,11 +6,15 @@ const {
 
 const {
   url: {
-    base: baseUrl,
+    baseUrl,
   },
 } = require('../config');
 
 const cache = require('./cache');
+
+const {
+  NEED_LOGIN,
+} = require('./tips');
 
 /**
  * 生成请求头
@@ -21,10 +22,7 @@ const cache = require('./cache');
 module.exports = () => {
   const sessionCache = cache.get('session');
 
-  sbValidValue(
-    sessionCache,
-    `Need login. Use ${yellow('xleetcode login')}`,
-  );
+  sbValidValue(sessionCache, NEED_LOGIN);
 
   const {
     LEETCODE_SESSION,

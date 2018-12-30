@@ -6,7 +6,7 @@ const getRespSetCookieInfo = require('./getRespSetCookieInfo');
 
 const {
   url: {
-    login: loginUrl,
+    loginUrl,
   },
 } = require('../config');
 

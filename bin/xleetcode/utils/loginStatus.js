@@ -8,7 +8,7 @@ const {
 
 const {
   url: {
-    login: loginUrl,
+    loginUrl,
   },
 } = require('../config');
 

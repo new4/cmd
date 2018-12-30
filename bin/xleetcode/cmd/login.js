@@ -41,8 +41,8 @@ const {
 
 const {
   url: {
-    base: baseUrl,
-    login: loginUrl,
+    baseUrl,
+    loginUrl,
   },
 } = require('../config');
 
