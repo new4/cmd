@@ -16,7 +16,6 @@ const {
     log,
   },
   shouldBe: {
-    sb,
     sbValidValue,
   },
   underPath,
@@ -56,39 +55,23 @@ module.exports = async (name, cmd) => {
   );
   const chapterList = await novel.getChapterList();
 
-  const asyncFuncList = chunk(
-    chapterList.map(chapterInfo => (async () => await novel.getChapterDetails(chapterInfo))), // eslint-disable-line
+  const asyncFnChunk = chunk(
+    chapterList.map(chapterInfo => async () => {
+      await novel.getChapterDetails(chapterInfo);
+    }),
     5, // 5 个一组进行分割
   );
 
-  // return console.log(chapterList.length);
-
-  // const asyncFuncList = chapterList.map(chapterInfo => (async () => await novel.getChapterDetails(chapterInfo))); // eslint-disable-line
-
-  // return console.log(asyncFuncList.length);
-
-  const chapterDetails = await Promise.all(chapterList.map(async chapterInfo => await novel.getChapterDetails(chapterInfo)));
-
-  console.log(chapterDetails);
-
-  chapterDetails.forEach(([title, ...contents]) => {
-    console.log(title);
-  });
-
-
-  // while (novel.url) {
-  //   await novel.loadPage();
-  //   const title = novel.getTitle();
-  //   const contentArr = novel.contentHandler();
-  //   fse.outputFileSync(
-  //     `${cacheDir}/${name}/${title}.txt`,
-  //     concat(
-  //       '---------------------',
-  //       `${title}`,
-  //       '---------------------',
-  //       contentArr,
-  //     ).join('\n\n'),
-  //   );
-  //   novel.updateUrl();
-  // }
+  for (let chunkFn of asyncFnChunk) { // eslint-disable-line
+    const chapterDetails = await Promise.all(chunkFn.map(fn => fn())); // eslint-disable-line
+    chapterDetails.forEach(([title, ...contentArr]) => fse.outputFileSync(
+      `${cacheDir}/${name}/${title}.txt`,
+      concat(
+        '---------------------',
+        `${title}`,
+        '---------------------',
+        contentArr,
+      ).join('\n\n'),
+    ));
+  }
 };

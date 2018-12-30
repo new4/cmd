@@ -65,34 +65,11 @@ class Novel {
   }
 
   /**
-   * 加载某一章节页
+   * [静态方法] 加载某一章节页
    */
   static async loadChapterPage(url) {
     const $chapter = await loadPage('loadChapterPage', url);
     return $chapter;
-  }
-
-  updateUrl() {
-    const {
-      $,
-      baseUrl,
-      selector: {
-        nextLinkSelector,
-      },
-    } = this;
-
-    const path = $(nextLinkSelector).attr('href');
-    return this.url = !path ? false : `${baseUrl}${path}`;
-  }
-
-  getContent() {
-    const {
-      $,
-      selector: {
-        contentSelector,
-      },
-    } = this;
-    return $(contentSelector);
   }
 }
 
