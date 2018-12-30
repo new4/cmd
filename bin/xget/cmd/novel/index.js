@@ -1,6 +1,7 @@
 const fse = require('fs-extra');
 const {
   concat,
+  chunk,
 } = require('lodash');
 
 const {
@@ -55,13 +56,23 @@ module.exports = async (name, cmd) => {
   );
   const chapterList = await novel.getChapterList();
 
-  const chapterDetails = await Promise.all(chapterList.map(async chapterInfo => await novel.getChapterDetails(chapterInfo))); // eslint-disable-line
+  const asyncFuncList = chunk(
+    chapterList.map(chapterInfo => (async () => await novel.getChapterDetails(chapterInfo))), // eslint-disable-line
+    5, // 5 个一组进行分割
+  );
+  // return console.log(chapterList.length);
 
-  console.log(chapterDetails.length);
+  // const asyncFuncList = chapterList.map(chapterInfo => (async () => await novel.getChapterDetails(chapterInfo))); // eslint-disable-line
 
-  // chapterDetails.forEach(([title, ...contents]) => {
-  //   console.log(title);
-  // });
+  // return console.log(asyncFuncList.length);
+
+  const chapterDetails = await Promise.all(chapterList.map(async chapterInfo => await novel.getChapterDetails(chapterInfo)));
+
+  console.log(chapterDetails);
+
+  chapterDetails.forEach(([title, ...contents]) => {
+    console.log(title);
+  });
 
 
   // while (novel.url) {
