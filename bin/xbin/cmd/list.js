@@ -13,15 +13,11 @@ const {
     log,
     logBoth,
   },
-  shouldBe: {
-    sbValidValue,
-    sbValidArray,
-  },
 } = require('../../../utils');
 
 const {
-  cmdInPkgJson,
   getCurCmd,
+  checkCmdInPkgJson,
 } = require('../utils');
 
 /**
@@ -31,19 +27,7 @@ const {
  *  - 检查 package.json 中的 bin 字段对应文件是否存在
  */
 module.exports = () => {
-  const cmdInPkgJsonList = cmdInPkgJson();
-
-  sbValidValue(
-    cmdInPkgJsonList,
-    'No bin config in package.json',
-  );
-
-  const entries = Object.entries(cmdInPkgJsonList);
-
-  sbValidArray(
-    entries,
-    'No cmd config in bin of package.json',
-  );
+  const entries = checkCmdInPkgJson();
 
   log();
 

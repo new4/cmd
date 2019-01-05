@@ -5,6 +5,10 @@ const {
   getPkgJson,
   getRootDir,
   underPath,
+  shouldBe: {
+    sbValidValue,
+    sbValidArray,
+  },
 } = require('../../utils');
 
 const packageJson = getPkgJson(getRootDir());
@@ -18,6 +22,27 @@ exports.cmdUnderDirBin = () => fs.readdirSync(underPath('bin'));
  * 获取 package.json 文件中 bin 字段包含的命令名称
  */
 exports.cmdInPkgJson = () => packageJson.bin || {};
+
+/**
+ * 检查 package.json 文件中的 bin 字段，通过检查会返回命令名组成的数组
+ */
+exports.checkCmdInPkgJson = () => {
+  const cmdInPkgJsonList = exports.cmdInPkgJson();
+
+  sbValidValue(
+    cmdInPkgJsonList,
+    'No bin config in package.json',
+  );
+
+  const entries = Object.entries(cmdInPkgJsonList);
+
+  sbValidArray(
+    entries,
+    'No cmd config in bin of package.json',
+  );
+
+  return entries;
+};
 
 /**
  * 获取当前目录所属的 bin 命令名称

@@ -30,17 +30,13 @@ const {
   npmOp: {
     relink,
   },
-  shouldBe: {
-    sbValidValue,
-    sbValidArray,
-  },
 } = require('../../../utils');
 
 const {
   cmdUnderDirBin,
-  cmdInPkgJson,
   getCurCmd,
   checkBin,
+  checkCmdInPkgJson,
 } = require('../utils');
 
 const packageJson = getPkgJson(getRootDir());
@@ -58,19 +54,7 @@ module.exports = (cmd) => {
     dir: [], // 目录残留
   };
 
-  const cmdInPkgJsonList = cmdInPkgJson();
-
-  sbValidValue(
-    cmdInPkgJsonList,
-    'No bin config in package.json',
-  );
-
-  const entries = Object.entries(cmdInPkgJsonList);
-
-  sbValidArray(
-    entries,
-    'No cmd config in bin of package.json',
-  );
+  const entries = checkCmdInPkgJson();
 
   logBoth(cyan('cmd info in package.json:'));
   entries.forEach(([cmdname, path]) => {
