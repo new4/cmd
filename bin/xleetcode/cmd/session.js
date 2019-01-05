@@ -59,23 +59,23 @@ module.exports = async (cmd) => {
   );
 
   const {
-    specify: sessionName,
+    specify: sessionNameOrId,
   } = cmd;
 
   // 仅显示
-  if (!sessionName) {
+  if (!sessionNameOrId) {
     showSessionInfo(sessions);
     return;
   }
 
-  const [targetSession] = sessions.filter(session => session.name === sessionName);
+  const [target] = sessions.filter(session => session.name === sessionNameOrId || +session.id === +sessionNameOrId);
 
   sbValidValue(
-    targetSession,
-    `invalid session name: ${sessionName}`,
+    target,
+    `invalid session name or id: ${sessionNameOrId}`,
   );
 
-  await setSession(targetSession);
+  await setSession(target);
 
-  successlogBoth(`set session ${yellow(sessionName)} success!`);
+  successlogBoth(`set session ${yellow(sessionNameOrId)} success!`);
 };

@@ -132,7 +132,7 @@ function promptToLogin() {
 
       logWithSpinner(grey('Logining ...'));
       await login(user);
-      stopSpinner(cyan(`Successfully login @ ${yellow(user.username)}`));
+      stopSpinner(cyan(`Successfully login @${yellow(user.username)}`));
       log();
     },
   );
@@ -147,7 +147,7 @@ async function autoRelogin(user) {
 
   logWithSpinner(grey('Auto relogining ...'));
   await login(user);
-  stopSpinner(cyan(`Successfully relogin @ ${yellow(user.username)}`));
+  stopSpinner(cyan(`Successfully relogin @${yellow(user.username)}`));
   log();
 }
 
