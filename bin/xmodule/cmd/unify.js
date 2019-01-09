@@ -11,7 +11,9 @@ const {
   shouldBe: {
     sbValidDir,
   },
-  getExistFiles,
+  fileOp: {
+    getExistFiles,
+  },
 } = require('../../../utils');
 
 /**

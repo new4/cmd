@@ -22,7 +22,9 @@ const {
     sbValidArray,
   },
   underPath,
-  getExistFiles,
+  fileOp: {
+    getExistFiles,
+  },
 } = require('../../../utils');
 
 const {
