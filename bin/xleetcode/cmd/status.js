@@ -38,9 +38,7 @@ const {
 function parseByFrontendId(allProblems) {
   const statStatusPairs = allProblems.stat_status_pairs;
   const lastFrontendQuestionId = statStatusPairs[0].stat.frontend_question_id;
-  const statusInfo = new Array(lastFrontendQuestionId);
-
-  _.fill(statusInfo, null);
+  const statusInfo = Array.from({ length: lastFrontendQuestionId }, () => null);
 
   statStatusPairs.forEach(statStatus => statusInfo[statStatus.stat.frontend_question_id] = statStatus);
 
