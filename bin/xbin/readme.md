@@ -14,7 +14,7 @@ xbin create <cmd-name>
 xbin remove <cmd-name>
 ```
 
-带上参数 `--force` 或 `-f` 才是真正的移除（防止误删用）：
+带上参数 `--force` 或 `-f` 才是真正的移除（防止误删）：
 
 ```cmd
 xbin remove -f <cmd-name>

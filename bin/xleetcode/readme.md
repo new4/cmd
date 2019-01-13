@@ -31,11 +31,11 @@ xleetcode session
 切换当前进度
 
 ```bash
-xleetcode session --specify <session-name>
+xleetcode session --specify <session-name|session-id>
 ```
 
-## 拉取一道题号为 number 的题目
+## 拉取一道题号为 `number` 的题目
 
 ```bash
-xleetcode get -n number
+xleetcode get -n <number>
 ```
