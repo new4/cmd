@@ -22,24 +22,16 @@ const {
 module.exports = (folder) => {
   const dir = underPath('cur', folder);
 
-  sbValidDir(
-    dir,
-    `invalid path: ${yellow(folder)}`,
+  sbValidDir(dir, `invalid path: ${yellow(folder)}`);
+
+  const exportStr = getExistFiles(dir, file => file !== 'index.js' && /.js$/.test(file))
+    .map(file => file.replace(/\.js$/, ''))
+    .reduce((arr, module) => [...arr, `exports.${module} = require('./${module}');`], []);
+
+  fse.outputFileSync(
+    underPath(dir, 'index.js'),
+    [...exportStr, ''].join('\n'), // 最后加上一行
   );
-
-  const files = getExistFiles(dir);
-
-  const exportStr = [];
-  files.forEach((file) => {
-    if (file !== 'index.js') {
-      const module = file.replace(/\.js$/, '');
-      exportStr.push(`exports.${module} = require('./${module}');`);
-    }
-  });
-  exportStr.push(''); // 最后加上一行
-
-  const exportIndex = underPath(dir, 'index.js');
-  fse.outputFileSync(exportIndex, exportStr.join('\n'));
 
   successlogBoth(`unify success in folder: ${yellow(dir)}`);
 };
