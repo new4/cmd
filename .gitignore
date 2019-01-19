@@ -66,3 +66,6 @@ yarn.lock
 
 # xleetcode 缓存
 **/.cache
+
+# 临时代码的目录
+/temp
