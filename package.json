@@ -43,5 +43,6 @@
     "xleetcode": "bin/xleetcode/xleetcode.js",
     "xmodule": "bin/xmodule/xmodule.js",
     "xget": "bin/xget/xget.js"
-  }
+  },
+  "keywords": []
 }
