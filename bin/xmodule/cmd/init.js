@@ -7,7 +7,6 @@ const {
   },
   log: {
     logBoth,
-    successlogBoth,
     successlog,
   },
   shouldBe: {
@@ -35,36 +34,28 @@ const DEV_DEPS = ['eslint', 'eslint-config-new4-eslintrc'];
 /**
  * 以本项目为蓝本初始化项目的目录
  */
-module.exports = (folder) => {
-  const dir = underPath('cur', folder);
+module.exports = (dir) => {
+  const targetDir = underPath('cur', dir);
 
-  sbValidDir(dir, `invalid path: ${yellow(folder)}`);
+  sbValidDir(targetDir, `invalid path: ${yellow(dir)}`);
 
-  let [pkgJson] = getExistFiles(dir, file => file === 'package.json');
+  const [pkgJson] = getExistFiles(targetDir, file => file === 'package.json');
 
   if (!pkgJson) {
     logBoth(`package.json not found. create one with ${yellow('<npm init -y>')}`);
-    npmInit(dir);
+    npmInit(targetDir);
     successlog(`${yellow('pcakage.json')} created!`);
   } else {
     successlog(`${yellow('pcakage.json')} existed!`);
   }
 
-  pkgJson = require(`${dir}/package.json`);
-
-  const {
-    devDependencies,
-  } = pkgJson;
-
-  PROJECT_DEPS.forEach(dep => {
-    console.log(underPath('root', dep));
-    console.log(underPath(dir, dep));
+  PROJECT_DEPS.forEach((dep) => {
     fse.copySync(
       underPath('root', dep),
-      underPath(dir, dep),
+      underPath(targetDir, dep),
     );
     successlog(`${yellow(dep)} copied!`);
   });
 
-  npmInstallDevDeps(dir, DEV_DEPS);
+  npmInstallDevDeps(targetDir, DEV_DEPS);
 };
