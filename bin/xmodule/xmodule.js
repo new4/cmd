@@ -8,6 +8,7 @@ const {
 
 const init = require('./cmd/init');
 const unify = require('./cmd/unify');
+const scripts = require('./cmd/scripts');
 
 program
   .version('0.1.0')
@@ -28,6 +29,14 @@ program
   .command('unify <dir>')
   .description('unify a directory as a module')
   .action(dir => unify(dir));
+
+/**
+ * 显示当前项目 package.json 中的 scripts 脚本
+ */
+program
+  .command('scripts <dir>')
+  .description('list scripts in package.json')
+  .action(dir => scripts(dir));
 
 // 强化的提示
 tipEnhance(program, 'xmodule');
