@@ -45,7 +45,7 @@ module.exports = (dir) => {
   Object
     .entries(scripts)
     .forEach(([key, value]) => {
-      log(` ${cyan(hollowCircle)} ${yellow(strAdjustRight(key, 10))} ${value}`);
+      log(` ${cyan(hollowCircle)} ${yellow(strAdjustRight(key, 12))} ${value}`);
     });
   log();
 };

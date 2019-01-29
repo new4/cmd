@@ -11,3 +11,9 @@ xmodule init /path/to/unify
 ```bash
 xmodule unify /path/to/unify
 ```
+
+## 显示当前项目 package.json 中的 scripts 脚本
+
+```bash
+xmodule scripts /path/to/unify
+```
