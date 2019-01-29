@@ -12,6 +12,7 @@ const rename = require('./cmd/rename');
 const check = require('./cmd/check');
 const relink = require('./cmd/relink');
 const list = require('./cmd/list');
+const subcmd = require('./cmd/subcmd');
 
 program
   .version('0.1.0')
@@ -73,6 +74,16 @@ program
   .description('show list of all commanders')
   // .option('-p, --private', 'create a private cmd') // 不想上传到 git 的，可以带上参数 -p，这样仅限本地进行使用
   .action(() => list());
+
+/**
+ * 管理某一个命令的子命令的创建
+ */
+program
+  .command('subcmd <subcmd-name>')
+  .description('manage subcmd of somecmd')
+  .option('-a, --add <sub-cmd-name>', 'add a subcmd of somecmd')
+  .option('-d, --desc <description>', 'description of subcmd')
+  .action((name, cmd) => subcmd(name, cleanArgs(cmd)));
 
 // 强化的提示
 tipEnhance(program, 'xbin');

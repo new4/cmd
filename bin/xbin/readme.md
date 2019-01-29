@@ -49,3 +49,9 @@ xbin relink
 ```cmd
 xbin list
 ```
+
+## 管理某一个命令的子命令的创建
+
+```cmd
+xbin subcmd <cmd-name> -a <subcmd-name> -d <subcmd-description>
+```
