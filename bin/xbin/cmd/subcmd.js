@@ -20,6 +20,9 @@ const {
   fileOp: {
     readFileByLines,
   },
+  vscode: {
+    code,
+  },
 } = require('../../../utils');
 
 const {
@@ -94,4 +97,6 @@ module.exports = (cmdName, cmd) => {
 
   fse.outputFile(subcmdFile, 'module.exports = () => { };\n');
   successlogAfter(`${yellow(subcmdFile.replace(rootPath, ''))} created success!`);
+
+  code(cmdEntryFile);
 };
