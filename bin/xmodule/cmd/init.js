@@ -15,6 +15,10 @@ const {
   fileOp: {
     getExistFiles,
   },
+  spinner: {
+    logWithSpinner,
+    stopSpinner,
+  },
   npmOp: {
     npmInit,
     npmInstallDevDeps,
@@ -29,21 +33,23 @@ const PROJECT_DEPS = [
 ];
 
 // 开发依赖
-const DEV_DEPS = ['eslint', 'eslint-config-new4-eslintrc'];
+const DEV_DEPS = [
+  'eslint',
+  'eslint-config-new4-eslintrc',
+];
 
 /**
  * 以本项目为蓝本初始化项目的目录
  */
-module.exports = (dir) => {
+module.exports = async (dir) => {
   const targetDir = underPath('cur', dir);
 
   sbValidDir(targetDir, `invalid path: ${yellow(dir)}`);
 
   const [pkgJson] = getExistFiles(targetDir, file => file === 'package.json');
-
   if (!pkgJson) {
     logBoth(`package.json not found. create one with ${yellow('<npm init -y>')}`);
-    npmInit(targetDir);
+    await npmInit(targetDir);
     successlog(`${yellow('pcakage.json')} created!`);
   } else {
     successlog(`${yellow('pcakage.json')} existed!`);
@@ -57,5 +63,8 @@ module.exports = (dir) => {
     successlog(`${yellow(dep)} copied!`);
   });
 
-  npmInstallDevDeps(targetDir, DEV_DEPS);
+  logWithSpinner('installing devDependencies ...');
+  await npmInstallDevDeps(targetDir, DEV_DEPS, () => {
+    stopSpinner(`${yellow(DEV_DEPS.join(', '))} installed!`);
+  });
 };

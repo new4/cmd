@@ -13,7 +13,6 @@ program
   .version('0.1.0')
   .usage('<command> [options]');
 
-
 /**
  * 初始化项目的目录
  */
