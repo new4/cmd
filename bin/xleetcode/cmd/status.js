@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const {
-  addonZero,
+  serialNumber,
   icons: {
     solidStar: iconAC,
     hollowStar: iconNotAC,
@@ -84,19 +84,19 @@ function showTotalStatistics(allProblems, currentSession) {
   ));
   log();
   log(green(
-    center(grey(':'), 'Resolved', `${addonZero(accept.total)}/${all.total}`, LEFT_LEN),
+    center(grey(':'), 'Resolved', `${serialNumber(accept.total)}/${all.total}`, LEFT_LEN),
   ));
   log(grey(
     center(':', '--------', '--------', LEFT_LEN),
   ));
   log(blue(
-    center(grey(':'), 'Easy', `${addonZero(accept.easy)}/${all.easy}`, LEFT_LEN),
+    center(grey(':'), 'Easy', `${serialNumber(accept.easy)}/${all.easy}`, LEFT_LEN),
   ));
   log(yellow(
-    center(grey(':'), 'Medium', `${addonZero(accept.medium)}/${all.medium}`, LEFT_LEN),
+    center(grey(':'), 'Medium', `${serialNumber(accept.medium)}/${all.medium}`, LEFT_LEN),
   ));
   log(red(
-    center(grey(':'), 'Hard', `${addonZero(accept.hard)}/${all.hard}`, LEFT_LEN),
+    center(grey(':'), 'Hard', `${serialNumber(accept.hard)}/${all.hard}`, LEFT_LEN),
   ));
 }
 
@@ -112,8 +112,8 @@ function showAcStatusMap(allProblems) {
   _.fill(top, '  ');
   for (let i = 0, len = chunkSize / subChunkSize; i < len; i++) {
     const [left, right] = [1 + subChunkSize * i, subChunkSize + subChunkSize * i];
-    top[left - 1] = addonZero(left, 2);
-    top[right - 1] = addonZero(right, 2);
+    top[left - 1] = serialNumber(left, 2);
+    top[right - 1] = serialNumber(right, 2);
   }
 
   let topStr = ' '.repeat(5); // prefix
@@ -124,7 +124,7 @@ function showAcStatusMap(allProblems) {
   logBefore(topStr); // 头部标尺
 
   _.chunk(statusInfo, chunkSize).forEach((chunk, index) => {
-    const row = [`${addonZero(index * chunkSize)} `]; // 左侧标尺
+    const row = [`${serialNumber(index * chunkSize)} `]; // 左侧标尺
     chunk.forEach((item, jndex) => {
       if (!item) {
         // 有的题号是没有的，用空格来占位

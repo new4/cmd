@@ -6,7 +6,7 @@ const {
 } = require('lodash');
 
 const {
-  addonZero,
+  serialNumber,
   colorStr: {
     yellow,
     cyan,
@@ -149,12 +149,12 @@ module.exports = async function get(cmd) {
   const outputDir = underPath('cur', output || questionOutputDir);
   fse.ensureDirSync(outputDir);
 
-  const fileName = `${addonZero(number)} ${title}.js`;
+  const fileName = `${serialNumber(number)} ${title}.js`;
   const outputFile = path.join(outputDir, `${fileName}`);
   const existFiles = getExistFiles(outputDir);
 
   sbEmptyArray(
-    existFiles.filter(file => file.includes(addonZero(number))),
+    existFiles.filter(file => file.includes(serialNumber(number))),
     `file existed! number: ${yellow(number)}`,
   );
 
