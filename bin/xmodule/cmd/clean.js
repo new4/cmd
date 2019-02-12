@@ -1,3 +1,4 @@
+const fs = require('fs');
 const execa = require('execa');
 
 const {
