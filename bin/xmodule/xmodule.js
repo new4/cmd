@@ -9,6 +9,7 @@ const {
 const init = require('./cmd/init');
 const unify = require('./cmd/unify');
 const scripts = require('./cmd/scripts');
+const clean = require('./cmd/clean');
 
 program
   .version('0.1.0')
@@ -37,6 +38,14 @@ program
   .command('scripts <dir>')
   .description('list scripts in package.json')
   .action(dir => scripts(dir));
+
+/**
+ * todo: add description
+ */
+program
+  .command('clean')
+  .description('clean node_modules & yarn.lock & package-lock.json')
+  .action(() => clean());
 
 // 强化的提示
 tipEnhance(program, 'xmodule');
