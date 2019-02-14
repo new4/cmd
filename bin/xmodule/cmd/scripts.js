@@ -42,10 +42,10 @@ module.exports = (dir) => {
   sbValidPlainObject(scripts, `no ${yellow('scripts')} in package.json`);
 
   log();
-  Object
-    .entries(scripts)
-    .forEach(([key, value]) => {
-      log(` ${cyan(hollowCircle)} ${yellow(strAdjustRight(key, 12))} ${value}`);
-    });
+  const scriptEntries = Object.entries(scripts);
+  const maxLen = scriptEntries.reduce((len, [key]) => Math.max(len, key.length), 0);
+  scriptEntries.forEach(([key, value]) => {
+    log(` ${cyan(hollowCircle)} ${yellow(strAdjustRight(key, maxLen + 2))} ${value}`);
+  });
   log();
 };
