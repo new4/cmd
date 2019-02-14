@@ -30,6 +30,7 @@ const PROJECT_DEPS = [
   '.editorconfig',
   '.eslintignore',
   '.eslintrc.js',
+  '.gitignore',
 ];
 
 // 开发依赖
