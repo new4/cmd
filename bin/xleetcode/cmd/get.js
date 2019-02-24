@@ -25,6 +25,9 @@ const {
   fileOp: {
     getExistFiles,
   },
+  vscode: {
+    code: vsCode,
+  },
 } = require('../../../utils');
 
 const {
@@ -177,4 +180,6 @@ module.exports = async function get(cmd) {
 
   successlogBefore(`File ${yellow(fileName)} created!`);
   logBoth(cyan(`Under Path: ${outputDir}`));
+
+  await vsCode(outputFile);
 };
