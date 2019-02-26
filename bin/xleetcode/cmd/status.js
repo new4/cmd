@@ -38,7 +38,9 @@ const {
 function parseByFrontendId(allProblems) {
   const statStatusPairs = allProblems.stat_status_pairs;
   const lastFrontendQuestionId = statStatusPairs[0].stat.frontend_question_id;
-  const statusInfo = Array.from({ length: lastFrontendQuestionId }, () => null);
+  const statusInfo = Array.from({
+    length: lastFrontendQuestionId,
+  }, () => null);
 
   statStatusPairs.forEach(statStatus => statusInfo[statStatus.stat.frontend_question_id] = statStatus);
 
@@ -116,7 +118,7 @@ function showAcStatusMap(allProblems) {
     top[right - 1] = serialNumber(right, 2);
   }
 
-  let topStr = ' '.repeat(5); // prefix
+  let topStr = ' '.repeat(6); // prefix
   _.chunk(top, subChunkSize).forEach((item) => {
     topStr = `${topStr}${item.join('')}  `;
   });
@@ -124,7 +126,7 @@ function showAcStatusMap(allProblems) {
   logBefore(topStr); // 头部标尺
 
   _.chunk(statusInfo, chunkSize).forEach((chunk, index) => {
-    const row = [`${serialNumber(index * chunkSize)} `]; // 左侧标尺
+    const row = [`${serialNumber(index * chunkSize, 4)} `]; // 左侧标尺
     chunk.forEach((item, jndex) => {
       if (!item) {
         // 有的题号是没有的，用空格来占位
