@@ -8,7 +8,7 @@ const {
 
 const {
   url: {
-    loginUrl,
+    personListUrl,
   },
 } = require('../config');
 
@@ -30,16 +30,17 @@ function checkLoginSession(skip) {
 }
 
 /**
- * 访问 loginUrl 没有发生 302 重定向的也需要登陆
+ * 访问我的列表页 personListUrl 时发生了 302 重定向的也需要登陆
  * skip 参数跳过 sb 的检查，透出链接检查的结果供别的逻辑
  */
 async function checkLoginUrl(skip) {
-  const [, body] = await requestP({
-    url: loginUrl,
+  const [resp] = await requestP({
+    url: personListUrl,
     headers: generateHeaders(),
     json: true,
   });
-  const fn = () => body && body.location === '/';
+
+  const fn = () => resp && +resp.statusCode === 200;
   return skip ? fn() : sb(fn, NEED_LOGIN);
 }
 
