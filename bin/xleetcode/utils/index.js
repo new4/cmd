@@ -5,4 +5,5 @@ exports.getRespSetCookieInfo = require('./getRespSetCookieInfo');
 exports.loginStatus = require('./loginStatus');
 exports.requestCsrftoken = require('./requestCsrftoken');
 exports.session = require('./session');
-exports.tipStr = require('./tips');
+exports.tips = require('./tips');
+exports.updateResolved = require('./updateResolved');

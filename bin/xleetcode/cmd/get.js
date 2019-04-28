@@ -22,9 +22,6 @@ const {
     sbValidArray,
   },
   underPath,
-  fileOp: {
-    getExistFiles,
-  },
   vscode: {
     code: vsCode,
   },
@@ -32,6 +29,7 @@ const {
 
 const {
   getAllProblems,
+  updateResolved,
 } = require('../utils');
 
 const {
@@ -119,7 +117,12 @@ module.exports = async function get(cmd) {
   const {
     number, // 题号
     output, // 输出目录
+    random, // 是否随机一题
   } = cmd;
+
+  const outputDir = underPath('cur', output || questionOutputDir);
+  fse.ensureDirSync(outputDir);
+  const resolvedProblems = updateResolved(outputDir);
 
   sbValidValue(
     number,
@@ -149,15 +152,11 @@ module.exports = async function get(cmd) {
     },
   } = targetStatus;
 
-  const outputDir = underPath('cur', output || questionOutputDir);
-  fse.ensureDirSync(outputDir);
-
   const fileName = `${serialNumber(number)} ${title}.js`;
   const outputFile = path.join(outputDir, `${fileName}`);
-  const existFiles = getExistFiles(outputDir);
 
   sbEmptyArray(
-    existFiles.filter(file => file.includes(serialNumber(number))),
+    Object.values(resolvedProblems).filter(file => file.includes(serialNumber(number))),
     `file existed! number: ${yellow(number)}`,
   );
 
