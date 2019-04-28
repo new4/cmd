@@ -3,6 +3,7 @@ const fse = require('fs-extra');
 const path = require('path');
 const {
   concat,
+  sample,
 } = require('lodash');
 
 const {
@@ -124,12 +125,12 @@ module.exports = async function get(cmd) {
   fse.ensureDirSync(outputDir);
   const resolvedProblems = updateResolved(outputDir);
 
-  sbValidValue(
+  !random && sbValidValue(
     number,
     `need option ${yellow('-n, --number <number>')}`,
   );
 
-  sbNumber(
+  !random && sbNumber(
     number,
     `option ${yellow('-n, --number <number>')} should be a number`,
   );
@@ -138,11 +139,21 @@ module.exports = async function get(cmd) {
     stat_status_pairs: statStatusPairs,
   } = await getAllProblems();
 
-  const [targetStatus] = statStatusPairs.filter(statStatus => +number === statStatus.stat.frontend_question_id);
+  const allProblemsId = statStatusPairs.map(statStatus => serialNumber(statStatus.stat.frontend_question_id));
+  const pendingProblems = allProblemsId.filter(id => !Object.keys(resolvedProblems).includes(id));
+
+  sbValidArray(
+    pendingProblems,
+    'no pengding problems left',
+  );
+
+  const realNumber = random ? sample(pendingProblems) : number;
+
+  const [targetStatus] = statStatusPairs.filter(statStatus => +realNumber === statStatus.stat.frontend_question_id);
 
   sbValidValue(
     targetStatus,
-    `no question has id ${yellow(number)}`,
+    `no question has id ${yellow(realNumber)}`,
   );
 
   const {
@@ -152,12 +163,12 @@ module.exports = async function get(cmd) {
     },
   } = targetStatus;
 
-  const fileName = `${serialNumber(number)} ${title}.js`;
+  const fileName = `${serialNumber(realNumber)} ${title}.js`;
   const outputFile = path.join(outputDir, `${fileName}`);
 
   sbEmptyArray(
-    Object.values(resolvedProblems).filter(file => file.includes(serialNumber(number))),
-    `file existed! number: ${yellow(number)}`,
+    Object.values(resolvedProblems).filter(file => file.includes(serialNumber(realNumber))),
+    `file existed! realNumber: ${yellow(realNumber)}`,
   );
 
   const questionInfoParsed = await queryQuestion(titleSlug);

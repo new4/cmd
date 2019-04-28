@@ -12,8 +12,6 @@ const cache = require('./cache');
 module.exports = (dir) => {
   const existFiles = getExistFiles(dir);
 
-  console.log(existFiles);
-
   const resolvedProblems = existFiles.reduce(
     (result, filename) => {
       const [num] = filename.split(' ');
