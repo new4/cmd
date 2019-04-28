@@ -11,6 +11,7 @@ module.exports = {
     cardInfo: 'https://leetcode-cn.com/problems/api/card-info/',
     problemsAllUrl: 'https://leetcode-cn.com/api/problems/all/',
     sessionUrl: 'https://leetcode-cn.com/session/',
+    personListUrl: 'https://leetcode-cn.com/list/',
   },
   question: {
     outputDir: './solutions',
