@@ -35,6 +35,8 @@ const {
   },
 } = require('../utils');
 
+const { questionNumMaxLen } = require('../config');
+
 function parseByFrontendId(allProblems) {
   const statStatusPairs = allProblems.stat_status_pairs;
   const lastFrontendQuestionId = statStatusPairs[0].stat.frontend_question_id;
@@ -86,19 +88,19 @@ function showTotalStatistics(allProblems, currentSession) {
   ));
   log();
   log(green(
-    center(grey(':'), 'Resolved', `${serialNumber(accept.total)}/${all.total}`, LEFT_LEN),
+    center(grey(':'), 'Resolved', `${serialNumber(accept.total, questionNumMaxLen, ' ')}/${all.total}`, LEFT_LEN),
   ));
   log(grey(
     center(':', '--------', '--------', LEFT_LEN),
   ));
   log(blue(
-    center(grey(':'), 'Easy', `${serialNumber(accept.easy)}/${all.easy}`, LEFT_LEN),
+    center(grey(':'), 'Easy', `${serialNumber(accept.easy, questionNumMaxLen, ' ')}/${all.easy}`, LEFT_LEN),
   ));
   log(yellow(
-    center(grey(':'), 'Medium', `${serialNumber(accept.medium)}/${all.medium}`, LEFT_LEN),
+    center(grey(':'), 'Medium', `${serialNumber(accept.medium, questionNumMaxLen, ' ')}/${all.medium}`, LEFT_LEN),
   ));
   log(red(
-    center(grey(':'), 'Hard', `${serialNumber(accept.hard)}/${all.hard}`, LEFT_LEN),
+    center(grey(':'), 'Hard', `${serialNumber(accept.hard, questionNumMaxLen, ' ')}/${all.hard}`, LEFT_LEN),
   ));
 }
 
@@ -126,7 +128,7 @@ function showAcStatusMap(allProblems) {
   logBefore(topStr); // 头部标尺
 
   _.chunk(statusInfo, chunkSize).forEach((chunk, index) => {
-    const row = [`${serialNumber(index * chunkSize, 4)} `]; // 左侧标尺
+    const row = [`${serialNumber(index * chunkSize, questionNumMaxLen)} `]; // 左侧标尺
     chunk.forEach((item, jndex) => {
       if (!item) {
         // 有的题号是没有的，用空格来占位

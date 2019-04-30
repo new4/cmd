@@ -42,6 +42,7 @@ const {
     outputDir: questionOutputDir,
     lang: targetLang,
   },
+  questionNumMaxLen,
 } = require('../config');
 
 // 1. 去除 str 末尾的空格
@@ -139,7 +140,9 @@ module.exports = async function get(cmd) {
     stat_status_pairs: statStatusPairs,
   } = await getAllProblems();
 
-  const allProblemsId = statStatusPairs.map(statStatus => serialNumber(statStatus.stat.frontend_question_id));
+  const allProblemsId = statStatusPairs.map(
+    statStatus => serialNumber(statStatus.stat.frontend_question_id, questionNumMaxLen),
+  );
   const pendingProblems = allProblemsId.filter(id => !Object.keys(resolvedProblems).includes(id));
 
   sbValidArray(
@@ -163,11 +166,11 @@ module.exports = async function get(cmd) {
     },
   } = targetStatus;
 
-  const fileName = `${serialNumber(realNumber)} ${title}.js`;
+  const fileName = `${serialNumber(realNumber, questionNumMaxLen)} ${title}.js`;
   const outputFile = path.join(outputDir, `${fileName}`);
 
   sbEmptyArray(
-    Object.values(resolvedProblems).filter(file => file.includes(serialNumber(realNumber))),
+    Object.values(resolvedProblems).filter(file => file.includes(serialNumber(realNumber, questionNumMaxLen))),
     `file existed! realNumber: ${yellow(realNumber)}`,
   );
 

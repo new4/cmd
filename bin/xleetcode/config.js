@@ -13,6 +13,7 @@ module.exports = {
     sessionUrl: 'https://leetcode-cn.com/session/',
     personListUrl: 'https://leetcode-cn.com/list/',
   },
+  questionNumMaxLen: 4, // 题目序号的长度，如今1000+题了
   question: {
     outputDir: './solutions',
     lang: 'javascript', // 拉 js 代码，拉其它代码意义不大
