@@ -120,21 +120,25 @@ module.exports = async function get(cmd) {
     number, // 题号
     output, // 输出目录
     random, // 是否随机一题
+    sequence, // 是否顺序一题
   } = cmd;
 
   const outputDir = underPath('cur', output || questionOutputDir);
   fse.ensureDirSync(outputDir);
   const resolvedProblems = updateResolved(outputDir);
 
-  !random && sbValidValue(
-    number,
-    `need option ${yellow('-n, --number <number>')}`,
-  );
+  // 指定题目的情况下需要检查 number
+  if (!random && !sequence) {
+    sbValidValue(
+      number,
+      `need option ${yellow('-n, --number <number>')}`,
+    );
 
-  !random && sbNumber(
-    number,
-    `option ${yellow('-n, --number <number>')} should be a number`,
-  );
+    sbNumber(
+      number,
+      `option ${yellow('-n, --number <number>')} should be a number`,
+    );
+  }
 
   const {
     stat_status_pairs: statStatusPairs,
@@ -143,14 +147,18 @@ module.exports = async function get(cmd) {
   const allProblemsId = statStatusPairs.map(
     statStatus => serialNumber(statStatus.stat.frontend_question_id, questionNumMaxLen),
   );
-  const pendingProblems = allProblemsId.filter(id => !Object.keys(resolvedProblems).includes(id));
+  const pendingProblems = allProblemsId.filter(id => !Object.keys(resolvedProblems).includes(id)).sort(); // 排序
 
   sbValidArray(
     pendingProblems,
     'no pengding problems left',
   );
 
-  const realNumber = random ? sample(pendingProblems) : number;
+  const realNumber = random
+    ? sample(pendingProblems)
+    : sequence
+      ? pendingProblems[0]
+      : number;
 
   const [targetStatus] = statStatusPairs.filter(statStatus => +realNumber === statStatus.stat.frontend_question_id);
 

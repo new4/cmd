@@ -67,6 +67,7 @@ program
   .option('-n, --number <number>', 'specify problem number')
   .option('-o, --output <dir>', 'specify output directory')
   .option('-r, --random', 'pick one problem at random')
+  .option('-s, --sequence', 'pick one problem at sequence')
   .action(cmd => get(cleanArgs(cmd)));
 
 // 强化的提示
