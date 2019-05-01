@@ -34,8 +34,22 @@ xleetcode session
 xleetcode session --specify <session-name|session-id>
 ```
 
-## 拉取一道题号为 `number` 的题目
+## 拉取题目
+
+### 指定题号 `number`
 
 ```bash
 xleetcode get -n <number>
+```
+
+### 随机一题
+
+```bash
+xleetcode get -r
+```
+
+### 按照顺序的下一题
+
+```bash
+xleetcode get -s
 ```
