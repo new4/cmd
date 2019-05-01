@@ -42,7 +42,6 @@
     "xbin": "bin/xbin/xbin.js",
     "xleetcode": "bin/xleetcode/xleetcode.js",
     "xmodule": "bin/xmodule/xmodule.js",
-    "xget": "bin/xget/xget.js",
     "xmy": "bin/xmy/xmy.js"
   },
   "keywords": []
