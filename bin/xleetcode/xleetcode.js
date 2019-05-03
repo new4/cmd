@@ -12,6 +12,7 @@ const logout = require('./cmd/logout');
 const status = require('./cmd/status');
 const session = require('./cmd/session');
 const get = require('./cmd/get');
+const update = require('./cmd/update');
 
 program
   .version('0.1.0')
@@ -69,6 +70,15 @@ program
   .option('-r, --random', 'pick one problem at random')
   .option('-s, --sequence', 'pick one problem at sequence')
   .action(cmd => get(cleanArgs(cmd)));
+
+/**
+ * 更新已完成题目的一些内容
+ */
+program
+  .command('update')
+  .description('update solutions')
+  .option('-o, --output <dir>', 'specify output directory')
+  .action(cmd => update(cleanArgs(cmd)));
 
 // 强化的提示
 tipEnhance(program, 'xleetcode');
