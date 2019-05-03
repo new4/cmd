@@ -8,6 +8,9 @@ const {
     sbValidValue,
     sbValidArray,
   },
+  log: {
+    successlog,
+  },
   underPath,
   fileOp: {
     getExistFiles,
@@ -80,11 +83,11 @@ module.exports = async function update(cmd) {
     // 更新 '难度' 字段
     if (!fileContents[1].includes('难度')) {
       fileContents[1] += `  难度:[${difficulty}]`;
+      fse.outputFileSync(
+        filePath,
+        fileContents.join('\n'),
+      );
+      successlog(`updated! filename: ${yellow(filename)}`);
     }
-
-    fse.outputFileSync(
-      filePath,
-      fileContents.join('\n'),
-    );
   });
 };
