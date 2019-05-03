@@ -34,6 +34,7 @@ module.exports = async (titleSlug) => {
           translatedTitle
           content
           translatedContent
+          difficulty
           codeSnippets {
             lang
             langSlug

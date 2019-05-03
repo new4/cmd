@@ -67,11 +67,12 @@ function createComments(questionInfo) {
   const {
     translatedTitle,
     translatedContent,
+    difficulty,
   } = questionInfo;
 
   const title = [
     '/**',
-    ` * ${translatedTitle}`,
+    ` * ${translatedTitle}  难度:[${difficulty}]`,
     ' *',
   ];
 
