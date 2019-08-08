@@ -188,8 +188,8 @@ module.exports = async function get(cmd) {
     },
   } = questionInfoParsed;
 
-  const { title, translatedTitle } = questionInfo;
-  const fileName = `${serialNumber(realNumber, questionNumMaxLen)} ${translatedTitle} ${title}.js`;
+  const { translatedTitle } = questionInfo;
+  const fileName = `${serialNumber(realNumber, questionNumMaxLen)} ${translatedTitle}.js`;
   const outputFile = path.join(outputDir, `${fileName}`);
 
   fse.outputFileSync(
