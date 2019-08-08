@@ -171,13 +171,9 @@ module.exports = async function get(cmd) {
 
   const {
     stat: {
-      question__title: title,
       question__title_slug: titleSlug,
     },
   } = targetStatus;
-
-  const fileName = `${serialNumber(realNumber, questionNumMaxLen)} ${title}.js`;
-  const outputFile = path.join(outputDir, `${fileName}`);
 
   sbEmptyArray(
     Object.values(resolvedProblems).filter(file => file.includes(serialNumber(realNumber, questionNumMaxLen))),
@@ -191,6 +187,10 @@ module.exports = async function get(cmd) {
       question: questionInfo,
     },
   } = questionInfoParsed;
+
+  const { title, translatedTitle } = questionInfo;
+  const fileName = `${serialNumber(realNumber, questionNumMaxLen)} ${translatedTitle} ${title}.js`;
+  const outputFile = path.join(outputDir, `${fileName}`);
 
   fse.outputFileSync(
     outputFile,
